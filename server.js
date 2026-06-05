@@ -4,12 +4,17 @@ const path = require('path');
 const fs = require('fs');
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 const QUIZ_FILE = path.join(__dirname, 'current-quiz.json');
 
 app.use(cors());
 app.use(express.json({ limit: '10mb' }));
-app.use(express.static(__dirname));
+
+// ── Serve Vite build in production ──────────────────────────────────────────
+const distPath = path.join(__dirname, 'dist');
+if (fs.existsSync(distPath)) {
+  app.use(express.static(distPath));
+}
 
 // ── Webhook endpoint: n8n sends quiz data here ──────────────────────────────
 app.post('/webhook/quiz', (req, res) => {
@@ -63,13 +68,17 @@ app.get('/api/quiz', (req, res) => {
   }
 });
 
-// ── Serve index.html for all other routes ───────────────────────────────────
+// ── Serve index.html for all other routes (SPA client-side routing) ─────────
 app.get('/{*splat}', (req, res) => {
-  res.sendFile(path.join(__dirname, 'index.html'));
+  if (fs.existsSync(distPath)) {
+    res.sendFile(path.join(distPath, 'index.html'));
+  } else {
+    res.sendFile(path.join(__dirname, 'index.html'));
+  }
 });
 
 app.listen(PORT, () => {
-  console.log(`\n🚀 Quiz app running at http://localhost:${PORT}`);
+  console.log(`\n🚀 Credible running at http://localhost:${PORT}`);
   console.log(`📡 Webhook endpoint: POST http://localhost:${PORT}/webhook/quiz`);
   console.log(`📋 Quiz API: GET http://localhost:${PORT}/api/quiz\n`);
 });
