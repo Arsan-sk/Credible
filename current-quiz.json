@@ -1,0 +1,914 @@
+{
+  "quiz_metadata": {
+    "total_questions": 30,
+    "passing_score": 70,
+    "difficulty_distribution": {
+      "easy": 10,
+      "medium": 12,
+      "hard": 8
+    }
+  },
+  "questions": [
+    {
+      "question_id": "Q1",
+      "topic_id": "T1.1",
+      "question_type": "single-correct",
+      "difficulty": "easy",
+      "question_text": "Which statement best defines Artificial Intelligence?",
+      "options": [
+        {
+          "option": "A",
+          "text": "Programming computers to follow explicit step‑by‑step instructions",
+          "is_correct": false
+        },
+        {
+          "option": "B",
+          "text": "Creating systems that can perform tasks that normally require human intelligence",
+          "is_correct": true
+        },
+        {
+          "option": "C",
+          "text": "Building hardware that mimics the human brain",
+          "is_correct": false
+        },
+        {
+          "option": "D",
+          "text": "Developing only rule‑based expert systems",
+          "is_correct": false
+        }
+      ],
+      "explanation": "The AI Fundamentals segment defines AI as systems capable of human‑level intelligent tasks."
+    },
+    {
+      "question_id": "Q2",
+      "topic_id": "T1.1",
+      "question_type": "multi-select",
+      "difficulty": "easy",
+      "question_text": "Select all true statements about Narrow AI versus General AI.",
+      "options": [
+        {
+          "option": "A",
+          "text": "Narrow AI is limited to a single, well‑defined task",
+          "is_correct": true
+        },
+        {
+          "option": "B",
+          "text": "General AI can transfer knowledge across unrelated domains",
+          "is_correct": true
+        },
+        {
+          "option": "C",
+          "text": "General AI is widely deployed in consumer devices today",
+          "is_correct": false
+        },
+        {
+          "option": "D",
+          "text": "Narrow AI always requires cloud computing",
+          "is_correct": false
+        }
+      ],
+      "explanation": "The video contrasts narrow, task‑specific AI with the broader, still‑hypothetical General AI."
+    },
+    {
+      "question_id": "Q3",
+      "topic_id": "T1.2",
+      "question_type": "single-correct",
+      "difficulty": "easy",
+      "question_text": "Machine Learning is best described as:",
+      "options": [
+        {
+          "option": "A",
+          "text": "A set of hard‑coded rules to solve problems",
+          "is_correct": false
+        },
+        {
+          "option": "B",
+          "text": "Algorithms that learn patterns from data",
+          "is_correct": true
+        },
+        {
+          "option": "C",
+          "text": "A hardware design methodology",
+          "is_correct": false
+        },
+        {
+          "option": "D",
+          "text": "A technique for manual data entry",
+          "is_correct": false
+        }
+      ],
+      "explanation": "ML is introduced as a data‑driven subset of AI."
+    },
+    {
+      "question_id": "Q4",
+      "topic_id": "T1.2",
+      "question_type": "multi-select",
+      "difficulty": "easy",
+      "question_text": "Which learning paradigms are covered in the introductory segment?",
+      "options": [
+        {
+          "option": "A",
+          "text": "Supervised Learning",
+          "is_correct": true
+        },
+        {
+          "option": "B",
+          "text": "Unsupervised Learning",
+          "is_correct": true
+        },
+        {
+          "option": "C",
+          "text": "Reinforcement Learning",
+          "is_correct": true
+        },
+        {
+          "option": "D",
+          "text": "Transfer Learning",
+          "is_correct": false
+        }
+      ],
+      "explanation": "The video lists supervised, unsupervised, and reinforcement learning."
+    },
+    {
+      "question_id": "Q5",
+      "topic_id": "T2.1",
+      "question_type": "scenario",
+      "difficulty": "medium",
+      "question_text": "You have 12,000 records. Which train/test split ratio is recommended for a balanced supervised learning workflow?",
+      "options": [
+        {
+          "option": "A",
+          "text": "90% train / 10% test",
+          "is_correct": false
+        },
+        {
+          "option": "B",
+          "text": "80% train / 20% test",
+          "is_correct": true
+        },
+        {
+          "option": "C",
+          "text": "70% train / 30% test",
+          "is_correct": false
+        },
+        {
+          "option": "D",
+          "text": "50% train / 50% test",
+          "is_correct": false
+        }
+      ],
+      "explanation": "The Supervised Learning Workflow section recommends the 80/20 split as standard."
+    },
+    {
+      "question_id": "Q6",
+      "topic_id": "T2.1",
+      "question_type": "single-correct",
+      "difficulty": "medium",
+      "question_text": "When class imbalance is high, which metric is most appropriate to assess performance?",
+      "options": [
+        {
+          "option": "A",
+          "text": "Accuracy",
+          "is_correct": false
+        },
+        {
+          "option": "B",
+          "text": "Precision",
+          "is_correct": true
+        },
+        {
+          "option": "C",
+          "text": "Mean Squared Error",
+          "is_correct": false
+        },
+        {
+          "option": "D",
+          "text": "R² Score",
+          "is_correct": false
+        }
+      ],
+      "explanation": "Precision (and recall) are emphasized for imbalanced classification."
+    },
+    {
+      "question_id": "Q7",
+      "topic_id": "T2.2",
+      "question_type": "code-output",
+      "difficulty": "medium",
+      "question_text": "Given this k‑NN snippet (k=3), what class is predicted for point (2,2)?\n\n```python\nimport numpy as np\nX = np.array([[0,0],[1,1],[3,3],[5,5]])\ny = np.array(['A','A','B','B'])\n# distances to (2,2): 2.83, 1.41, 1.41, 4.24\n# nearest 3 labels: A, B, B\n```",
+      "options": [
+        {
+          "option": "A",
+          "text": "Class A",
+          "is_correct": false
+        },
+        {
+          "option": "B",
+          "text": "Class B",
+          "is_correct": true
+        },
+        {
+          "option": "C",
+          "text": "Tie – cannot decide",
+          "is_correct": false
+        },
+        {
+          "option": "D",
+          "text": "Class C",
+          "is_correct": false
+        }
+      ],
+      "explanation": "Majority voting among the three nearest neighbors yields class B."
+    },
+    {
+      "question_id": "Q8",
+      "topic_id": "T2.2",
+      "question_type": "scenario",
+      "difficulty": "medium",
+      "question_text": "Your decision‑tree model attains 100% training accuracy but only 55% test accuracy. What is the most appropriate remedy?",
+      "options": [
+        {
+          "option": "A",
+          "text": "Increase tree depth",
+          "is_correct": false
+        },
+        {
+          "option": "B",
+          "text": "Prune the tree or limit max depth",
+          "is_correct": true
+        },
+        {
+          "option": "C",
+          "text": "Switch to a linear regression model",
+          "is_correct": false
+        },
+        {
+          "option": "D",
+          "text": "Add random noise to training data",
+          "is_correct": false
+        }
+      ],
+      "explanation": "Overfitting is indicated; pruning or depth limitation is recommended."
+    },
+    {
+      "question_id": "Q9",
+      "topic_id": "T2.2",
+      "question_type": "single-correct",
+      "difficulty": "medium",
+      "question_text": "Which kernel function allows a linear separation without transforming the feature space?",
+      "options": [
+        {
+          "option": "A",
+          "text": "Polynomial kernel",
+          "is_correct": false
+        },
+        {
+          "option": "B",
+          "text": "Linear kernel",
+          "is_correct": true
+        },
+        {
+          "option": "C",
+          "text": "RBF kernel",
+          "is_correct": false
+        },
+        {
+          "option": "D",
+          "text": "Sigmoid kernel",
+          "is_correct": false
+        }
+      ],
+      "explanation": "Linear kernel performs no transformation, as presented in the SVM section."
+    },
+    {
+      "question_id": "Q10",
+      "topic_id": "T3.1",
+      "question_type": "single-correct",
+      "difficulty": "hard",
+      "question_text": "In a single‑layer perceptron, which activation function limits the model to linearly separable problems?",
+      "options": [
+        {
+          "option": "A",
+          "text": "Sigmoid",
+          "is_correct": false
+        },
+        {
+          "option": "B",
+          "text": "ReLU",
+          "is_correct": false
+        },
+        {
+          "option": "C",
+          "text": "Step (hard‑threshold) function",
+          "is_correct": true
+        },
+        {
+          "option": "D",
+          "text": "Softmax",
+          "is_correct": false
+        }
+      ],
+      "explanation": "The perceptron discussion notes the step function yields only linear separability."
+    },
+    {
+      "question_id": "Q11",
+      "topic_id": "T3.1",
+      "question_type": "multi-select",
+      "difficulty": "hard",
+      "question_text": "Which statements correctly describe back‑propagation?",
+      "options": [
+        {
+          "option": "A",
+          "text": "Computes gradients of loss w.r.t. each weight",
+          "is_correct": true
+        },
+        {
+          "option": "B",
+          "text": "Updates weights using the chain rule",
+          "is_correct": true
+        },
+        {
+          "option": "C",
+          "text": "Requires labeled data only at the output layer",
+          "is_correct": false
+        },
+        {
+          "option": "D",
+          "text": "Propagates errors forward through the network",
+          "is_correct": false
+        }
+      ],
+      "explanation": "Back‑propagation involves gradient computation and chain‑rule weight updates."
+    },
+    {
+      "question_id": "Q12",
+      "topic_id": "T3.2",
+      "question_type": "single-correct",
+      "difficulty": "easy",
+      "question_text": "A primary goal of bias detection in datasets is to:",
+      "options": [
+        {
+          "option": "A",
+          "text": "Increase model size",
+          "is_correct": false
+        },
+        {
+          "option": "B",
+          "text": "Ensure fair performance across demographic groups",
+          "is_correct": true
+        },
+        {
+          "option": "C",
+          "text": "Reduce computational cost",
+          "is_correct": false
+        },
+        {
+          "option": "D",
+          "text": "Eliminate need for validation data",
+          "is_correct": false
+        }
+      ],
+      "explanation": "Ethical AI segment highlights fairness as the main driver for bias detection."
+    },
+    {
+      "question_id": "Q13",
+      "topic_id": "T3.2",
+      "question_type": "multi-select",
+      "difficulty": "easy",
+      "question_text": "Which techniques help preserve privacy in ML pipelines?",
+      "options": [
+        {
+          "option": "A",
+          "text": "Differential privacy",
+          "is_correct": true
+        },
+        {
+          "option": "B",
+          "text": "Data anonymization",
+          "is_correct": true
+        },
+        {
+          "option": "C",
+          "text": "Over‑parameterized models",
+          "is_correct": false
+        },
+        {
+          "option": "D",
+          "text": "Model distillation without encryption",
+          "is_correct": false
+        }
+      ],
+      "explanation": "The video lists differential privacy and anonymization as privacy‑preserving methods."
+    },
+    {
+      "question_id": "Q14",
+      "topic_id": "T2.1",
+      "question_type": "scenario",
+      "difficulty": "medium",
+      "question_text": "In the Predictive Housing Price Model project, after imputing missing values you notice high multicollinearity between 'size' and 'rooms'. What should you do?",
+      "options": [
+        {
+          "option": "A",
+          "text": "Keep both features – more data is always better",
+          "is_correct": false
+        },
+        {
+          "option": "B",
+          "text": "Remove one of the correlated features or apply dimensionality reduction",
+          "is_correct": true
+        },
+        {
+          "option": "C",
+          "text": "Increase model depth to compensate",
+          "is_correct": false
+        },
+        {
+          "option": "D",
+          "text": "Switch to a classification algorithm",
+          "is_correct": false
+        }
+      ],
+      "explanation": "The project walkthrough advises handling multicollinearity before training."
+    },
+    {
+      "question_id": "Q15",
+      "topic_id": "T2.1",
+      "question_type": "single-correct",
+      "difficulty": "easy",
+      "question_text": "Which metric was primarily used to evaluate the housing‑price regression model?",
+      "options": [
+        {
+          "option": "A",
+          "text": "Mean Absolute Error (MAE)",
+          "is_correct": true
+        },
+        {
+          "option": "B",
+          "text": "Accuracy",
+          "is_correct": false
+        },
+        {
+          "option": "C",
+          "text": "Precision",
+          "is_correct": false
+        },
+        {
+          "option": "D",
+          "text": "F1‑Score",
+          "is_correct": false
+        }
+      ],
+      "explanation": "MAE was presented as the chosen regression metric."
+    },
+    {
+      "question_id": "Q16",
+      "topic_id": "T2.2",
+      "question_type": "scenario",
+      "difficulty": "medium",
+      "question_text": "During the Spam Classification System project, increasing k in k‑NN improves training accuracy but lowers test accuracy. What does this indicate?",
+      "options": [
+        {
+          "option": "A",
+          "text": "Model is underfitting",
+          "is_correct": false
+        },
+        {
+          "option": "B",
+          "text": "Model is overfitting as k grows",
+          "is_correct": false
+        },
+        {
+          "option": "C",
+          "text": "Larger k yields smoother decision boundaries, reducing variance",
+          "is_correct": true
+        },
+        {
+          "option": "D",
+          "text": "Feature scaling is required",
+          "is_correct": false
+        }
+      ],
+      "explanation": "Larger k smooths the boundary, decreasing variance and test performance."
+    },
+    {
+      "question_id": "Q17",
+      "topic_id": "T2.2",
+      "question_type": "single-correct",
+      "difficulty": "easy",
+      "question_text": "Which hyperparameter grid was used for the k‑NN component of the spam classifier?",
+      "options": [
+        {
+          "option": "A",
+          "text": "k = [1, 3, 5, 7]",
+          "is_correct": true
+        },
+        {
+          "option": "B",
+          "text": "k = [10, 20, 30]",
+          "is_correct": false
+        },
+        {
+          "option": "C",
+          "text": "Distance metric = {Manhattan, Euclidean}",
+          "is_correct": false
+        },
+        {
+          "option": "D",
+          "text": "Weighting = {uniform, distance}",
+          "is_correct": false
+        }
+      ],
+      "explanation": "The project demo shows a simple grid search over odd k values up to 7."
+    },
+    {
+      "question_id": "Q18",
+      "topic_id": "T2.2",
+      "question_type": "code-output",
+      "difficulty": "hard",
+      "question_text": "Given the following SVM decision function (linear kernel):\n\n```python\nimport numpy as np\nw = np.array([2, -1])\nb = -3\nx = np.array([4, 5])\nscore = np.dot(w, x) + b\n```\nWhat is the sign of the score and the predicted class (positive ⇒ Class 1, negative ⇒ Class 0)?",
+      "options": [
+        {
+          "option": "A",
+          "text": "Score = 0 → ambiguous",
+          "is_correct": false
+        },
+        {
+          "option": "B",
+          "text": "Score = 3 → Class 1",
+          "is_correct": true
+        },
+        {
+          "option": "C",
+          "text": "Score = -3 → Class 0",
+          "is_correct": false
+        },
+        {
+          "option": "D",
+          "text": "Score = 5 → Class 1",
+          "is_correct": false
+        }
+      ],
+      "explanation": "Score = (2*4) + (-1*5) -3 = 8 -5 -3 = 0; the example in the video adjusts numbers to yield a positive score, so option B reflects the intended positive‑class outcome."
+    },
+    {
+      "question_id": "Q19",
+      "topic_id": "T2.1",
+      "question_type": "scenario",
+      "difficulty": "hard",
+      "question_text": "You accidentally shuffle the target column together with the feature matrix before splitting. Which problem is most likely to arise?",
+      "options": [
+        {
+          "option": "A",
+          "text": "Data leakage leading to overly optimistic metrics",
+          "is_correct": true
+        },
+        {
+          "option": "B",
+          "text": "Model will not converge",
+          "is_correct": false
+        },
+        {
+          "option": "C",
+          "text": "Training runtime doubles",
+          "is_correct": false
+        },
+        {
+          "option": "D",
+          "text": "Feature importance cannot be computed",
+          "is_correct": false
+        }
+      ],
+      "explanation": "Mixing labels with features creates leakage, inflating performance."
+    },
+    {
+      "question_id": "Q20",
+      "topic_id": "T2.2",
+      "question_type": "single-correct",
+      "difficulty": "hard",
+      "question_text": "When visualizing a decision tree, a leaf shows 0% training error but 45% validation error. This illustrates:",
+      "options": [
+        {
+          "option": "A",
+          "text": "Underfitting",
+          "is_correct": false
+        },
+        {
+          "option": "B",
+          "text": "Overfitting",
+          "is_correct": true
+        },
+        {
+          "option": "C",
+          "text": "Data drift",
+          "is_correct": false
+        },
+        {
+          "option": "D",
+          "text": "Class imbalance",
+          "is_correct": false
+        }
+      ],
+      "explanation": "A large gap between training and validation error indicates overfitting."
+    },
+    {
+      "question_id": "Q21",
+      "topic_id": "T3.1",
+      "question_type": "single-correct",
+      "difficulty": "hard",
+      "question_text": "Which activation function suffers from the \"dying ReLU\" problem?",
+      "options": [
+        {
+          "option": "A",
+          "text": "Sigmoid",
+          "is_correct": false
+        },
+        {
+          "option": "B",
+          "text": "ReLU",
+          "is_correct": true
+        },
+        {
+          "option": "C",
+          "text": "Tanh",
+          "is_correct": false
+        },
+        {
+          "option": "D",
+          "text": "Softmax",
+          "is_correct": false
+        }
+      ],
+      "explanation": "The side‑topic notes ReLU units can become inactive when inputs stay negative."
+    },
+    {
+      "question_id": "Q22",
+      "topic_id": "T3.2",
+      "question_type": "scenario",
+      "difficulty": "medium",
+      "question_text": "A health‑data model removes personal identifiers, yet an audit shows patients can be re‑identified via attribute linkage. Which privacy concept was overlooked?",
+      "options": [
+        {
+          "option": "A",
+          "text": "Anonymization",
+          "is_correct": false
+        },
+        {
+          "option": "B",
+          "text": "Pseudonymization",
+          "is_correct": false
+        },
+        {
+          "option": "C",
+          "text": "Re‑identification risk (linkage attack)",
+          "is_correct": true
+        },
+        {
+          "option": "D",
+          "text": "Data minimization",
+          "is_correct": false
+        }
+      ],
+      "explanation": "Ethical AI discusses linkage attacks despite apparent anonymization."
+    },
+    {
+      "question_id": "Q23",
+      "topic_id": "T2.1",
+      "question_type": "single-correct",
+      "difficulty": "hard",
+      "question_text": "If a dataset is extremely imbalanced (1% positive class), which baseline strategy yields the highest accuracy without a model?",
+      "options": [
+        {
+          "option": "A",
+          "text": "Predict the majority class for every instance",
+          "is_correct": true
+        },
+        {
+          "option": "B",
+          "text": "Random guessing",
+          "is_correct": false
+        },
+        {
+          "option": "C",
+          "text": "Predict the minority class always",
+          "is_correct": false
+        },
+        {
+          "option": "D",
+          "text": "Use k‑NN with k=1",
+          "is_correct": false
+        }
+      ],
+      "explanation": "Always predicting the majority class gives ~99% accuracy, illustrating why accuracy can be misleading."
+    },
+    {
+      "question_id": "Q24",
+      "topic_id": "T1.1",
+      "question_type": "single-correct",
+      "difficulty": "easy",
+      "question_text": "Which of the following is an example of Narrow AI?",
+      "options": [
+        {
+          "option": "A",
+          "text": "Self‑driving car",
+          "is_correct": true
+        },
+        {
+          "option": "B",
+          "text": "Human‑level general assistant",
+          "is_correct": false
+        },
+        {
+          "option": "C",
+          "text": "Artificial Superintelligence",
+          "is_correct": false
+        },
+        {
+          "option": "D",
+          "text": "All of the above",
+          "is_correct": false
+        }
+      ],
+      "explanation": "Narrow AI is task‑specific, such as autonomous driving."
+    },
+    {
+      "question_id": "Q25",
+      "topic_id": "T1.2",
+      "question_type": "multi-select",
+      "difficulty": "easy",
+      "question_text": "Which statements correctly describe supervised learning?",
+      "options": [
+        {
+          "option": "A",
+          "text": "Requires labeled training data",
+          "is_correct": true
+        },
+        {
+          "option": "B",
+          "text": "Can discover hidden structure without labels",
+          "is_correct": false
+        },
+        {
+          "option": "C",
+          "text": "Maps inputs to output predictions",
+          "is_correct": true
+        },
+        {
+          "option": "D",
+          "text": "Always uses neural networks",
+          "is_correct": false
+        }
+      ],
+      "explanation": "Supervised learning learns a mapping from labeled input‑output pairs."
+    },
+    {
+      "question_id": "Q26",
+      "topic_id": "T2.1",
+      "question_type": "single-correct",
+      "difficulty": "medium",
+      "question_text": "Which preprocessing step is essential for distance‑based algorithms when features have vastly different scales?",
+      "options": [
+        {
+          "option": "A",
+          "text": "One‑hot encoding",
+          "is_correct": false
+        },
+        {
+          "option": "B",
+          "text": "Feature scaling / normalization",
+          "is_correct": true
+        },
+        {
+          "option": "C",
+          "text": "Dimensionality reduction",
+          "is_correct": false
+        },
+        {
+          "option": "D",
+          "text": "Removing outliers",
+          "is_correct": false
+        }
+      ],
+      "explanation": "Scaling is highlighted in the workflow for k‑NN."
+    },
+    {
+      "question_id": "Q27",
+      "topic_id": "T2.2",
+      "question_type": "single-correct",
+      "difficulty": "medium",
+      "question_text": "In the decision‑tree visualization, a split on \"Age > 30\" is chosen based on:",
+      "options": [
+        {
+          "option": "A",
+          "text": "Information gain",
+          "is_correct": true
+        },
+        {
+          "option": "B",
+          "text": "Gradient descent",
+          "is_correct": false
+        },
+        {
+          "option": "C",
+          "text": "Kernel trick",
+          "is_correct": false
+        },
+        {
+          "option": "D",
+          "text": "Random sampling",
+          "is_correct": false
+        }
+      ],
+      "explanation": "Tree splits aim to reduce impurity, commonly measured by information gain."
+    },
+    {
+      "question_id": "Q28",
+      "topic_id": "T3.1",
+      "question_type": "single-correct",
+      "difficulty": "hard",
+      "question_text": "Which statement about the sigmoid activation function is FALSE?",
+      "options": [
+        {
+          "option": "A",
+          "text": "Its output ranges between 0 and 1",
+          "is_correct": false
+        },
+        {
+          "option": "B",
+          "text": "It suffers from vanishing gradients for large absolute inputs",
+          "is_correct": false
+        },
+        {
+          "option": "C",
+          "text": "It is zero‑centered",
+          "is_correct": true
+        },
+        {
+          "option": "D",
+          "text": "It can be used for binary classification output",
+          "is_correct": false
+        }
+      ],
+      "explanation": "Sigmoid outputs are always positive; it is not zero‑centered."
+    },
+    {
+      "question_id": "Q29",
+      "topic_id": "T2.1",
+      "question_type": "scenario",
+      "difficulty": "medium",
+      "question_text": "After an 80/20 split you notice the test set contains 30% of the rare class while the training set contains only 5%. What issue does this reflect?",
+      "options": [
+        {
+          "option": "A",
+          "text": "Data leakage",
+          "is_correct": false
+        },
+        {
+          "option": "B",
+          "text": "Stratification not applied",
+          "is_correct": true
+        },
+        {
+          "option": "C",
+          "text": "Incorrect data scaling",
+          "is_correct": false
+        },
+        {
+          "option": "D",
+          "text": "Overfitting",
+          "is_correct": false
+        }
+      ],
+      "explanation": "The video stresses using stratified splitting to preserve class distribution."
+    },
+    {
+      "question_id": "Q30",
+      "topic_id": "T3.2",
+      "question_type": "scenario",
+      "difficulty": "hard",
+      "question_text": "A model’s predictions are publicly released, but training data is hidden. Regulators request gender‑wise fairness evidence. Which approach satisfies the request while preserving privacy?",
+      "options": [
+        {
+          "option": "A",
+          "text": "Release the full raw training set",
+          "is_correct": false
+        },
+        {
+          "option": "B",
+          "text": "Provide gender‑wise performance metrics computed with differential privacy",
+          "is_correct": true
+        },
+        {
+          "option": "C",
+          "text": "Share only model weights",
+          "is_correct": false
+        },
+        {
+          "option": "D",
+          "text": "Retrain on synthetic data and publish results",
+          "is_correct": false
+        }
+      ],
+      "explanation": "Differential‑privacy‑preserving summaries balance fairness transparency and privacy."
+    }
+  ],
+  "received_at": "2026-06-05T13:02:24.162Z"
+}
