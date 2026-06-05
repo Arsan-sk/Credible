@@ -1,0 +1,140 @@
+.verify-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 56px - 100px);
+  padding: var(--space-3xl) var(--space-lg);
+}
+
+.verify-container {
+  max-width: 480px;
+  width: 100%;
+  text-align: center;
+}
+
+.verify-header {
+  margin-bottom: var(--space-xl);
+}
+
+.verify-icon {
+  color: var(--text-muted);
+  margin-bottom: var(--space-md);
+}
+
+.verify-header h1 {
+  font-size: 1.75rem;
+  margin-bottom: var(--space-sm);
+}
+
+.verify-header p {
+  font-size: 0.9375rem;
+  color: var(--text-secondary);
+}
+
+/* Form */
+.verify-form {
+  margin-bottom: var(--space-xl);
+}
+
+.verify-input-group {
+  display: flex;
+  gap: 8px;
+}
+
+.verify-input {
+  font-size: 1rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+/* Result */
+.verify-result {
+  background: var(--bg-white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-xl);
+}
+
+.verify-result-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto var(--space-md);
+}
+
+.verify-found-icon {
+  background: var(--success-light);
+  color: var(--success);
+}
+
+.verify-not-found-icon {
+  background: var(--error-light);
+  color: var(--error);
+}
+
+.verify-result-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: var(--space-xs);
+}
+
+.verify-found-title {
+  color: var(--success);
+}
+
+.verify-not-found-title {
+  color: var(--error);
+}
+
+.verify-result-subtitle {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  margin-bottom: var(--space-lg);
+}
+
+/* Details */
+.verify-details {
+  text-align: left;
+  border-top: 1px solid var(--border);
+  padding-top: var(--space-md);
+}
+
+.verify-detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.verify-detail-row:last-child {
+  border-bottom: none;
+}
+
+.verify-detail-label {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+.verify-detail-value {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  text-align: right;
+  max-width: 60%;
+}
+
+@media (max-width: 640px) {
+  .verify-page {
+    padding: var(--space-xl) var(--space-md);
+    align-items: flex-start;
+    padding-top: var(--space-2xl);
+  }
+  .verify-input-group {
+    flex-direction: column;
+  }
+}

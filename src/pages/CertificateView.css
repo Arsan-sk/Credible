@@ -1,0 +1,82 @@
+.certview-page {
+  min-height: calc(100vh - 56px - 100px);
+  padding: var(--space-2xl) var(--space-lg) var(--space-3xl);
+}
+
+.certview-container {
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.certview-header {
+  margin-bottom: var(--space-xl);
+}
+
+.certview-header h1 {
+  font-size: 1.75rem;
+  margin-bottom: var(--space-sm);
+}
+
+.certview-header p {
+  font-size: 0.9375rem;
+  color: var(--text-secondary);
+}
+
+.certview-preview {
+  overflow-x: auto;
+  margin-bottom: var(--space-xl);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  justify-content: center;
+  background: white;
+}
+
+.certview-actions {
+  display: flex;
+  gap: var(--space-sm);
+  justify-content: center;
+  margin-bottom: var(--space-lg);
+  flex-wrap: wrap;
+}
+
+.certview-actions .btn {
+  min-width: 180px;
+}
+
+.certview-id {
+  text-align: center;
+  padding: var(--space-md);
+  background: var(--bg-secondary);
+  border-radius: var(--radius-md);
+}
+
+.certview-id-label {
+  font-size: 0.6875rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 500;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.certview-id-value {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: 0.05em;
+  font-family: var(--font-primary);
+}
+
+@media (max-width: 640px) {
+  .certview-page {
+    padding: var(--space-xl) var(--space-md);
+  }
+  .certview-actions {
+    flex-direction: column;
+  }
+  .certview-actions .btn {
+    width: 100%;
+  }
+}

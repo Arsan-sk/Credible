@@ -1,0 +1,102 @@
+.results-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 56px - 100px);
+  padding: var(--space-3xl) var(--space-lg);
+}
+
+.results-container {
+  max-width: 480px;
+  width: 100%;
+  text-align: center;
+}
+
+/* Hero */
+.results-hero {
+  margin-bottom: var(--space-xl);
+}
+
+.results-verdict {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-top: var(--space-lg);
+  margin-bottom: var(--space-sm);
+  letter-spacing: -0.02em;
+}
+
+.results-pass {
+  color: var(--success);
+}
+
+.results-fail {
+  color: var(--error);
+}
+
+.results-message {
+  font-size: 0.9375rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+/* Stats */
+.results-stats {
+  display: flex;
+  gap: 1px;
+  background: var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin-bottom: var(--space-xl);
+}
+
+.results-stat {
+  flex: 1;
+  background: var(--bg-white);
+  padding: var(--space-md);
+  text-align: center;
+}
+
+.results-stat-value {
+  display: block;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+  margin-bottom: 2px;
+}
+
+.results-stat-correct {
+  color: var(--success);
+}
+
+.results-stat-wrong {
+  color: var(--error);
+}
+
+.results-stat-skipped {
+  color: var(--text-muted);
+}
+
+.results-stat-label {
+  display: block;
+  font-size: 0.6875rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 500;
+}
+
+/* Actions */
+.results-actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+@media (max-width: 640px) {
+  .results-page {
+    padding: var(--space-xl) var(--space-md);
+    align-items: flex-start;
+    padding-top: var(--space-2xl);
+  }
+}
