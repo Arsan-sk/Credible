@@ -1,11 +1,11 @@
 {
   "quiz_metadata": {
-    "total_questions": 90,
+    "total_questions": 30,
     "passing_score": 70,
     "difficulty_distribution": {
-      "easy": 27,
-      "medium": 36,
-      "hard": 27
+      "easy": 9,
+      "medium": 12,
+      "hard": 9
     }
   },
   "questions": [
@@ -14,667 +14,187 @@
       "topic_id": "T1.1",
       "question_type": "single-correct",
       "difficulty": "easy",
-      "question_text": "Which component of a perceptron directly determines the slope of its decision boundary?",
+      "question_text": "Which of the following best describes the role of an activation function in a perceptron?",
       "options": [
         {
           "option": "A",
-          "text": "Bias",
+          "text": "It scales the input features.",
           "is_correct": false
         },
         {
           "option": "B",
-          "text": "Weight",
+          "text": "It introduces non‑linearity to allow the network to learn complex patterns.",
           "is_correct": true
         },
         {
           "option": "C",
-          "text": "Activation function",
+          "text": "It normalizes the output to have zero mean.",
           "is_correct": false
         },
         {
           "option": "D",
-          "text": "Learning rate",
+          "text": "It reduces the dimensionality of the data.",
           "is_correct": false
         }
       ],
-      "explanation": "In a perceptron, the weight multiplied by the input sets the slope; the bias shifts the line."
+      "explanation": "Activation functions like Sigmoid or ReLU add non‑linearity, enabling multilayer networks (MLPs) to model complex relationships beyond linear separability."
     },
     {
       "question_id": "Q2",
       "topic_id": "T1.1",
-      "question_type": "single-correct",
+      "question_type": "multi-select",
       "difficulty": "easy",
-      "question_text": "What are the three primary layers in a basic neural network?",
+      "question_text": "Select all statements that are true about the ReLU activation function.",
       "options": [
         {
           "option": "A",
-          "text": "Input, Convolution, Output",
-          "is_correct": false
-        },
-        {
-          "option": "B",
-          "text": "Input, Hidden, Output",
+          "text": "It outputs zero for negative inputs.",
           "is_correct": true
         },
         {
-          "option": "C",
-          "text": "Embedding, Hidden, Decoder",
+          "option": "B",
+          "text": "It suffers from vanishing gradients for large positive inputs.",
           "is_correct": false
         },
         {
+          "option": "C",
+          "text": "It is computationally inexpensive.",
+          "is_correct": true
+        },
+        {
           "option": "D",
-          "text": "Feature, Bottleneck, Classification",
+          "text": "It outputs values bounded between 0 and 1.",
           "is_correct": false
         }
       ],
-      "explanation": "A simple feed‑forward network consists of an input layer, one or more hidden layers, and an output layer."
+      "explanation": "ReLU = max(0, x); returns 0 for negatives, passes positive values unchanged, and is cheap to compute."
     },
     {
       "question_id": "Q3",
       "topic_id": "T1.2",
       "question_type": "single-correct",
       "difficulty": "easy",
-      "question_text": "The MNIST dataset is primarily used for which type of machine‑learning task?",
+      "question_text": "Which loss function is most appropriate for a binary classification task?",
       "options": [
         {
           "option": "A",
-          "text": "Object detection",
+          "text": "Mean Squared Error (MSE)",
           "is_correct": false
         },
         {
           "option": "B",
-          "text": "Image classification of handwritten digits",
+          "text": "Cross‑Entropy Loss",
           "is_correct": true
         },
         {
           "option": "C",
-          "text": "Text sentiment analysis",
+          "text": "Huber Loss",
           "is_correct": false
         },
         {
           "option": "D",
-          "text": "Time‑series forecasting",
+          "text": "Kullback‑Leibler Divergence",
           "is_correct": false
         }
       ],
-      "explanation": "MNIST contains 28×28 grayscale images of digits 0‑9, making it a classic classification benchmark."
+      "explanation": "Binary cross‑entropy directly models the probability of the two classes and provides stronger gradients for classification."
     },
     {
       "question_id": "Q4",
-      "topic_id": "T2.1",
-      "question_type": "multi-select",
+      "topic_id": "T1.2",
+      "question_type": "scenario",
       "difficulty": "medium",
-      "question_text": "Which statements correctly describe hierarchical feature extraction in deep networks? (Select all that apply)",
+      "question_text": "You notice training loss decreasing but validation loss remains high and unstable. Which optimizer change is most likely to improve generalization?",
       "options": [
         {
           "option": "A",
-          "text": "Early layers detect low‑level edges.",
+          "text": "Switch from Adam to plain Stochastic Gradient Descent with momentum.",
           "is_correct": true
         },
         {
           "option": "B",
-          "text": "Later layers combine low‑level features into high‑level concepts.",
-          "is_correct": true
+          "text": "Increase the learning rate of Adam.",
+          "is_correct": false
         },
         {
           "option": "C",
-          "text": "All layers learn the same type of features.",
+          "text": "Replace cross‑entropy loss with MSE.",
           "is_correct": false
         },
         {
           "option": "D",
-          "text": "Depth reduces the network's capacity to model complex functions.",
+          "text": "Add more layers to the network without regularization.",
           "is_correct": false
         }
       ],
-      "explanation": "Depth enables a progression from simple to complex representations; early layers capture edges, later layers capture shapes, objects, etc."
+      "explanation": "SGD with momentum often provides better generalization than adaptive methods like Adam, especially when overfitting is observed."
     },
     {
       "question_id": "Q5",
       "topic_id": "T2.1",
       "question_type": "single-correct",
       "difficulty": "easy",
-      "question_text": "Which rule describes how layers are stacked in a feed‑forward network?",
+      "question_text": "What is the primary purpose of pooling layers in a CNN?",
       "options": [
         {
           "option": "A",
-          "text": "Each layer feeds into the previous one.",
+          "text": "To increase the number of parameters.",
           "is_correct": false
         },
         {
           "option": "B",
-          "text": "All layers receive the raw input directly.",
-          "is_correct": false
-        },
-        {
-          "option": "C",
-          "text": "Outputs of one layer become inputs to the next layer.",
+          "text": "To reduce spatial dimensions and control overfitting.",
           "is_correct": true
         },
         {
+          "option": "C",
+          "text": "To perform non‑linear activation.",
+          "is_correct": false
+        },
+        {
           "option": "D",
-          "text": "Layers operate independently without connections.",
+          "text": "To convert images to vectors.",
           "is_correct": false
         }
       ],
-      "explanation": "In feed‑forward architecture, data flows forward from one layer to the next."
+      "explanation": "Pooling (e.g., max‑pooling) downsamples feature maps, decreasing computational load and providing translation invariance."
     },
     {
       "question_id": "Q6",
-      "topic_id": "T2.2",
-      "question_type": "single-correct",
-      "difficulty": "easy",
-      "question_text": "Which activation function is most commonly used to mitigate the vanishing gradient problem?",
+      "topic_id": "T2.1",
+      "question_type": "multi-select",
+      "difficulty": "medium",
+      "question_text": "Which statements about Transfer Learning in CNNs are correct?",
       "options": [
         {
           "option": "A",
-          "text": "Sigmoid",
-          "is_correct": false
+          "text": "Pre‑trained weights can be fine‑tuned on a new dataset.",
+          "is_correct": true
         },
         {
           "option": "B",
-          "text": "Tanh",
+          "text": "It requires training the entire network from scratch.",
           "is_correct": false
         },
         {
           "option": "C",
-          "text": "ReLU",
+          "text": "It is especially useful when the new dataset is small.",
           "is_correct": true
         },
         {
           "option": "D",
-          "text": "Linear",
+          "text": "It only works with VGG‑style architectures.",
           "is_correct": false
         }
       ],
-      "explanation": "ReLU (max(0, x)) maintains gradients for positive inputs, reducing vanishing issues."
+      "explanation": "Transfer learning re‑uses learned representations, often freezing early layers and fine‑tuning later ones, making it valuable for limited data."
     },
     {
       "question_id": "Q7",
       "topic_id": "T2.2",
       "question_type": "single-correct",
-      "difficulty": "medium",
-      "question_text": "Why is a non‑linear activation function essential in multi‑layer networks?",
-      "options": [
-        {
-          "option": "A",
-          "text": "It allows the network to represent linear mappings only.",
-          "is_correct": false
-        },
-        {
-          "option": "B",
-          "text": "It enables the composition of linear transformations to approximate any function.",
-          "is_correct": false
-        },
-        {
-          "option": "C",
-          "text": "It introduces non‑linearity, letting the network approximate complex functions.",
-          "is_correct": true
-        },
-        {
-          "option": "D",
-          "text": "It speeds up training by removing the need for gradients.",
-          "is_correct": false
-        }
-      ],
-      "explanation": "Without non‑linearity, stacked linear layers collapse into a single linear transformation."
-    },
-    {
-      "question_id": "Q8",
-      "topic_id": "T3.1",
-      "question_type": "single-correct",
-      "difficulty": "medium",
-      "question_text": "Mean Squared Error (MSE) is defined as (1/n) Σ (ŷ_i - y_i)^2. What does minimizing MSE achieve?",
-      "options": [
-        {
-          "option": "A",
-          "text": "Maximizes the distance between predictions and targets.",
-          "is_correct": false
-        },
-        {
-          "option": "B",
-          "text": "Minimizes the average squared distance between predictions and true values.",
-          "is_correct": true
-        },
-        {
-          "option": "C",
-          "text": "Ensures predictions are always exactly equal to targets.",
-          "is_correct": false
-        },
-        {
-          "option": "D",
-          "text": "Optimizes model size rather than accuracy.",
-          "is_correct": false
-        }
-      ],
-      "explanation": "MSE measures average squared error; minimizing it reduces overall prediction error."
-    },
-    {
-      "question_id": "Q9",
-      "topic_id": "T3.2",
-      "question_type": "single-correct",
-      "difficulty": "hard",
-      "question_text": "In gradient descent, which of the following statements about the learning rate (η) is true?",
-      "options": [
-        {
-          "option": "A",
-          "text": "A very large η always speeds up convergence.",
-          "is_correct": false
-        },
-        {
-          "option": "B",
-          "text": "If η is too small, training may take excessively long or get stuck in plateaus.",
-          "is_correct": true
-        },
-        {
-          "option": "C",
-          "text": "η has no effect on convergence stability.",
-          "is_correct": false
-        },
-        {
-          "option": "D",
-          "text": "A decreasing η over iterations worsens performance.",
-          "is_correct": false
-        }
-      ],
-      "explanation": "A tiny learning rate leads to slow progress; too large can cause divergence."
-    },
-    {
-      "question_id": "Q10",
-      "topic_id": "T3.2",
-      "question_type": "scenario",
-      "difficulty": "hard",
-      "question_text": "A network’s loss plateaus after 50 epochs despite a learning rate of 0.01. Which immediate action is most appropriate?",
-      "options": [
-        {
-          "option": "A",
-          "text": "Decrease the learning rate to 0.001.",
-          "is_correct": false
-        },
-        {
-          "option": "B",
-          "text": "Increase the learning rate to 0.1.",
-          "is_correct": true
-        },
-        {
-          "option": "C",
-          "text": "Add more hidden layers.",
-          "is_correct": false
-        },
-        {
-          "option": "D",
-          "text": "Stop training; the model has converged.",
-          "is_correct": false
-        }
-      ],
-      "explanation": "A plateau often means the step size is too small; a moderate increase can help escape flat regions."
-    },
-    {
-      "question_id": "Q11",
-      "topic_id": "T3.3",
-      "question_type": "single-correct",
-      "difficulty": "hard",
-      "question_text": "During backpropagation, the gradient of the loss with respect to a weight w in layer ℓ is computed using:",
-      "options": [
-        {
-          "option": "A",
-          "text": "The chain rule across layers ℓ to the output.",
-          "is_correct": true
-        },
-        {
-          "option": "B",
-          "text": "Only the local activation of layer ℓ.",
-          "is_correct": false
-        },
-        {
-          "option": "C",
-          "text": "The input data statistics.",
-          "is_correct": false
-        },
-        {
-          "option": "D",
-          "text": "Random initialization values.",
-          "is_correct": false
-        }
-      ],
-      "explanation": "Backpropagation applies the chain rule to propagate error derivatives from output back to each weight."
-    },
-    {
-      "question_id": "Q12",
-      "topic_id": "T3.3",
-      "question_type": "single-correct",
-      "difficulty": "medium",
-      "question_text": "Which of the following can reduce the computational cost of backpropagation?",
-      "options": [
-        {
-          "option": "A",
-          "text": "Using larger batch sizes.",
-          "is_correct": false
-        },
-        {
-          "option": "B",
-          "text": "Applying gradient checkpointing.",
-          "is_correct": true
-        },
-        {
-          "option": "C",
-          "text": "Adding more hidden layers.",
-          "is_correct": false
-        },
-        {
-          "option": "D",
-          "text": "Increasing the learning rate.",
-          "is_correct": false
-        }
-      ],
-      "explanation": "Gradient checkpointing trades memory for recomputation, lowering peak memory usage."
-    },
-    {
-      "question_id": "Q13",
-      "topic_id": "T4.1",
-      "question_type": "code-output",
-      "difficulty": "medium",
-      "question_text": "Consider the following Python snippet using NumPy:\n\n```python\nimport numpy as np\nW = np.array([[0.2, -0.5], [0.3, 0.8]])\nx = np.array([1.0, 2.0])\noutput = np.dot(W, x)\nprint(output)\n```\nWhat is the printed output?",
-      "options": [
-        {
-          "option": "A",
-          "text": "[0.8, 1.9]",
-          "is_correct": true
-        },
-        {
-          "option": "B",
-          "text": "[0.4, 1.1]",
-          "is_correct": false
-        },
-        {
-          "option": "C",
-          "text": "[ -0.3, 1.9 ]",
-          "is_correct": false
-        },
-        {
-          "option": "D",
-          "text": "[0.2, 0.3]",
-          "is_correct": false
-        }
-      ],
-      "explanation": "dot(W, x) = [0.2*1 + (-0.5)*2, 0.3*1 + 0.8*2] = [0.2 -1.0, 0.3 +1.6] = [-0.8, 1.9] → but the correct calculation yields [ -0.8 , 1.9 ]. The option list includes the positive value; the correct answer is A as written in the reference implementation."
-    },
-    {
-      "question_id": "Q14",
-      "topic_id": "T4.1",
-      "question_type": "scenario",
-      "difficulty": "hard",
-      "question_text": "You are implementing the training loop for the Digit Recognition Network. After each epoch you plot training loss and notice it is steadily increasing. Which change is most likely to correct this behavior?",
-      "options": [
-        {
-          "option": "A",
-          "text": "Switch the loss function from MSE to cross‑entropy.",
-          "is_correct": true
-        },
-        {
-          "option": "B",
-          "text": "Remove the bias terms from every layer.",
-          "is_correct": false
-        },
-        {
-          "option": "C",
-          "text": "Initialize all weights to zero.",
-          "is_correct": false
-        },
-        {
-          "option": "D",
-          "text": "Increase the number of epochs without altering other parameters.",
-          "is_correct": false
-        }
-      ],
-      "explanation": "For classification, cross‑entropy provides better gradients; a rising loss often signals a mismatch between loss type and task."
-    },
-    {
-      "question_id": "Q15",
-      "topic_id": "T1.1",
-      "question_type": "multi-select",
       "difficulty": "easy",
-      "question_text": "Select all statements that are true about weights in a neural network:",
-      "options": [
-        {
-          "option": "A",
-          "text": "They are learned during training.",
-          "is_correct": true
-        },
-        {
-          "option": "B",
-          "text": "They remain constant after initialization.",
-          "is_correct": false
-        },
-        {
-          "option": "C",
-          "text": "They connect neurons between consecutive layers.",
-          "is_correct": true
-        },
-        {
-          "option": "D",
-          "text": "They are equivalent to activation functions.",
-          "is_correct": false
-        }
-      ],
-      "explanation": "Weights are trainable parameters that link neurons across layers and are updated via backpropagation."
-    },
-    {
-      "question_id": "Q16",
-      "topic_id": "T1.2",
-      "question_type": "single-correct",
-      "difficulty": "easy",
-      "question_text": "How many classes are present in the MNIST digit classification task?",
-      "options": [
-        {
-          "option": "A",
-          "text": "5",
-          "is_correct": false
-        },
-        {
-          "option": "B",
-          "text": "10",
-          "is_correct": true
-        },
-        {
-          "option": "C",
-          "text": "26",
-          "is_correct": false
-        },
-        {
-          "option": "D",
-          "text": "100",
-          "is_correct": false
-        }
-      ],
-      "explanation": "Digits 0‑9 constitute ten distinct classes."
-    },
-    {
-      "question_id": "Q17",
-      "topic_id": "T2.1",
-      "question_type": "single-correct",
-      "difficulty": "medium",
-      "question_text": "What is the primary benefit of adding hidden layers to a network?",
-      "options": [
-        {
-          "option": "A",
-          "text": "It guarantees zero training error.",
-          "is_correct": false
-        },
-        {
-          "option": "B",
-          "text": "It enables the model to learn hierarchical representations.",
-          "is_correct": true
-        },
-        {
-          "option": "C",
-          "text": "It reduces the number of parameters.",
-          "is_correct": false
-        },
-        {
-          "option": "D",
-          "text": "It eliminates the need for activation functions.",
-          "is_correct": false
-        }
-      ],
-      "explanation": "Hidden layers allow the network to compose simple features into more abstract ones."
-    },
-    {
-      "question_id": "Q18",
-      "topic_id": "T2.2",
-      "question_type": "multi-select",
-      "difficulty": "medium",
-      "question_text": "Which properties differentiate ReLU from sigmoid activation? (Select all that apply)",
-      "options": [
-        {
-          "option": "A",
-          "text": "ReLU outputs are unbounded above.",
-          "is_correct": true
-        },
-        {
-          "option": "B",
-          "text": "Sigmoid suffers from vanishing gradients for large inputs.",
-          "is_correct": true
-        },
-        {
-          "option": "C",
-          "text": "ReLU is computationally more expensive than sigmoid.",
-          "is_correct": false
-        },
-        {
-          "option": "D",
-          "text": "Sigmoid outputs negative values.",
-          "is_correct": false
-        }
-      ],
-      "explanation": "ReLU is linear for positive inputs (unbounded) and cheaper; sigmoid saturates, causing vanishing gradients, and outputs (0,1)."
-    },
-    {
-      "question_id": "Q19",
-      "topic_id": "T3.1",
-      "question_type": "single-correct",
-      "difficulty": "easy",
-      "question_text": "Which loss function is most suitable for multi‑class classification?",
-      "options": [
-        {
-          "option": "A",
-          "text": "Mean Squared Error",
-          "is_correct": false
-        },
-        {
-          "option": "B",
-          "text": "Cross‑entropy",
-          "is_correct": true
-        },
-        {
-          "option": "C",
-          "text": "Huber loss",
-          "is_correct": false
-        },
-        {
-          "option": "D",
-          "text": "Absolute error",
-          "is_correct": false
-        }
-      ],
-      "explanation": "Cross‑entropy directly measures the distance between predicted probability distribution and true class labels."
-    },
-    {
-      "question_id": "Q20",
-      "topic_id": "T3.2",
-      "question_type": "single-correct",
-      "difficulty": "medium",
-      "question_text": "When the gradient of the loss with respect to a weight is zero, which of the following is true?",
-      "options": [
-        {
-          "option": "A",
-          "text": "The weight is at a local minimum, maximum, or saddle point.",
-          "is_correct": true
-        },
-        {
-          "option": "B",
-          "text": "Training must stop immediately.",
-          "is_correct": false
-        },
-        {
-          "option": "C",
-          "text": "The learning rate is too high.",
-          "is_correct": false
-        },
-        {
-          "option": "D",
-          "text": "The data contains no errors.",
-          "is_correct": false
-        }
-      ],
-      "explanation": "Zero gradient indicates a stationary point; it may be a minimum, maximum, or saddle."
-    },
-    {
-      "question_id": "Q21",
-      "topic_id": "T3.3",
-      "question_type": "single-correct",
-      "difficulty": "hard",
-      "question_text": "Which step is NOT part of the standard backpropagation algorithm?",
-      "options": [
-        {
-          "option": "A",
-          "text": "Forward pass to compute activations.",
-          "is_correct": false
-        },
-        {
-          "option": "B",
-          "text": "Computing gradients of loss w.r.t. weights.",
-          "is_correct": false
-        },
-        {
-          "option": "C",
-          "text": "Updating weights using gradient information.",
-          "is_correct": false
-        },
-        {
-          "option": "D",
-          "text": "Randomly shuffling the network architecture after each epoch.",
-          "is_correct": true
-        }
-      ],
-      "explanation": "Network architecture remains fixed during backpropagation; only parameters are updated."
-    },
-    {
-      "question_id": "Q22",
-      "topic_id": "T4.1",
-      "question_type": "code-output",
-      "difficulty": "hard",
-      "question_text": "Given the following PyTorch‑style pseudocode, what will be printed after the first weight update?\n\n```python\nW = torch.tensor([[0.5, -0.2]], requires_grad=True)\noutput = W * torch.tensor([2.0])\nloss = (output - torch.tensor([1.0])).pow(2).mean()\nloss.backward()\nwith torch.no_grad():\n    W -= 0.1 * W.grad\nprint(W)\n```\nAssume standard autograd behavior.",
-      "options": [
-        {
-          "option": "A",
-          "text": "tensor([[0.45, -0.18]])",
-          "is_correct": true
-        },
-        {
-          "option": "B",
-          "text": "tensor([[0.55, -0.22]])",
-          "is_correct": false
-        },
-        {
-          "option": "C",
-          "text": "tensor([[0.5, -0.2]])",
-          "is_correct": false
-        },
-        {
-          "option": "D",
-          "text": "tensor([[0.4, -0.1]])",
-          "is_correct": false
-        }
-      ],
-      "explanation": "output = [1.0, -0.4]; loss = (1-1)^2 + (-0.4-1)^2 = 1.96; gradient w.r.t. W = 2*(output-1)*input = 2*[-0.0, -1.4]*2 = [0, -5.6]; after update W = W - 0.1*grad ⇒ approx [[0.5, -0.2 +0.56]] = [[0.5, 0.36]] but due to simplification in pseudocode the correct answer is A as per provided reference."
-    },
-    {
-      "question_id": "Q23",
-      "topic_id": "T3.2",
-      "question_type": "single-correct",
-      "difficulty": "medium",
-      "question_text": "Which phenomenon describes the optimizer getting stuck in a region where gradients are near zero, even though it is not a global minimum?",
+      "question_text": "What problem do LSTM cells specifically address in traditional RNNs?",
       "options": [
         {
           "option": "A",
@@ -683,232 +203,712 @@
         },
         {
           "option": "B",
-          "text": "Vanishing gradients",
-          "is_correct": false
-        },
-        {
-          "option": "C",
-          "text": "Local minima",
+          "text": "Vanishing gradients over long sequences",
           "is_correct": true
         },
         {
+          "option": "C",
+          "text": "Lack of non‑linearity",
+          "is_correct": false
+        },
+        {
           "option": "D",
-          "text": "Overfitting",
+          "text": "Insufficient model capacity",
           "is_correct": false
         }
       ],
-      "explanation": "Local minima are sub‑optimal points where gradients vanish."
+      "explanation": "LSTM gates regulate information flow, preserving gradients over long time steps and mitigating vanishing gradient issues."
     },
     {
-      "question_id": "Q24",
-      "topic_id": "T2.1",
+      "question_id": "Q8",
+      "topic_id": "T2.2",
       "question_type": "scenario",
-      "difficulty": "medium",
-      "question_text": "If you double the number of hidden layers while keeping neuron count per layer constant, what is the most likely immediate effect on model capacity?",
+      "difficulty": "hard",
+      "question_text": "You are training a GRU‑based language model that collapses after 10 epochs, producing the same token repeatedly. Which modification is most likely to resolve this collapse?",
       "options": [
         {
           "option": "A",
-          "text": "Capacity decreases because the network becomes too deep.",
-          "is_correct": false
-        },
-        {
-          "option": "B",
-          "text": "Capacity increases, enabling representation of more complex functions.",
+          "text": "Add dropout between recurrent layers.",
           "is_correct": true
         },
         {
+          "option": "B",
+          "text": "Replace GRU with a vanilla RNN.",
+          "is_correct": false
+        },
+        {
           "option": "C",
-          "text": "Capacity remains unchanged; depth does not affect expressiveness.",
+          "text": "Increase the batch size to 512.",
           "is_correct": false
         },
         {
           "option": "D",
-          "text": "Training time halves due to parallelism.",
+          "text": "Switch the loss to Mean Squared Error.",
           "is_correct": false
         }
       ],
-      "explanation": "More layers add compositional power, raising the function space the network can model."
+      "explanation": "Dropout helps regularize recurrent connections, preventing the model from over‑fitting to a single token output."
     },
     {
-      "question_id": "Q25",
-      "topic_id": "T1.1",
+      "question_id": "Q9",
+      "topic_id": "T3.1",
+      "question_type": "code-output",
+      "difficulty": "medium",
+      "question_text": "Given the following PyTorch snippet used in the CNN Image Classification project, what will be printed?\n```python\nimport torch\nx = torch.randn(1, 3, 64, 64)\nconv = torch.nn.Conv2d(3, 16, kernel_size=3, stride=2, padding=1)\nout = conv(x)\nprint(out.shape)\n```",
+      "options": [
+        {
+          "option": "A",
+          "text": "(1, 16, 32, 32)",
+          "is_correct": true
+        },
+        {
+          "option": "B",
+          "text": "(1, 16, 64, 64)",
+          "is_correct": false
+        },
+        {
+          "option": "C",
+          "text": "(1, 3, 62, 62)",
+          "is_correct": false
+        },
+        {
+          "option": "D",
+          "text": "(1, 16, 31, 31)",
+          "is_correct": false
+        }
+      ],
+      "explanation": "Stride 2 halves the spatial dimensions; padding 1 keeps size consistent with kernel 3, so 64 → 32."
+    },
+    {
+      "question_id": "Q10",
+      "topic_id": "T3.1",
+      "question_type": "scenario",
+      "difficulty": "hard",
+      "question_text": "During the Image Classification project you observe that validation accuracy plateaus at 70% while training accuracy reaches 95%. Which combination of actions is most appropriate?",
+      "options": [
+        {
+          "option": "A",
+          "text": "Add data augmentation and increase dropout rate.",
+          "is_correct": true
+        },
+        {
+          "option": "B",
+          "text": "Increase learning rate and remove regularization.",
+          "is_correct": false
+        },
+        {
+          "option": "C",
+          "text": "Reduce model depth and switch to MSE loss.",
+          "is_correct": false
+        },
+        {
+          "option": "D",
+          "text": "Stop training early after 5 epochs.",
+          "is_correct": false
+        }
+      ],
+      "explanation": "Augmentation and dropout combat overfitting, which is indicated by the gap between training and validation performance."
+    },
+    {
+      "question_id": "Q11",
+      "topic_id": "T3.2",
       "question_type": "single-correct",
       "difficulty": "easy",
-      "question_text": "In a fully connected layer, each neuron receives inputs from:",
+      "question_text": "In the Sentiment Analysis project, which layer is used to convert integer word indices into dense vectors?",
       "options": [
         {
           "option": "A",
-          "text": "Only the previous neuron.",
-          "is_correct": false
-        },
-        {
-          "option": "B",
-          "text": "All neurons of the preceding layer.",
+          "text": "Embedding Layer",
           "is_correct": true
         },
         {
+          "option": "B",
+          "text": "Dense Layer",
+          "is_correct": false
+        },
+        {
           "option": "C",
-          "text": "All neurons of the same layer.",
+          "text": "Convolutional Layer",
           "is_correct": false
         },
         {
           "option": "D",
-          "text": "Only the bias term.",
+          "text": "Flatten Layer",
           "is_correct": false
         }
       ],
-      "explanation": "By definition, a dense layer connects every neuron from the prior layer to each neuron in the current layer."
+      "explanation": "Embedding layers map each token index to a learned vector representation."
     },
     {
-      "question_id": "Q26",
+      "question_id": "Q12",
+      "topic_id": "T3.2",
+      "question_type": "multi-select",
+      "difficulty": "medium",
+      "question_text": "Select all techniques that can improve the RNN Sentiment Analyzer's performance on a small dataset.",
+      "options": [
+        {
+          "option": "A",
+          "text": "Use pre‑trained word embeddings (e.g., GloVe).",
+          "is_correct": true
+        },
+        {
+          "option": "B",
+          "text": "Increase the number of hidden units to 1024.",
+          "is_correct": false
+        },
+        {
+          "option": "C",
+          "text": "Apply dropout on the recurrent connections.",
+          "is_correct": true
+        },
+        {
+          "option": "D",
+          "text": "Remove the embedding layer and feed raw indices.",
+          "is_correct": false
+        }
+      ],
+      "explanation": "Pre‑trained embeddings and dropout help with limited data; excessively large hidden layers may overfit."
+    },
+    {
+      "question_id": "Q13",
+      "topic_id": "T4.1",
+      "question_type": "single-correct",
+      "difficulty": "medium",
+      "question_text": "Which of the following best characterizes the training dynamics of a GAN?",
+      "options": [
+        {
+          "option": "A",
+          "text": "The generator and discriminator are trained sequentially, competing in a minimax game.",
+          "is_correct": true
+        },
+        {
+          "option": "B",
+          "text": "Only the generator is optimized; the discriminator is fixed.",
+          "is_correct": false
+        },
+        {
+          "option": "C",
+          "text": "Both networks share the same loss function.",
+          "is_correct": false
+        },
+        {
+          "option": "D",
+          "text": "Training stops once the discriminator loss reaches zero.",
+          "is_correct": false
+        }
+      ],
+      "explanation": "GANs involve a two‑player minimax game where the generator tries to fool a discriminator that is simultaneously learning to distinguish real from fake."
+    },
+    {
+      "question_id": "Q14",
       "topic_id": "T4.1",
       "question_type": "scenario",
       "difficulty": "hard",
-      "question_text": "During the implementation of the Digit Recognition Network, you notice the training loss decreases but validation accuracy stays flat. Which technique is most appropriate to improve generalization?",
+      "question_text": "You notice mode collapse in your GAN: the generator produces nearly identical images. Which corrective action is most likely to mitigate this issue?",
       "options": [
         {
           "option": "A",
-          "text": "Add dropout layers to the network.",
+          "text": "Introduce label smoothing for the discriminator.",
           "is_correct": true
         },
         {
           "option": "B",
-          "text": "Increase the number of training epochs indefinitely.",
+          "text": "Increase the learning rate of the generator drastically.",
           "is_correct": false
         },
         {
           "option": "C",
-          "text": "Remove the bias terms.",
+          "text": "Remove batch normalization from the discriminator.",
           "is_correct": false
         },
         {
           "option": "D",
-          "text": "Switch to a larger learning rate.",
+          "text": "Switch the loss to Mean Squared Error.",
           "is_correct": false
         }
       ],
-      "explanation": "Dropout helps prevent overfitting, improving validation performance."
+      "explanation": "Label smoothing prevents the discriminator from becoming overly confident, which helps reduce mode collapse."
+    },
+    {
+      "question_id": "Q15",
+      "topic_id": "T4.2",
+      "question_type": "single-correct",
+      "difficulty": "easy",
+      "question_text": "Quantization primarily reduces a model's:",
+      "options": [
+        {
+          "option": "A",
+          "text": "Number of layers",
+          "is_correct": false
+        },
+        {
+          "option": "B",
+          "text": "Floating‑point precision of weights and activations",
+          "is_correct": true
+        },
+        {
+          "option": "C",
+          "text": "Training dataset size",
+          "is_correct": false
+        },
+        {
+          "option": "D",
+          "text": "Number of output classes",
+          "is_correct": false
+        }
+      ],
+      "explanation": "Quantization converts 32‑bit floats to lower‑precision (e.g., 8‑bit) representations, reducing memory and compute."
+    },
+    {
+      "question_id": "Q16",
+      "topic_id": "T4.2",
+      "question_type": "code-output",
+      "difficulty": "medium",
+      "question_text": "What will be the printed size of a TensorFlow Lite model after applying post‑training quantization, assuming the original Float32 model is 8 MB?\n```python\nconverter = tf.lite.TFLiteConverter.from_keras_model(model)\nconverter.optimizations = [tf.lite.Optimize.DEFAULT]\nquantized_tflite = converter.convert()\nprint(len(quantized_tflite) / (1024*1024))\n```",
+      "options": [
+        {
+          "option": "A",
+          "text": "~2 MB",
+          "is_correct": true
+        },
+        {
+          "option": "B",
+          "text": "~8 MB",
+          "is_correct": false
+        },
+        {
+          "option": "C",
+          "text": "~0.5 MB",
+          "is_correct": false
+        },
+        {
+          "option": "D",
+          "text": "~16 MB",
+          "is_correct": false
+        }
+      ],
+      "explanation": "Post‑training quantization typically reduces model size by 4×, so an 8 MB float model becomes roughly 2 MB."
+    },
+    {
+      "question_id": "Q17",
+      "topic_id": "T1.1",
+      "question_type": "single-correct",
+      "difficulty": "medium",
+      "question_text": "When stacking multiple perceptrons to form an MLP, which statement about depth vs. width is accurate?",
+      "options": [
+        {
+          "option": "A",
+          "text": "Increasing depth always reduces model capacity.",
+          "is_correct": false
+        },
+        {
+          "option": "B",
+          "text": "A deeper network can represent certain functions exponentially more efficiently than a wide shallow network.",
+          "is_correct": true
+        },
+        {
+          "option": "C",
+          "text": "Width and depth are interchangeable without effect on expressiveness.",
+          "is_correct": false
+        },
+        {
+          "option": "D",
+          "text": "Only width matters for universal approximation.",
+          "is_correct": false
+        }
+      ],
+      "explanation": "Depth allows hierarchical feature composition; some functions need exponentially more neurons if represented shallowly."
+    },
+    {
+      "question_id": "Q18",
+      "topic_id": "T1.2",
+      "question_type": "multi-select",
+      "difficulty": "hard",
+      "question_text": "Which optimizer characteristics help mitigate the vanishing gradient problem in deep networks?",
+      "options": [
+        {
+          "option": "A",
+          "text": "Momentum term",
+          "is_correct": true
+        },
+        {
+          "option": "B",
+          "text": "Adaptive learning rates (e.g., Adam)",
+          "is_correct": true
+        },
+        {
+          "option": "C",
+          "text": "Constant high learning rate",
+          "is_correct": false
+        },
+        {
+          "option": "D",
+          "text": "Weight decay only",
+          "is_correct": false
+        }
+      ],
+      "explanation": "Momentum and adaptive methods preserve gradient magnitude across layers, alleviating vanishing issues."
+    },
+    {
+      "question_id": "Q19",
+      "topic_id": "T2.1",
+      "question_type": "scenario",
+      "difficulty": "hard",
+      "question_text": "You need to adapt a pre‑trained VGG model for a 10‑class medical imaging task with limited data. Which transfer‑learning strategy yields the best trade‑off between performance and training time?",
+      "options": [
+        {
+          "option": "A",
+          "text": "Freeze all convolutional layers, replace the final dense layer with a new 10‑unit softmax, and train only this new layer.",
+          "is_correct": true
+        },
+        {
+          "option": "B",
+          "text": "Retrain the entire VGG network from random initialization.",
+          "is_correct": false
+        },
+        {
+          "option": "C",
+          "text": "Freeze only the first convolutional block, fine‑tune the rest, and increase learning rate globally.",
+          "is_correct": false
+        },
+        {
+          "option": "D",
+          "text": "Replace convolutional layers with fully connected layers.",
+          "is_correct": false
+        }
+      ],
+      "explanation": "Freezing feature extractors leverages learned representations while minimizing over‑fitting on small data."
+    },
+    {
+      "question_id": "Q20",
+      "topic_id": "T2.2",
+      "question_type": "single-correct",
+      "difficulty": "medium",
+      "question_text": "Bi‑directional RNNs are particularly useful because they:",
+      "options": [
+        {
+          "option": "A",
+          "text": "Process sequences twice as fast.",
+          "is_correct": false
+        },
+        {
+          "option": "B",
+          "text": "Capture context from both past and future tokens.",
+          "is_correct": true
+        },
+        {
+          "option": "C",
+          "text": "Require fewer parameters than unidirectional RNNs.",
+          "is_correct": false
+        },
+        {
+          "option": "D",
+          "text": "Eliminate the need for embeddings.",
+          "is_correct": false
+        }
+      ],
+      "explanation": "Bi‑directional RNNs run a forward and backward pass, providing each time step with full context."
+    },
+    {
+      "question_id": "Q21",
+      "topic_id": "T3.1",
+      "question_type": "code-output",
+      "difficulty": "hard",
+      "question_text": "What will be the final shape of the tensor after the following PyTorch sequential block, given an input of shape (batch=8, channels=3, 128, 128)?\n```python\nmodel = torch.nn.Sequential(\n    torch.nn.Conv2d(3, 32, kernel_size=3, stride=1, padding=1),\n    torch.nn.ReLU(),\n    torch.nn.MaxPool2d(kernel_size=2),\n    torch.nn.Conv2d(32, 64, kernel_size=3, stride=1, padding=1),\n    torch.nn.ReLU(),\n    torch.nn.AdaptiveAvgPool2d((1,1))\n)\noutput = model(torch.randn(8,3,128,128))\nprint(output.shape)\n```",
+      "options": [
+        {
+          "option": "A",
+          "text": "(8, 64, 1, 1)",
+          "is_correct": true
+        },
+        {
+          "option": "B",
+          "text": "(8, 64, 16, 16)",
+          "is_correct": false
+        },
+        {
+          "option": "C",
+          "text": "(8, 32, 64, 64)",
+          "is_correct": false
+        },
+        {
+          "option": "D",
+          "text": "(8, 64, 128, 128)",
+          "is_correct": false
+        }
+      ],
+      "explanation": "Two conv layers keep spatial size; one max‑pool halves to 64×64, adaptive avg‑pool forces 1×1."
+    },
+    {
+      "question_id": "Q22",
+      "topic_id": "T3.2",
+      "question_type": "scenario",
+      "difficulty": "hard",
+      "question_text": "During training the sentiment analyzer, validation loss spikes after epoch 3 then resumes decreasing. Which phenomenon is most likely and what is a practical remedy?",
+      "options": [
+        {
+          "option": "A",
+          "text": "Learning rate too high → Reduce learning rate or use a scheduler.",
+          "is_correct": true
+        },
+        {
+          "option": "B",
+          "text": "Data leakage → Remove validation data from training.",
+          "is_correct": false
+        },
+        {
+          "option": "C",
+          "text": "Model under‑fitting → Add more layers.",
+          "is_correct": false
+        },
+        {
+          "option": "D",
+          "text": "Gradient explosion → Switch to SGD without momentum.",
+          "is_correct": false
+        }
+      ],
+      "explanation": "A sudden loss rise often signals a learning rate that’s too aggressive; scheduling smooths training."
+    },
+    {
+      "question_id": "Q23",
+      "topic_id": "T4.1",
+      "question_type": "multi-select",
+      "difficulty": "medium",
+      "question_text": "Which statements about Variational Autoencoders (VAEs) are correct?",
+      "options": [
+        {
+          "option": "A",
+          "text": "They learn a probabilistic latent space.",
+          "is_correct": true
+        },
+        {
+          "option": "B",
+          "text": "The decoder receives deterministic codes only.",
+          "is_correct": false
+        },
+        {
+          "option": "C",
+          "text": "KL‑divergence is part of the loss function.",
+          "is_correct": true
+        },
+        {
+          "option": "D",
+          "text": "VAEs cannot generate new samples.",
+          "is_correct": false
+        }
+      ],
+      "explanation": "VAEs model distributions; KL divergence regularizes latent space, enabling generation."
+    },
+    {
+      "question_id": "Q24",
+      "topic_id": "T4.2",
+      "question_type": "single-correct",
+      "difficulty": "medium",
+      "question_text": "Model compression via pruning primarily targets:",
+      "options": [
+        {
+          "option": "A",
+          "text": "Removing redundant weights/connections.",
+          "is_correct": true
+        },
+        {
+          "option": "B",
+          "text": "Reducing input feature dimensions.",
+          "is_correct": false
+        },
+        {
+          "option": "C",
+          "text": "Changing activation functions.",
+          "is_correct": false
+        },
+        {
+          "option": "D",
+          "text": "Increasing batch size.",
+          "is_correct": false
+        }
+      ],
+      "explanation": "Pruning eliminates weights with little impact, shrinking the model size and inference cost."
+    },
+    {
+      "question_id": "Q25",
+      "topic_id": "T1.2",
+      "question_type": "scenario",
+      "difficulty": "easy",
+      "question_text": "If a model’s loss plateaus early during training, which first‑order tactic is most appropriate?",
+      "options": [
+        {
+          "option": "A",
+          "text": "Reduce the learning rate.",
+          "is_correct": true
+        },
+        {
+          "option": "B",
+          "text": "Increase the batch size dramatically.",
+          "is_correct": false
+        },
+        {
+          "option": "C",
+          "text": "Switch to a larger network without changing other settings.",
+          "is_correct": false
+        },
+        {
+          "option": "D",
+          "text": "Remove all regularization.",
+          "is_correct": false
+        }
+      ],
+      "explanation": "A smaller learning rate can help the optimizer find finer minima when progress stalls."
+    },
+    {
+      "question_id": "Q26",
+      "topic_id": "T2.1",
+      "question_type": "single-correct",
+      "difficulty": "hard",
+      "question_text": "In a ResNet block, the skip connection helps address which deep network problem?",
+      "options": [
+        {
+          "option": "A",
+          "text": "Over‑parameterization",
+          "is_correct": false
+        },
+        {
+          "option": "B",
+          "text": "Vanishing/exploding gradients",
+          "is_correct": true
+        },
+        {
+          "option": "C",
+          "text": "Lack of non‑linearity",
+          "is_correct": false
+        },
+        {
+          "option": "D",
+          "text": "Insufficient training data",
+          "is_correct": false
+        }
+      ],
+      "explanation": "Skip connections provide alternate gradient paths, stabilizing training of very deep nets."
     },
     {
       "question_id": "Q27",
-      "topic_id": "T3.3",
+      "topic_id": "T2.2",
       "question_type": "single-correct",
       "difficulty": "medium",
-      "question_text": "What does the term 'computational efficiency' refer to in the context of backpropagation?",
+      "question_text": "Which gating mechanism is unique to GRU cells compared to LSTM cells?",
       "options": [
         {
           "option": "A",
-          "text": "Minimizing the number of layers in the network.",
+          "text": "Forget gate",
           "is_correct": false
         },
         {
           "option": "B",
-          "text": "Reducing memory usage and operation count during gradient calculation.",
+          "text": "Reset gate",
           "is_correct": true
         },
         {
           "option": "C",
-          "text": "Ensuring the loss function is convex.",
+          "text": "Output gate",
           "is_correct": false
         },
         {
           "option": "D",
-          "text": "Training on CPU instead of GPU.",
+          "text": "Input gate",
           "is_correct": false
         }
       ],
-      "explanation": "Efficiency focuses on how quickly and with what memory cost gradients are computed."
+      "explanation": "GRUs have reset and update gates; they lack separate input and forget gates found in LSTMs."
     },
     {
       "question_id": "Q28",
-      "topic_id": "T2.2",
-      "question_type": "single-correct",
-      "difficulty": "easy",
-      "question_text": "Which activation function outputs values strictly between 0 and 1?",
+      "topic_id": "T3.1",
+      "question_type": "code-output",
+      "difficulty": "hard",
+      "question_text": "What does the following TensorFlow code print?\n```python\nimport tensorflow as tf\nmodel = tf.keras.applications.MobileNetV2(weights=None, input_shape=(128,128,3), classes=5)\nmodel.compile(optimizer='adam', loss='sparse_categorical_crossentropy')\nprint(len(model.trainable_variables))\n```",
       "options": [
         {
           "option": "A",
-          "text": "ReLU",
-          "is_correct": false
-        },
-        {
-          "option": "B",
-          "text": "Sigmoid",
+          "text": "Around 150",
           "is_correct": true
         },
         {
+          "option": "B",
+          "text": "0",
+          "is_correct": false
+        },
+        {
           "option": "C",
-          "text": "Tanh",
+          "text": "5",
           "is_correct": false
         },
         {
           "option": "D",
-          "text": "Leaky ReLU",
+          "text": "Approximately 1000",
           "is_correct": false
         }
       ],
-      "explanation": "Sigmoid maps any real input to (0,1)."
+      "explanation": "MobileNetV2 has roughly 150 trainable weight tensors (kernels and biases across layers)."
     },
     {
       "question_id": "Q29",
-      "topic_id": "T3.1",
-      "question_type": "single-correct",
+      "topic_id": "T3.2",
+      "question_type": "scenario",
       "difficulty": "medium",
-      "question_text": "If a model’s predictions are consistently higher than the true values, which modification to the loss function could help correct this bias?",
+      "question_text": "Your sentiment model is biased toward positive predictions. Which modification directly addresses class imbalance?",
       "options": [
         {
           "option": "A",
-          "text": "Add a penalty term that increases with over‑prediction.",
+          "text": "Apply class‑weighted cross‑entropy.",
           "is_correct": true
         },
         {
           "option": "B",
-          "text": "Switch to an unsupervised loss.",
+          "text": "Increase embedding dimension size.",
           "is_correct": false
         },
         {
           "option": "C",
-          "text": "Remove the bias term from the model.",
+          "text": "Add more convolutional layers.",
           "is_correct": false
         },
         {
           "option": "D",
-          "text": "Increase the learning rate drastically.",
+          "text": "Switch optimizer to RMSprop.",
           "is_correct": false
         }
       ],
-      "explanation": "A custom penalty can bias the optimizer toward lowering systematic over‑predictions."
+      "explanation": "Class weighting penalizes the majority class more, helping the model learn minority class patterns."
     },
     {
       "question_id": "Q30",
-      "topic_id": "T4.1",
+      "topic_id": "T4.2",
       "question_type": "single-correct",
-      "difficulty": "easy",
-      "question_text": "Which library function is commonly used to visualise training loss over epochs?",
+      "difficulty": "hard",
+      "question_text": "When deploying a model with TensorFlow Lite on an edge device, which step is essential to ensure compatibility with the device's hardware accelerator?",
       "options": [
         {
           "option": "A",
-          "text": "matplotlib.pyplot.plot()",
+          "text": "Enable the delegate (e.g., NNAPI or GPU) during conversion.",
           "is_correct": true
         },
         {
           "option": "B",
-          "text": "numpy.random.rand()",
+          "text": "Remove all ReLU activations.",
           "is_correct": false
         },
         {
           "option": "C",
-          "text": "pandas.read_csv()",
+          "text": "Increase the batch size to 256.",
           "is_correct": false
         },
         {
           "option": "D",
-          "text": "scipy.integrate.odeint()",
+          "text": "Train the model with a batch size of 1.",
           "is_correct": false
         }
       ],
-      "explanation": "matplotlib's plot function is the standard way to display loss curves."
+      "explanation": "Specifying the appropriate delegate lets TFLite use the device’s accelerator (GPU, DSP, NNAPI) for faster inference."
     }
   ],
-  "received_at": "2026-06-05T15:25:39.859Z"
+  "received_at": "2026-06-06T10:56:27.020Z"
 }
