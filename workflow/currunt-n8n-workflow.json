@@ -1,0 +1,275 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "Provide Details",
+        "formDescription": "give the necessary details of video for quiz generations",
+        "formFields": {
+          "values": [
+            {
+              "fieldName": "Video Title",
+              "fieldLabel": "Enter Video Title",
+              "placeholder": "Video title or Topic",
+              "requiredField": true
+            },
+            {
+              "fieldName": "Video URL",
+              "fieldLabel": "Video url",
+              "placeholder": "Video url",
+              "requiredField": true
+            },
+            {
+              "fieldName": "Video Domain",
+              "fieldLabel": "Video Domain",
+              "placeholder": "Programming, Finance, etc",
+              "requiredField": true
+            },
+            {
+              "fieldName": "Target Certification Level",
+              "fieldLabel": "Target Certification Level",
+              "placeholder": "Beginner, Intermediate, Pro"
+            },
+            {
+              "fieldName": "Language",
+              "fieldLabel": "Language",
+              "placeholder": "English, Spanish, Japnees",
+              "defaultValue": "English"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.4,
+      "position": [
+        -512,
+        -144
+      ],
+      "id": "bb1837d0-4a4c-442b-a955-bbd3ca741891",
+      "name": "On form submission",
+      "webhookId": "3f2de1c0-592f-4f74-8668-a6e9d57f4cbc"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=ROLE\n\nYou are an AI Curriculum Analyst & Educational Content Auditor.\nYou specialize in reverse-engineering long-form educational videos into structured, exam-grade knowledge representations.\n\nOBJECTIVE\n\nGiven a long-duration educational video, extract a complete, structured, and verifiable course context that captures:\n\nModules\nTopics\nSubtopics\nPractical sections\nProjects\nSide explanations\nEmphasis & repetition signals\nTeaching depth and style\n\nThis output will be used to generate a certification-level assessment.\n\nINPUTS\n\nYou will receive the following inputs (provided programmatically):\n\n{{ $json['Video Title'] }}\n{{ $json['Video URL'] }}\n{{ $json['Video Domain'] }}\n{{ $json['Target Certification Level'] }}\n{{ $json.Language }}\n\nTOOLS YOU MUST USE\n\nSpeech-to-Text transcription tool\n\nTimestamp-aware chunking\n\nSemantic analysis using LLM reasoning\n\n❗ Never invent content. Every extracted concept must be traceable to the transcript.\n\nPROCESS (MANDATORY)\n\nFollow these steps strictly:\n\nStep 1 — Transcription\n\nTranscribe the full video\n\nPreserve timestamps\n\nClean fillers but retain meaning\n\nStep 2 — Semantic Chunking\n\nSplit transcript into logical teaching segments\n\nMaintain topic continuity\n\nLabel each chunk with time range\n\nStep 3 — Curriculum Reconstruction\n\nFor each chunk, extract:\n\nPrimary topic\n\nSubtopics\n\nWhether it is:\n\nConceptual\n\nPractical\n\nProject-based\n\nSide explanation\n\nStep 4 — Emphasis Scoring\n\nAssign an emphasis_score (0–1) based on:\n\nDuration spent\n\nRepetition\n\nExample count\n\nInstructor emphasis language\n\nStep 5 — Project & Practical Detection\n\nIdentify:\n\nCoding demos\n\nWalkthroughs\n\nAssignments\n\nMini-projects\n\nFinal projects\n\nOUTPUT (STRICT JSON ONLY)\n{\n  \"course_metadata\": {\n    \"video_title\": \"\",\n    \"video_url\": \"\",\n    \"domain\": \"\",\n    \"total_duration_minutes\": 0,\n    \"language\": \"\",\n    \"certification_level\": \"\"\n  },\n  \"assessment_metadata\": {\n    \"difficulty_rating\": \"beginner | intermediate | advanced\",\n    \"topics_count\": 0,\n    \"subtopics_count\": 0,\n    \"projects_count\": 0,\n    \"practical_sections_count\": 0,\n    \"estimated_learning_hours\": 0,\n    \"knowledge_scope_score\": 0,\n    \"assessment_weight\": \"light | standard | extensive\"\n  },\n  \"modules\": [\n    {\n      \"module_id\": \"M1\",\n      \"module_title\": \"\",\n      \"time_range\": \"00:00 - 45:30\",\n      \"topics\": [\n        {\n          \"topic_id\": \"T1.1\",\n          \"topic_name\": \"\",\n          \"subtopics\": [],\n          \"teaching_type\": \"conceptual | practical | project | side-topic\",\n          \"examples_count\": 0,\n          \"emphasis_score\": 0.0,\n          \"project_reference\": true,\n          \"difficulty_level\": \"easy | medium | hard\"\n        }\n      ]\n    }\n  ],\n  \"projects\": [\n    {\n      \"project_name\": \"\",\n      \"related_topics\": [],\n      \"complexity\": \"basic | intermediate | advanced\"\n    },\n  \"credential_value\": {\n  \"content_depth_score\": (0-100),\n  \"content_complexity_score\": (0-100),\n  \"overall_credibility_weight\": (0-100)\n    }\n  ]\n}\n\nFAILURE RULES\n\nIf audio is unclear → mark section as \"confidence\": \"low\"\n\nIf content is ambiguous → do NOT infer",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        -208,
+        -144
+      ],
+      "id": "82d83563-a873-4724-b5ac-eead230fc50d",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $json.submittedAt }}",
+        "contextWindowLength": "="
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        -192,
+        64
+      ],
+      "id": "01a0ddd9-c6d9-4570-a62d-bec194422459",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=You must respond with ONLY a valid JSON object. No markdown, no code fences, \nno preamble, no explanation. Start your response with { and end with }.\n\nROLE\n\nYou are an AI Examination Designer & Certification Authority.\n\nYou design industry-grade certification assessments that verify actual learning, not superficial exposure.\n\nOBJECTIVE\n\nUsing the structured course context provided, generate a 90-question certification quiz that evaluates:\n\nConceptual understanding\n\nApplied reasoning\n\nPractical knowledge\n\nProject comprehension\n\nINPUT\n\nYou will receive a structured JSON context from Agent 1:\n\n{{ $json.output }}\n\nQUIZ DESIGN RULES\n\nTotal Questions: 30\n\nDistribution:\n\n40% Core Concepts\n30% Applied Reasoning\n20% Project-Based\n10% Edge / Tricky Cases\n\nQUESTION TYPES (MCQ FORMAT ONLY)\n\nSingle correct\nMulti-select\nScenario-based\nCode output prediction\nPROCESS\nMap questions directly to topic IDs\n\nDo NOT create questions from low emphasis topics unless needed\n\nEnsure increasing difficulty\n\nEvery correct answer must be defensible from context\n\nOUTPUT (STRICT JSON ONLY)\n{\n  \"quiz_metadata\": {\n    \"total_questions\": 90,\n    \"passing_score\": 70,\n    \"difficulty_distribution\": {\n      \"easy\": 30,\n      \"medium\": 40,\n      \"hard\": 20\n    }\n  },\n  \"assessment_profile\": {\n    \"assessment_title\": \"\",\n    \"source_video_title\": \"\",\n    \"source_video_url\": \"\",\n    \"difficulty_rating\": \"\",\n    \"knowledge_scope_score\": 0,\n    \"topics_count\": 0,\n    \"projects_count\": 0,\n    \"estimated_learning_hours\": 0,\n    \"assessment_weight\": \"\"\n  },\n  \"questions\": [\n    {\n      \"question_id\": \"Q1\",\n      \"topic_id\": \"T1.1\",\n      \"question_type\": \"single-correct | multi-select | scenario | code-output\",\n      \"difficulty\": \"easy | medium | hard\",\n      \"question_text\": \"\",\n      \"options\": [\n        { \"option\": \"A\", \"text\": \"\", \"is_correct\": false },\n        { \"option\": \"B\", \"text\": \"\", \"is_correct\": true }\n      ],\n      \"explanation\": \"\"\n    }\n  ]\n}\n\nFINAL CLARITY (This Matters)\nYou are NOT:\n\n“Summarizing videos”\n\n“Letting ChatGPT guess content”\n\nYou ARE:\n\nBuilding an agent-orchestrated learning verification engine\n\nTurning public content into auditable proof of knowledge\n\nThis is startup-level, research-worthy, and very strong for credibility.\n\nNegative example :\n\nWRONG (never do this):\n\"Here is the quiz: ```json { ... } ```\"\n\nCORRECT:\n{ \"quiz_metadata\": { ... }, \"questions\": [ ... ] }",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        128,
+        -144
+      ],
+      "id": "a7a5b31b-31c7-448a-a013-17a5691f21fb",
+      "name": "AI Agent1"
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('On form submission').item.json.submittedAt }}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        192,
+        64
+      ],
+      "id": "da016289-da9a-4b3e-9a89-02e605f910f2",
+      "name": "Simple Memory1"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://localhost:3000/webhook/quiz",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $json.output }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          },
+          "timeout": 10000
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        496,
+        -144
+      ],
+      "id": "00fa4949-1e15-43de-9c2e-5fda1a0bc819",
+      "name": "Send Quiz to Web App"
+    },
+    {
+      "parameters": {
+        "model": "z-ai/glm-4.5-air:free",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        -336,
+        64
+      ],
+      "id": "f1c82df3-89b8-4442-b1ff-00346c187d3c",
+      "name": "OpenRouter Chat Model",
+      "credentials": {
+        "openRouterApi": {
+          "id": "9k04na892Ab2xOth",
+          "name": "OpenRouter account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "openai/gpt-oss-120b:free",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        32,
+        64
+      ],
+      "id": "207e3a31-ac24-44a6-9a11-1e19ad7bd8b4",
+      "name": "OpenRouter Chat Model1",
+      "credentials": {
+        "openRouterApi": {
+          "id": "teNRrviU98JNsS09",
+          "name": "OpenRouter account 2"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent1": {
+      "main": [
+        [
+          {
+            "node": "Send Quiz to Web App",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory1": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Quiz to Web App": {
+      "main": [
+        []
+      ]
+    },
+    "OpenRouter Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "e90da0dc83ba99e18f830c90ceed8d1156753144d5b5cb04e5ed79df91a2cea4"
+  }
+}
