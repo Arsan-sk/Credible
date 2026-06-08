@@ -68,6 +68,21 @@ app.get('/api/quiz', (req, res) => {
   }
 });
 
+// ── API: guest quiz (featured assessment) ───────────────────────────────────
+const GUEST_QUIZ_FILE = path.join(__dirname, 'guest-quiz.json');
+
+app.get('/api/guest-quiz', (req, res) => {
+  if (!fs.existsSync(GUEST_QUIZ_FILE)) {
+    return res.status(404).json({ error: 'No guest quiz available.' });
+  }
+  try {
+    const data = JSON.parse(fs.readFileSync(GUEST_QUIZ_FILE, 'utf8'));
+    res.json(data);
+  } catch {
+    res.status(500).json({ error: 'Corrupt guest quiz file.' });
+  }
+});
+
 // ── Serve index.html for all other routes (SPA client-side routing) ─────────
 app.get('/{*splat}', (req, res) => {
   if (fs.existsSync(distPath)) {
