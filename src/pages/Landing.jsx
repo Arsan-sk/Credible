@@ -78,7 +78,7 @@ export default function Landing() {
 
   const questions = quiz?.questions || [];
   const metadata = quiz?.quiz_metadata || {};
-  const title = quiz?.title || quiz?.video_title || metadata?.title || null;
+  const title = quiz?.assessment_profile?.source_video_title || quiz?.title || quiz?.video_title || metadata?.title || null;
   const domain = quiz?.domain || metadata?.domain || null;
   const hasQuiz = questions.length > 0;
 
@@ -160,7 +160,7 @@ export default function Landing() {
                 onClick={() => navigate('/assessment')}
                 id="btn-start-assessment"
               >
-                Start Assessment
+                {user ? 'Start Assessment' : 'Start Featured Assessment'}
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M3.33 8h9.34M8.67 4L13 8l-4.33 4" />
                 </svg>
