@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "AI Learning Validation & Certification Platform",
   "scripts": {
-    "dev": "vite",
+    "dev": "node start-dev.js",
     "build": "vite build",
     "preview": "vite preview",
     "server": "node server.js",
