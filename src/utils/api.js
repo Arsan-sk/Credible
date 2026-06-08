@@ -21,3 +21,22 @@ export async function fetchQuiz() {
     return null;
   }
 }
+
+/**
+ * Fetch the guest featured quiz from the backend.
+ * Returns guest quiz data object or null if not available.
+ */
+export async function fetchGuestQuiz() {
+  try {
+    const res = await fetch(`${API_BASE}/api/guest-quiz`);
+    if (!res.ok) return null;
+    const data = await res.json();
+    if (data?.questions?.length > 0) {
+      return data;
+    }
+    return null;
+  } catch {
+    return null;
+  }
+}
+
