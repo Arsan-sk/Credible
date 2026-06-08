@@ -1,4 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
+import { AuthProvider } from './context/AuthContext';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Landing from './pages/Landing';
@@ -9,14 +10,20 @@ import DetailedReview from './pages/DetailedReview';
 import CertificateView from './pages/CertificateView';
 import Verify from './pages/Verify';
 import History from './pages/History';
+import Register from './pages/Register';
+import Login from './pages/Login';
+import Profile from './pages/Profile';
 
 export default function App() {
   return (
-    <>
+    <AuthProvider>
       <Header />
       <main style={{ flex: 1 }}>
         <Routes>
           <Route path="/" element={<Landing />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/profile" element={<Profile />} />
           <Route path="/assessment" element={<AssessmentEntry />} />
           <Route path="/quiz" element={<Quiz />} />
           <Route path="/results" element={<Results />} />
@@ -29,6 +36,7 @@ export default function App() {
         </Routes>
       </main>
       <Footer />
-    </>
+    </AuthProvider>
   );
 }
+
