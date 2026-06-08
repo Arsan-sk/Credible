@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 import { loadQuiz, saveUserName, loadUserName } from '../utils/storage';
 import { PASSING_SCORE } from '../utils/quiz';
 import './AssessmentEntry.css';
 
 export default function AssessmentEntry() {
   const navigate = useNavigate();
-  const [name, setName] = useState(loadUserName());
+  const { user, profile } = useAuth();
+  const [name, setName] = useState('');
   const [quiz, setQuiz] = useState(null);
 
   useEffect(() => {
@@ -17,6 +19,15 @@ export default function AssessmentEntry() {
     }
     setQuiz(q);
   }, [navigate]);
+
+  useEffect(() => {
+    if (user) {
+      const username = profile?.username || user.email?.split('@')[0] || '';
+      setName(username);
+    } else {
+      setName(loadUserName());
+    }
+  }, [user, profile]);
 
   if (!quiz) return null;
 
@@ -75,14 +86,17 @@ export default function AssessmentEntry() {
             id="input-name"
             type="text"
             className="input"
-            placeholder="Enter your full name"
+            placeholder={user ? "" : "Enter your full name"}
             value={name}
-            onChange={(e) => setName(e.target.value)}
+            onChange={(e) => !user && setName(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && handleStart()}
-            autoFocus
+            autoFocus={!user}
+            readOnly={!!user}
           />
           <p className="assessment-name-note">
-            This name will appear on your certificate if you pass.
+            {user 
+              ? "This is your account username and will appear on your certificate."
+              : "This name will appear on your certificate if you pass."}
           </p>
         </div>
 
@@ -101,3 +115,4 @@ export default function AssessmentEntry() {
     </div>
   );
 }
+

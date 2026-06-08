@@ -1,33 +1,80 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { fetchQuiz } from '../utils/api';
-import { saveQuiz, loadQuiz, getAllAttempts } from '../utils/storage';
+import { useAuth } from '../context/AuthContext';
+import { fetchQuiz, fetchGuestQuiz } from '../utils/api';
+import { saveQuiz, loadQuiz, getAllAttempts, getGuestId, hasGuestTakenFeatured } from '../utils/storage';
 import { PASSING_SCORE } from '../utils/quiz';
 import './Landing.css';
 
 export default function Landing() {
   const navigate = useNavigate();
+  const { user, profile, loading: authLoading } = useAuth();
   const [quiz, setQuiz] = useState(null);
-  const [attempts, setAttempts] = useState({});
+  const [isAttempted, setIsAttempted] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    async function loadQuizData() {
-      // Try server first
-      const serverQuiz = await fetchQuiz();
-      if (serverQuiz) {
-        saveQuiz(serverQuiz);
-        setQuiz(serverQuiz);
-      } else {
-        // Fallback to localStorage
-        const localQuiz = loadQuiz();
-        if (localQuiz) setQuiz(localQuiz);
+    async function loadLandingData() {
+      if (authLoading) return;
+
+      setLoading(true);
+      try {
+        if (user) {
+          // Logged-in mode: Load user quiz from API
+          const serverQuiz = await fetchQuiz();
+          if (serverQuiz) {
+            saveQuiz(serverQuiz);
+            setQuiz(serverQuiz);
+            
+            // Check if this specific user has attempted the quiz
+            const userAttempts = await getAllAttempts(user.id);
+            const attempted = Object.values(userAttempts).some(
+              (a) => a.quizId === serverQuiz.received_at
+            );
+            setIsAttempted(attempted);
+          } else {
+            // Fallback to local cache
+            const localQuiz = loadQuiz();
+            if (localQuiz) {
+              setQuiz(localQuiz);
+              const userAttempts = await getAllAttempts(user.id);
+              const attempted = Object.values(userAttempts).some(
+                (a) => a.quizId === localQuiz.received_at
+              );
+              setIsAttempted(attempted);
+            }
+          }
+        } else {
+          // Guest mode: Load featured quiz
+          const featuredQuiz = await fetchGuestQuiz();
+          if (featuredQuiz) {
+            saveQuiz(featuredQuiz);
+            setQuiz(featuredQuiz);
+
+            // Check guest attempt in Supabase
+            const guestId = getGuestId();
+            const attempted = await hasGuestTakenFeatured(guestId, featuredQuiz.quiz_id || 'FEATURED-ASSESSMENT-001');
+            setIsAttempted(attempted);
+          } else {
+            // Fallback to local cache
+            const localQuiz = loadQuiz();
+            if (localQuiz) {
+              setQuiz(localQuiz);
+              const guestId = getGuestId();
+              const attempted = await hasGuestTakenFeatured(guestId, localQuiz.quiz_id || 'FEATURED-ASSESSMENT-001');
+              setIsAttempted(attempted);
+            }
+          }
+        }
+      } catch (err) {
+        console.error('Error loading landing page data:', err);
+      } finally {
+        setLoading(false);
       }
-      setAttempts(getAllAttempts());
-      setLoading(false);
     }
-    loadQuizData();
-  }, []);
+
+    loadLandingData();
+  }, [user, authLoading]);
 
   const questions = quiz?.questions || [];
   const metadata = quiz?.quiz_metadata || {};
@@ -35,10 +82,7 @@ export default function Landing() {
   const domain = quiz?.domain || metadata?.domain || null;
   const hasQuiz = questions.length > 0;
 
-  // Check if this specific quiz was already attempted
-  const isAttempted = hasQuiz && Object.values(attempts).some(
-    (a) => a.quizId === quiz.received_at
-  );
+  const username = profile?.username || user?.email?.split('@')[0] || '';
 
   return (
     <div className="landing">
@@ -49,6 +93,11 @@ export default function Landing() {
             <span className="landing-badge-dot" />
             Learning Validation Platform
           </div>
+          {user && username && (
+            <p className="landing-subheadline" style={{ fontWeight: 600, color: 'var(--text-primary)', marginBottom: 'var(--space-sm)' }}>
+              Welcome back, {username}!
+            </p>
+          )}
           <h1 className="landing-headline">
             Learning From Videos Is Easy.
             <br />
@@ -61,7 +110,7 @@ export default function Landing() {
         </div>
 
         {/* Quiz Info, Attempted State, or Empty State */}
-        {loading ? (
+        {authLoading || loading ? (
           <div className="landing-loading">
             <div className="landing-spinner" />
             <p>Checking for available assessments...</p>
@@ -69,7 +118,12 @@ export default function Landing() {
         ) : hasQuiz && !isAttempted ? (
           <>
             <div className="landing-quiz-card animate-fade-in-up" style={{ animationDelay: '100ms' }}>
-              {title && <h3 className="landing-quiz-title">{title}</h3>}
+              {quiz.featured && (
+                <span className="badge badge-success" style={{ marginBottom: 'var(--space-sm)' }}>
+                  Featured Assessment
+                </span>
+              )}
+              {title && <h3 className="landing-quiz-title" style={{ marginTop: quiz.featured ? '4px' : '0' }}>{title}</h3>}
               <div className="landing-quiz-stats">
                 <div className="landing-stat">
                   <span className="landing-stat-value">{questions.length}</span>
@@ -111,9 +165,6 @@ export default function Landing() {
                   <path d="M3.33 8h9.34M8.67 4L13 8l-4.33 4" />
                 </svg>
               </button>
-              {/* <Link to="/history" className="btn btn-secondary btn-lg" id="btn-view-history">
-                View History
-              </Link> */}
               <Link to="/verify" className="btn btn-secondary btn-lg" id="btn-verify-cert">
                 Verify Certificate
               </Link>
@@ -128,20 +179,44 @@ export default function Landing() {
                   <polyline points="22 4 12 14.01 9 11.01" />
                 </svg>
               </div>
-              <h3>You're all caught up!</h3>
-              <p>
-                The latest assessment <strong>"{title}"</strong> has already been completed. Any new video analysis will appear here.
-              </p>
+              {user ? (
+                <>
+                  <h3>You're all caught up!</h3>
+                  <p>
+                    The latest assessment <strong>"{title}"</strong> has already been completed. Any new video analysis will appear here.
+                  </p>
+                </>
+              ) : (
+                <>
+                  <h3>You've explored the featured assessment!</h3>
+                  <p style={{ marginBottom: 'var(--space-md)' }}>
+                    You have already completed the guest assessment. Register a free account to unlock personalized learning paths, developer keys, and track your dashboard.
+                  </p>
+                </>
+              )}
             </div>
 
             {/* CTAs */}
             <div className="landing-actions animate-fade-in-up" style={{ animationDelay: '200ms' }}>
-              {/* <Link to="/history" className="btn btn-primary btn-lg" id="btn-view-history">
-                View Past Quizzes
-              </Link> */}
-              <Link to="/verify" className="btn btn-primary btn-lg" id="btn-verify-cert">
-                Verify Certificate
-              </Link>
+              {user ? (
+                <>
+                  <Link to="/history" className="btn btn-primary btn-lg" id="btn-view-history">
+                    View Attempt History
+                  </Link>
+                  <Link to="/verify" className="btn btn-secondary btn-lg" id="btn-verify-cert">
+                    Verify Certificate
+                  </Link>
+                </>
+              ) : (
+                <>
+                  <Link to="/register" className="btn btn-primary btn-lg" id="btn-guest-register">
+                    Create Free Account
+                  </Link>
+                  <Link to="/verify" className="btn btn-secondary btn-lg" id="btn-verify-cert">
+                    Verify Certificate
+                  </Link>
+                </>
+              )}
             </div>
           </>
         ) : (
@@ -160,10 +235,12 @@ export default function Landing() {
 
             {/* CTAs */}
             <div className="landing-actions animate-fade-in-up" style={{ animationDelay: '200ms' }}>
-              {/* <Link to="/history" className="btn btn-primary btn-lg" id="btn-view-history">
-                View Past Quizzes
-              </Link> */}
-              <Link to="/verify" className="btn btn-primary btn-lg" id="btn-verify-cert">
+              {user && (
+                <Link to="/history" className="btn btn-primary btn-lg" id="btn-view-history">
+                  View Attempt History
+                </Link>
+              )}
+              <Link to="/verify" className="btn style={{ marginTop: user ? '8px' : '0' }} btn-primary btn-lg" id="btn-verify-cert">
                 Verify Certificate
               </Link>
             </div>
