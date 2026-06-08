@@ -1,40 +1,48 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, Link, useParams } from 'react-router-dom';
-import { loadQuiz, loadQuizState, getAttempt } from '../utils/storage';
+import { useAuth } from '../context/AuthContext';
+import { loadQuiz, loadQuizState, getAttempt, getGuestAttempt } from '../utils/storage';
 import ReviewItem from '../components/ReviewItem';
 import './DetailedReview.css';
 
 export default function DetailedReview() {
   const { attemptId } = useParams();
   const navigate = useNavigate();
+  const { user, loading: authLoading } = useAuth();
   const [questions, setQuestions] = useState([]);
   const [answers, setAnswers] = useState({});
   const [backLink, setBackLink] = useState('/results');
 
   useEffect(() => {
-    if (attemptId) {
-      const attempt = getAttempt(attemptId);
-      if (!attempt) {
-        navigate('/history');
-        return;
-      }
-      setQuestions(attempt.questions || []);
-      setAnswers(attempt.answers || {});
-      setBackLink(`/results/${attemptId}`);
-    } else {
-      const q = loadQuiz();
-      const state = loadQuizState();
+    async function loadReviewData() {
+      if (authLoading) return;
 
-      if (!q || !state || !state.finished) {
-        navigate('/');
-        return;
-      }
+      if (attemptId) {
+        const attempt = user ? await getAttempt(attemptId) : await getGuestAttempt(attemptId);
+        if (!attempt) {
+          navigate(user ? '/history' : '/');
+          return;
+        }
+        setQuestions(attempt.questions || []);
+        setAnswers(attempt.answers || {});
+        setBackLink(`/results/${attemptId}`);
+      } else {
+        const q = loadQuiz();
+        const state = loadQuizState();
 
-      setQuestions(q.questions || []);
-      setAnswers(state.answers || {});
-      setBackLink('/results');
+        if (!q || !state || !state.finished) {
+          navigate('/');
+          return;
+        }
+
+        setQuestions(q.questions || []);
+        setAnswers(state.answers || {});
+        setBackLink('/results');
+      }
     }
-  }, [attemptId, navigate]);
+
+    loadReviewData();
+  }, [attemptId, navigate, user, authLoading]);
 
   if (questions.length === 0) return null;
 
@@ -75,3 +83,4 @@ export default function DetailedReview() {
     </div>
   );
 }
+

@@ -1,18 +1,40 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 import { getAllAttempts } from '../utils/storage';
 import './History.css';
 
 export default function History() {
+  const navigate = useNavigate();
+  const { user, loading: authLoading } = useAuth();
   const [attempts, setAttempts] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const data = getAllAttempts();
-    const sorted = Object.values(data).sort(
-      (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
-    );
-    setAttempts(sorted);
-  }, []);
+    async function loadHistory() {
+      if (authLoading) return;
+
+      if (!user) {
+        navigate('/');
+        return;
+      }
+
+      setLoading(true);
+      try {
+        const data = await getAllAttempts(user.id);
+        const sorted = Object.values(data).sort(
+          (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+        );
+        setAttempts(sorted);
+      } catch (err) {
+        console.error('Error loading history:', err);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    loadHistory();
+  }, [user, authLoading, navigate]);
 
   const formatDate = (dateStr) => {
     return new Date(dateStr).toLocaleDateString('en-US', {
@@ -23,6 +45,16 @@ export default function History() {
       minute: '2-digit',
     });
   };
+
+  if (authLoading || loading) {
+    return (
+      <div className="history-page">
+        <div style={{ textAlign: 'center', padding: '100px 0', color: 'var(--text-secondary)' }}>
+          Loading assessment history...
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="history-page">
@@ -103,3 +135,4 @@ export default function History() {
     </div>
   );
 }
+

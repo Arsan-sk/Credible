@@ -6,13 +6,23 @@ export default function Verify() {
   const [inputId, setInputId] = useState('');
   const [result, setResult] = useState(null); // null = not searched, object = found, false = not found
   const [searched, setSearched] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const handleVerify = () => {
+  const handleVerify = async () => {
     const id = inputId.trim().toUpperCase();
     if (!id) return;
-    const cert = getCertificate(id);
-    setResult(cert);
-    setSearched(true);
+    setLoading(true);
+    setSearched(false);
+    try {
+      const cert = await getCertificate(id);
+      setResult(cert);
+    } catch (err) {
+      console.error('Verification error:', err);
+      setResult(null);
+    } finally {
+      setSearched(true);
+      setLoading(false);
+    }
   };
 
   const formattedDate = result?.completionDate
@@ -46,19 +56,21 @@ export default function Verify() {
                 setInputId(e.target.value);
                 setSearched(false);
               }}
-              onKeyDown={(e) => e.key === 'Enter' && handleVerify()}
+              onKeyDown={(e) => e.key === 'Enter' && !loading && handleVerify()}
               id="input-cert-id"
+              disabled={loading}
             />
             <button
               className="btn btn-primary"
               onClick={handleVerify}
-              disabled={!inputId.trim()}
+              disabled={!inputId.trim() || loading}
               id="btn-verify"
             >
-              Verify
+              {loading ? 'Verifying...' : 'Verify'}
             </button>
           </div>
         </div>
+
 
         {/* Result */}
         {searched && result && (

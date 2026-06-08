@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, Link, useParams } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 import {
   loadQuiz,
   loadQuizState,
@@ -7,7 +8,11 @@ import {
   loadUserName,
   saveCertificate,
   getAttempt,
-  saveAttempt
+  saveAttempt,
+  getGuestId,
+  saveGuestAttempt,
+  getGuestAttempt,
+  saveGuestCertificate
 } from '../utils/storage';
 import { evaluateQuiz, PASSING_SCORE } from '../utils/quiz';
 import { generateCertificateId } from '../utils/certificate';
@@ -17,112 +22,130 @@ import './Results.css';
 export default function Results() {
   const { attemptId } = useParams();
   const navigate = useNavigate();
+  const { user, loading: authLoading } = useAuth();
   const [results, setResults] = useState(null);
   const [certId, setCertId] = useState(null);
   const [userName, setUserName] = useState('');
   const [currentAttemptId, setCurrentAttemptId] = useState(attemptId || null);
 
   useEffect(() => {
-    if (attemptId) {
-      // Historical attempt lookup
-      const attempt = getAttempt(attemptId);
-      if (!attempt) {
-        navigate('/history');
-        return;
-      }
-      setResults({
-        total: attempt.total,
-        correct: attempt.correct,
-        wrong: attempt.wrong,
-        skipped: attempt.skipped,
-        percentage: attempt.score,
-        passed: attempt.passed,
-      });
-      setCertId(attempt.certificateId);
-      setUserName(attempt.userName);
-    } else {
-      // Current active quiz lookup
-      const quiz = loadQuiz();
-      const state = loadQuizState();
-      const name = loadUserName();
+    async function loadAttemptData() {
+      if (authLoading) return;
 
-      if (!quiz || !state || !state.finished) {
-        navigate('/');
-        return;
-      }
-
-      const evaluation = evaluateQuiz(quiz.questions, state.answers);
-      setResults(evaluation);
-      setUserName(name);
-
-      // Check if attempt already saved for this run
-      if (state.attemptId) {
-        setCurrentAttemptId(state.attemptId);
-        // Look up certificate for this saved attempt
-        const attempt = getAttempt(state.attemptId);
-        if (attempt) {
-          setCertId(attempt.certificateId);
+      if (attemptId) {
+        // Historical attempt lookup
+        const attempt = user ? await getAttempt(attemptId) : await getGuestAttempt(attemptId);
+        if (!attempt) {
+          navigate(user ? '/history' : '/');
+          return;
         }
-      } else {
-        // Save new attempt!
-        const newAttemptId = `ATT-${Date.now()}-${Math.floor(1000 + Math.random() * 9000)}`;
-        const title = quiz.title || quiz.video_title || quiz.quiz_metadata?.title || 'AI Learning Assessment';
-        const videoUrl = quiz.video_url || quiz.quiz_metadata?.video_url || '';
-
-        const newAttempt = {
-          attemptId: newAttemptId,
-          quizId: quiz.received_at,
-          title,
-          videoUrl,
-          userName: name,
-          date: new Date().toISOString(),
-          score: evaluation.percentage,
-          passed: evaluation.passed,
-          total: evaluation.total,
-          correct: evaluation.correct,
-          wrong: evaluation.wrong,
-          skipped: evaluation.skipped,
-          certificateId: null,
-          answers: state.answers,
-          questions: quiz.questions,
-        };
-
-        saveAttempt(newAttempt);
-        setCurrentAttemptId(newAttemptId);
-
-        // Update active quiz state with this attemptId
-        saveQuizState({
-          ...state,
-          attemptId: newAttemptId,
+        setResults({
+          total: attempt.total,
+          correct: attempt.correct,
+          wrong: attempt.wrong,
+          skipped: attempt.skipped,
+          percentage: attempt.score,
+          passed: attempt.passed,
         });
+        setCertId(attempt.certificateId);
+        setUserName(attempt.userName);
+      } else {
+        // Current active quiz lookup
+        const quiz = loadQuiz();
+        const state = loadQuizState();
+        const name = loadUserName();
+
+        if (!quiz || !state || !state.finished) {
+          navigate('/');
+          return;
+        }
+
+        const evaluation = evaluateQuiz(quiz.questions, state.answers);
+        setResults(evaluation);
+        setUserName(name);
+
+        // Check if attempt already saved for this run
+        if (state.attemptId) {
+          setCurrentAttemptId(state.attemptId);
+          // Look up certificate for this saved attempt
+          const attempt = user ? await getAttempt(state.attemptId) : await getGuestAttempt(state.attemptId);
+          if (attempt) {
+            setCertId(attempt.certificateId);
+          }
+        } else {
+          // Save new attempt!
+          const newAttemptId = `ATT-${Date.now()}-${Math.floor(1000 + Math.random() * 9000)}`;
+          const title = quiz.title || quiz.video_title || quiz.quiz_metadata?.title || 'AI Learning Assessment';
+          const videoUrl = quiz.video_url || quiz.quiz_metadata?.video_url || '';
+
+          const newAttempt = {
+            attemptId: newAttemptId,
+            quizId: quiz.featured ? (quiz.quiz_id || 'FEATURED-ASSESSMENT-001') : quiz.received_at,
+            title,
+            videoUrl,
+            userName: name,
+            date: new Date().toISOString(),
+            score: evaluation.percentage,
+            passed: evaluation.passed,
+            total: evaluation.total,
+            correct: evaluation.correct,
+            wrong: evaluation.wrong,
+            skipped: evaluation.skipped,
+            certificateId: null,
+            answers: state.answers,
+            questions: quiz.questions,
+          };
+
+          if (user) {
+            newAttempt.userId = user.id;
+            await saveAttempt(newAttempt);
+          } else {
+            newAttempt.guestId = getGuestId();
+            await saveGuestAttempt(newAttempt);
+          }
+          
+          setCurrentAttemptId(newAttemptId);
+
+          // Update active quiz state with this attemptId
+          saveQuizState({
+            ...state,
+            attemptId: newAttemptId,
+          });
+        }
       }
     }
-  }, [attemptId, navigate]);
+
+    loadAttemptData();
+  }, [attemptId, navigate, user, authLoading]);
 
   if (!results) return null;
 
   const { total, correct, wrong, skipped, percentage, passed } = results;
 
-  const handleGenerateCertificate = () => {
+  const handleGenerateCertificate = async () => {
     const id = generateCertificateId();
     let title = 'AI Learning Assessment';
     let videoUrl = '';
     let quizId = '';
     const targetAttemptId = currentAttemptId;
 
+    let attemptData = null;
+    if (targetAttemptId) {
+      attemptData = user ? await getAttempt(targetAttemptId) : await getGuestAttempt(targetAttemptId);
+    }
+
     if (attemptId) {
-      const attempt = getAttempt(attemptId);
-      if (attempt) {
-        title = attempt.title;
-        videoUrl = attempt.videoUrl;
-        quizId = attempt.quizId;
+      if (attemptData) {
+        title = attemptData.title;
+        videoUrl = attemptData.videoUrl;
+        quizId = attemptData.quizId;
       }
     } else {
       const quiz = loadQuiz();
       if (quiz) {
         title = quiz.title || quiz.video_title || quiz.quiz_metadata?.title || 'AI Learning Assessment';
         videoUrl = quiz.video_url || quiz.quiz_metadata?.video_url || '';
-        quizId = quiz.received_at;
+        quizId = quiz.featured ? (quiz.quiz_id || 'FEATURED-ASSESSMENT-001') : quiz.received_at;
       }
     }
 
@@ -137,15 +160,23 @@ export default function Results() {
       quizId,
     };
 
-    saveCertificate(cert);
+    if (user) {
+      cert.userId = user.id;
+      await saveCertificate(cert);
+    } else {
+      cert.guestId = getGuestId();
+      await saveGuestCertificate(cert);
+    }
+
     setCertId(id);
 
     // Update the attempt with the certificateId
-    if (targetAttemptId) {
-      const attempt = getAttempt(targetAttemptId);
-      if (attempt) {
-        attempt.certificateId = id;
-        saveAttempt(attempt);
+    if (targetAttemptId && attemptData) {
+      attemptData.certificateId = id;
+      if (user) {
+        await saveAttempt(attemptData);
+      } else {
+        await saveGuestAttempt(attemptData);
       }
     }
   };
@@ -234,3 +265,4 @@ export default function Results() {
     </div>
   );
 }
+

@@ -1,31 +1,44 @@
 import { useState, useEffect, useRef } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { getCertificate, getAllAttempts } from '../utils/storage';
+import { useAuth } from '../context/AuthContext';
+import { getCertificate, getAllAttempts, getAllGuestAttempts, getGuestId } from '../utils/storage';
 import { generatePDF, generatePNG } from '../utils/certificate';
 import Certificate from '../components/Certificate';
 import './CertificateView.css';
 
 export default function CertificateView() {
   const { id } = useParams();
+  const { user, loading: authLoading } = useAuth();
   const [cert, setCert] = useState(null);
   const [downloading, setDownloading] = useState(false);
   const [backLink, setBackLink] = useState('/results');
   const certRef = useRef(null);
 
   useEffect(() => {
-    const data = getCertificate(id);
-    setCert(data);
+    async function loadCertData() {
+      if (authLoading) return;
 
-    if (data) {
-      const attempts = getAllAttempts();
-      const attempt = Object.values(attempts).find((a) => a.certificateId === id);
-      if (attempt) {
-        setBackLink(`/results/${attempt.attemptId}`);
-      } else {
-        setBackLink('/results');
+      const data = await getCertificate(id);
+      setCert(data);
+
+      if (data) {
+        let attemptsMap = {};
+        if (user) {
+          attemptsMap = await getAllAttempts(user.id);
+        } else {
+          attemptsMap = await getAllGuestAttempts(getGuestId());
+        }
+        const attempt = Object.values(attemptsMap).find((a) => a.certificateId === id);
+        if (attempt) {
+          setBackLink(`/results/${attempt.attemptId}`);
+        } else {
+          setBackLink('/results');
+        }
       }
     }
-  }, [id]);
+
+    loadCertData();
+  }, [id, user, authLoading]);
 
   if (!cert) {
     return (
@@ -122,3 +135,4 @@ export default function CertificateView() {
     </div>
   );
 }
+
