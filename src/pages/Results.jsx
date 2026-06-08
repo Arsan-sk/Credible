@@ -75,7 +75,7 @@ export default function Results() {
         } else {
           // Save new attempt!
           const newAttemptId = `ATT-${Date.now()}-${Math.floor(1000 + Math.random() * 9000)}`;
-          const title = quiz.assessment_profile?.source_video_title || quiz.title || quiz.video_title || quiz.quiz_metadata?.title || 'AI Learning Assessment';
+          const title = quiz.assessment_profile?.assessment_title || quiz.assessment_profile?.source_video_title || quiz.title || quiz.video_title || quiz.quiz_metadata?.title || 'AI Learning Assessment';
           const videoUrl = quiz.video_url || quiz.quiz_metadata?.video_url || '';
 
           const newAttempt = {
@@ -143,7 +143,7 @@ export default function Results() {
     } else {
       const quiz = loadQuiz();
       if (quiz) {
-        title = quiz.assessment_profile?.source_video_title || quiz.title || quiz.video_title || quiz.quiz_metadata?.title || 'AI Learning Assessment';
+        title = quiz.assessment_profile?.assessment_title || quiz.assessment_profile?.source_video_title || quiz.title || quiz.video_title || quiz.quiz_metadata?.title || 'AI Learning Assessment';
         videoUrl = quiz.video_url || quiz.quiz_metadata?.video_url || '';
         quizId = quiz.featured ? (quiz.quiz_id || 'FEATURED-ASSESSMENT-001') : quiz.received_at;
       }

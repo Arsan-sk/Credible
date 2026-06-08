@@ -33,7 +33,7 @@ export default function AssessmentEntry() {
 
   const questions = quiz.questions;
   const metadata = quiz.quiz_metadata || {};
-  const title = quiz.assessment_profile?.source_video_title || quiz.title || quiz.video_title || metadata.title || 'AI Learning Assessment';
+  const title = quiz.assessment_profile?.assessment_title || quiz.assessment_profile?.source_video_title || quiz.title || quiz.video_title || metadata.title || 'AI Learning Assessment';
   const domain = quiz.domain || metadata.domain || null;
   const certLevel = quiz.certification_level || metadata.certification_level || null;
 

@@ -23,7 +23,7 @@ export default function Login() {
     setLoading(true);
 
     try {
-      const syntheticEmail = `${trimmedUser}@credible.local`;
+      const syntheticEmail = `${trimmedUser}@credible.com`;
       const { data, error: signInError } = await supabase.auth.signInWithPassword({
         email: syntheticEmail,
         password: password,

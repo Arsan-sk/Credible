@@ -50,7 +50,7 @@ export default function Register() {
       }
 
       // 2. Register via Supabase Auth using synthetic email
-      const syntheticEmail = `${trimmedUser}@credible.local`;
+      const syntheticEmail = `${trimmedUser}@credible.com`;
       const { data, error: signUpError } = await supabase.auth.signUp({
         email: syntheticEmail,
         password: password,

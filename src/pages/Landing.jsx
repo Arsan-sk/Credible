@@ -78,7 +78,7 @@ export default function Landing() {
 
   const questions = quiz?.questions || [];
   const metadata = quiz?.quiz_metadata || {};
-  const title = quiz?.assessment_profile?.source_video_title || quiz?.title || quiz?.video_title || metadata?.title || null;
+  const title = quiz?.assessment_profile?.assessment_title || quiz?.assessment_profile?.source_video_title || quiz?.title || quiz?.video_title || metadata?.title || null;
   const domain = quiz?.domain || metadata?.domain || null;
   const hasQuiz = questions.length > 0;
 
