@@ -44,7 +44,7 @@ export default function CreateAssessment() {
       try {
         const { data, error } = await supabase
           .from('user_api_keys')
-          .select('id, key_name, key_preview')
+          .select('id, key_name, key_preview, provider, selected_model, use_same_model, agent1_model, agent2_model')
           .order('created_at', { ascending: false });
         
         if (error) throw error;
@@ -302,11 +302,22 @@ export default function CreateAssessment() {
                 disabled={isGenerating}
                 required
               >
-                {apiKeys.map((key) => (
-                  <option key={key.id} value={key.id}>
-                    {key.key_name} ({key.key_preview})
-                  </option>
-                ))}
+                {apiKeys.map((key) => {
+                  const prov = (key.provider || 'openrouter').toUpperCase();
+                  let modelSummary = '';
+                  if (!key.provider || key.provider === 'openrouter') {
+                    modelSummary = key.use_same_model 
+                      ? (key.selected_model || 'google/gemini-2.5-flash')
+                      : 'Split Models';
+                  } else {
+                    modelSummary = key.provider === 'openai' ? 'gpt-4o' : key.provider === 'anthropic' ? 'claude-sonnet' : 'gemini-pro';
+                  }
+                  return (
+                    <option key={key.id} value={key.id}>
+                      {key.key_name} ({prov} - {modelSummary} - {key.key_preview})
+                    </option>
+                  );
+                })}
               </select>
             )}
           </div>

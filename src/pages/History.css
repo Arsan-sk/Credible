@@ -158,3 +158,34 @@
   max-width: 320px;
   margin: 0 auto;
 }
+
+/* History Card Generation Metadata Styles */
+.history-generation-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+  margin-top: var(--space-md);
+  padding-top: var(--space-md);
+  border-top: 1px dashed var(--border-light);
+  font-size: 0.8125rem;
+}
+
+.meta-tag {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.meta-tag-label {
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.meta-tag-val {
+  color: var(--text-primary);
+  font-weight: 600;
+  background: var(--bg-secondary);
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-light);
+}

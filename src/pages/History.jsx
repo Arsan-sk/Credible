@@ -128,6 +128,23 @@ export default function History() {
                       </a>
                     </div>
                   )}
+
+                  {isUserGen && (
+                    <div className="history-generation-meta">
+                      <div className="meta-tag">
+                        <span className="meta-tag-label">Source:</span>
+                        <span className="meta-tag-val">User Generated</span>
+                      </div>
+                      <div className="meta-tag">
+                        <span className="meta-tag-label">Provider:</span>
+                        <span className="meta-tag-val" style={{ textTransform: 'uppercase' }}>{attempt.provider || 'OpenRouter'}</span>
+                      </div>
+                      <div className="meta-tag">
+                        <span className="meta-tag-label">Model:</span>
+                        <span className="meta-tag-val">{attempt.model || 'google/gemini-2.5-flash'}</span>
+                      </div>
+                    </div>
+                  )}
                 </div>
 
                 <div className="history-card-actions">

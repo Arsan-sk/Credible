@@ -93,44 +93,121 @@ app.get('/api/guest-quiz', (req, res) => {
   }
 });
 
-// ── Helper to call OpenRouter with model fallbacks ──────────────────────────
-async function callOpenRouter(apiKey, prompt, modelList) {
-  let lastError = null;
-  for (const model of modelList) {
-    try {
-      console.log(`📡 Calling OpenRouter model: ${model}...`);
-      const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${apiKey}`,
-          'HTTP-Referer': 'https://credible.com',
-          'X-Title': 'Credible',
-        },
-        body: JSON.stringify({
-          model: model,
-          messages: [{ role: 'user', content: prompt }],
-          temperature: 0.3
-        })
-      });
+// ── Helper to execute requests dynamically based on provider routing ────────
+async function executeLlmRequest(provider, apiKey, model, prompt) {
+  const providerKey = (provider || 'openrouter').toLowerCase().trim();
 
-      if (!response.ok) {
-        const errText = await response.text();
-        throw new Error(`OpenRouter API responded with ${response.status}: ${errText}`);
-      }
-
-      const data = await response.json();
-      const output = data.choices?.[0]?.message?.content;
-      if (!output) {
-        throw new Error('Empty completion received from model');
-      }
-      return output;
-    } catch (err) {
-      console.warn(`⚠️ Model ${model} failed:`, err.message);
-      lastError = err;
+  if (providerKey === 'openrouter') {
+    const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${apiKey}`,
+        'HTTP-Referer': 'https://credible.com',
+        'X-Title': 'Credible',
+      },
+      body: JSON.stringify({
+        model: model || 'google/gemini-2.5-flash',
+        messages: [{ role: 'user', content: prompt }],
+        temperature: 0.3
+      })
+    });
+    if (!response.ok) {
+      const errText = await response.text();
+      throw new Error(`OpenRouter API error (${response.status}): ${errText}`);
     }
+    const data = await response.json();
+    const content = data.choices?.[0]?.message?.content;
+    if (!content) {
+      throw new Error('Empty response received from OpenRouter');
+    }
+    return content;
   }
-  throw new Error(`All fallback models failed. Last error: ${lastError ? lastError.message : 'Unknown error'}`);
+
+  if (providerKey === 'openai') {
+    const response = await fetch('https://api.openai.com/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${apiKey}`,
+      },
+      body: JSON.stringify({
+        model: model || 'gpt-4o',
+        messages: [{ role: 'user', content: prompt }],
+        temperature: 0.3
+      })
+    });
+    if (!response.ok) {
+      const errText = await response.text();
+      throw new Error(`OpenAI API error (${response.status}): ${errText}`);
+    }
+    const data = await response.json();
+    const content = data.choices?.[0]?.message?.content;
+    if (!content) {
+      throw new Error('Empty response received from OpenAI');
+    }
+    return content;
+  }
+
+  if (providerKey === 'anthropic') {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': apiKey,
+        'anthropic-version': '2023-06-01'
+      },
+      body: JSON.stringify({
+        model: model || 'claude-3-5-sonnet-latest',
+        max_tokens: 4000,
+        messages: [{ role: 'user', content: prompt }],
+        temperature: 0.3
+      })
+    });
+    if (!response.ok) {
+      const errText = await response.text();
+      throw new Error(`Anthropic API error (${response.status}): ${errText}`);
+    }
+    const data = await response.json();
+    const content = data.content?.[0]?.text;
+    if (!content) {
+      throw new Error('Empty response received from Anthropic');
+    }
+    return content;
+  }
+
+  if (providerKey === 'gemini') {
+    const resolvedModel = model || 'gemini-1.5-flash';
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/${resolvedModel}:generateContent?key=${apiKey}`;
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        contents: [{
+          parts: [{
+            text: prompt
+          }]
+        }],
+        generationConfig: {
+          temperature: 0.3
+        }
+      })
+    });
+    if (!response.ok) {
+      const errText = await response.text();
+      throw new Error(`Gemini API error (${response.status}): ${errText}`);
+    }
+    const data = await response.json();
+    const content = data.candidates?.[0]?.content?.parts?.[0]?.text;
+    if (!content) {
+      throw new Error('Empty response received from Gemini');
+    }
+    return content;
+  }
+
+  throw new Error(`Unsupported API provider: ${provider}`);
 }
 
 // ── Clean JSON response helper ──────────────────────────────────────────────
@@ -143,7 +220,7 @@ function cleanJsonResponse(text) {
 }
 
 // ── Background Job Executor ─────────────────────────────────────────────────
-async function runGeneration(jobId, apiKey, inputs) {
+async function runGeneration(jobId, apiKey, keyMeta, inputs) {
   const supabaseAdmin = createClient(process.env.VITE_SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY);
   
   try {
@@ -154,6 +231,30 @@ async function runGeneration(jobId, apiKey, inputs) {
       .eq('id', jobId);
 
     const { videoTitle, videoUrl, videoDomain, targetLevel, language, userId } = inputs;
+
+    // Start generation timer
+    const startTime = Date.now();
+
+    const provider = keyMeta.provider || 'openrouter';
+    const useSame = keyMeta.use_same_model !== false;
+
+    // Resolve models
+    let model1 = 'google/gemini-2.5-flash';
+    let model2 = 'google/gemini-2.5-flash';
+
+    if (provider === 'openrouter') {
+      model1 = useSame ? keyMeta.selected_model : (keyMeta.agent1_model || keyMeta.selected_model);
+      model2 = useSame ? keyMeta.selected_model : (keyMeta.agent2_model || keyMeta.selected_model);
+    } else if (provider === 'openai') {
+      model1 = useSame ? (keyMeta.selected_model || 'gpt-4o') : (keyMeta.agent1_model || 'gpt-4o');
+      model2 = useSame ? (keyMeta.selected_model || 'gpt-4o') : (keyMeta.agent2_model || 'gpt-4o');
+    } else if (provider === 'anthropic') {
+      model1 = useSame ? (keyMeta.selected_model || 'claude-3-5-sonnet-latest') : (keyMeta.agent1_model || 'claude-3-5-sonnet-latest');
+      model2 = useSame ? (keyMeta.selected_model || 'claude-3-5-sonnet-latest') : (keyMeta.agent2_model || 'claude-3-5-sonnet-latest');
+    } else if (provider === 'gemini') {
+      model1 = useSame ? (keyMeta.selected_model || 'gemini-1.5-flash') : (keyMeta.agent1_model || 'gemini-1.5-flash');
+      model2 = useSame ? (keyMeta.selected_model || 'gemini-1.5-flash') : (keyMeta.agent2_model || 'gemini-1.5-flash');
+    }
 
     // 2. Read Agent 1 prompt and replace placeholders
     const prompt1Path = path.join(__dirname, 'prompts', 'agent1.txt');
@@ -169,8 +270,7 @@ async function runGeneration(jobId, apiKey, inputs) {
       .replace(/\{\{\s*\$json\.Language\s*\}\}/g, language);
 
     // 3. Call Agent 1
-    const agent1Models = ['z-ai/glm-4.5-air:free', 'meta-llama/llama-3.3-70b-instruct:free', 'google/gemini-2.5-flash'];
-    const agent1Output = await callOpenRouter(apiKey, prompt1, agent1Models);
+    const agent1Output = await executeLlmRequest(provider, apiKey, model1, prompt1);
     const cleanedAgent1Output = cleanJsonResponse(agent1Output);
 
     // 4. Read Agent 2 prompt and replace placeholders
@@ -182,8 +282,7 @@ async function runGeneration(jobId, apiKey, inputs) {
     prompt2 = prompt2.replace(/\{\{\s*\$json\.output\s*\}\}/g, cleanedAgent1Output);
 
     // 5. Call Agent 2
-    const agent2Models = ['openai/gpt-oss-120b:free', 'meta-llama/llama-3.3-70b-instruct:free', 'google/gemini-2.5-flash'];
-    const agent2Output = await callOpenRouter(apiKey, prompt2, agent2Models);
+    const agent2Output = await executeLlmRequest(provider, apiKey, model2, prompt2);
     const cleanedAgent2Output = cleanJsonResponse(agent2Output);
 
     // Validate if the output is a valid JSON
@@ -211,6 +310,17 @@ async function runGeneration(jobId, apiKey, inputs) {
       quizData.assessment_profile.source_video_title = quizData.assessment_profile.source_video_title || videoTitle;
     }
 
+    // Embed generation metadata
+    const durationMs = Date.now() - startTime;
+    quizData.generation_metadata = {
+      provider: provider,
+      model: useSame ? model1 : `Agent 1: ${model1} | Agent 2: ${model2}`,
+      agent1_model: model1,
+      agent2_model: model2,
+      generated_at: new Date().toISOString(),
+      generation_duration: Math.round(durationMs)
+    };
+
     // 7. Save to user_assessments table
     const { error: insertError } = await supabaseAdmin
       .from('user_assessments')
@@ -233,6 +343,12 @@ async function runGeneration(jobId, apiKey, inputs) {
         assessment_id: quizId
       })
       .eq('id', jobId);
+
+    // Update last_used in user_api_keys
+    await supabaseAdmin
+      .from('user_api_keys')
+      .update({ last_used: new Date().toISOString() })
+      .eq('user_id', userId);
 
     console.log(`✅ Generation job ${jobId} completed. Created assessment: ${quizId}`);
 
@@ -273,6 +389,17 @@ app.post('/api/generate-assessment', async (req, res) => {
       return res.status(401).json({ error: 'Unauthorized. Invalid authentication token.' });
     }
 
+    // Fetch key details (provider, selected_model, agent1_model, agent2_model, use_same_model)
+    const { data: keyMeta, error: metaError } = await userClient
+      .from('user_api_keys')
+      .select('provider, selected_model, agent1_model, agent2_model, use_same_model')
+      .eq('id', apiKeyId)
+      .single();
+
+    if (metaError || !keyMeta) {
+      return res.status(400).json({ error: `Failed to load API key details: ${metaError ? metaError.message : 'Not found'}` });
+    }
+
     // Fetch and decrypt key using user client context
     const { data: decryptedKey, error: keyError } = await userClient.rpc('get_api_key_value', {
       p_key_id: apiKeyId
@@ -282,6 +409,8 @@ app.post('/api/generate-assessment', async (req, res) => {
       return res.status(400).json({ error: `Failed to decrypt API key: ${keyError ? keyError.message : 'Key not found'}` });
     }
 
+    const resolvedProvider = keyMeta.provider || 'openrouter';
+
     // Insert new queued job
     const supabaseAdmin = createClient(process.env.VITE_SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY);
     const { data: job, error: jobError } = await supabaseAdmin
@@ -289,7 +418,7 @@ app.post('/api/generate-assessment', async (req, res) => {
       .insert({
         user_id: user.id,
         status: 'queued',
-        provider: 'OpenRouter',
+        provider: resolvedProvider,
         video_title: videoTitle
       })
       .select('id')
@@ -300,7 +429,7 @@ app.post('/api/generate-assessment', async (req, res) => {
     }
 
     // Trigger background runner asynchronously
-    runGeneration(job.id, decryptedKey, {
+    runGeneration(job.id, decryptedKey, keyMeta, {
       videoTitle,
       videoUrl,
       videoDomain,
@@ -314,6 +443,22 @@ app.post('/api/generate-assessment', async (req, res) => {
   } catch (err) {
     console.error('Error starting assessment generation:', err.message);
     res.status(500).json({ error: err.message });
+  }
+});
+
+// ── API: Proxy OpenRouter Models ────────────────────────────────────────────
+app.get('/api/openrouter-models', async (req, res) => {
+  try {
+    const response = await fetch('https://openrouter.ai/api/v1/models');
+    if (!response.ok) {
+      throw new Error(`OpenRouter models API returned ${response.status}`);
+    }
+    const data = await response.json();
+    res.json(data);
+  } catch (err) {
+    console.error('Error proxying OpenRouter models:', err.message);
+    // Return empty list so client can fallback gracefully
+    res.json({ data: [] });
   }
 });
 

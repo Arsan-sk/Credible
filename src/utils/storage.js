@@ -105,6 +105,8 @@ export async function saveAttempt(attempt) {
     answers: attempt.answers,
     questions: attempt.questions,
     certificate_id: attempt.certificateId,
+    provider: attempt.provider,
+    model: attempt.model,
   });
   if (error) console.error('saveAttempt error:', error.message);
 }
@@ -166,6 +168,8 @@ export async function saveGuestAttempt(attempt) {
     answers: attempt.answers,
     questions: attempt.questions,
     certificate_id: attempt.certificateId,
+    provider: attempt.provider,
+    model: attempt.model,
   });
   if (error) console.error('saveGuestAttempt error:', error.message);
 }
@@ -313,6 +317,8 @@ function mapAttemptFromDb(row) {
     answers: row.answers || {},
     questions: row.questions || [],
     certificateId: row.certificate_id,
+    provider: row.provider,
+    model: row.model,
   };
 }
 
@@ -334,6 +340,8 @@ function mapGuestAttemptFromDb(row) {
     answers: row.answers || {},
     questions: row.questions || [],
     certificateId: row.certificate_id,
+    provider: row.provider,
+    model: row.model,
   };
 }
 

@@ -80,9 +80,14 @@ export default function Results() {
           const title = quiz.assessment_profile?.assessment_title || quiz.assessment_profile?.source_video_title || quiz.title || quiz.video_title || quiz.quiz_metadata?.title || 'AI Learning Assessment';
           const videoUrl = quiz.video_url || quiz.quiz_metadata?.video_url || '';
 
+          // For custom generated assessments, they have quiz_id starting with 'GEN-'
+          const quizIdVal = quiz.quiz_id?.startsWith('GEN-') 
+            ? quiz.quiz_id 
+            : (quiz.featured ? (quiz.quiz_id || 'FEATURED-ASSESSMENT-001') : (quiz.received_at || 'SYSTEM-QUIZ'));
+
           const newAttempt = {
             attemptId: newAttemptId,
-            quizId: quiz.featured ? (quiz.quiz_id || 'FEATURED-ASSESSMENT-001') : quiz.received_at,
+            quizId: quizIdVal,
             title,
             videoUrl,
             userName: name,
@@ -96,6 +101,8 @@ export default function Results() {
             certificateId: null,
             answers: state.answers,
             questions: quiz.questions,
+            provider: quiz.generation_metadata?.provider || null,
+            model: quiz.generation_metadata?.model || null,
           };
 
           if (user) {
