@@ -245,6 +245,8 @@ async function runGeneration(jobId, apiKey, keyMeta, inputs) {
     if (provider === 'openrouter') {
       model1 = useSame ? keyMeta.selected_model : (keyMeta.agent1_model || keyMeta.selected_model);
       model2 = useSame ? keyMeta.selected_model : (keyMeta.agent2_model || keyMeta.selected_model);
+      if (!model1) model1 = 'z-ai/glm-4.5-air:free';
+      if (!model2) model2 = 'openai/gpt-oss-120b:free';
     } else if (provider === 'openai') {
       model1 = useSame ? (keyMeta.selected_model || 'gpt-4o') : (keyMeta.agent1_model || 'gpt-4o');
       model2 = useSame ? (keyMeta.selected_model || 'gpt-4o') : (keyMeta.agent2_model || 'gpt-4o');

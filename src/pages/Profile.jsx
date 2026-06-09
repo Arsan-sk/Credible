@@ -13,10 +13,13 @@ function SearchableModelDropdown({ label, value, onChange, models, idPrefix }) {
     setSearch(value);
   }, [value]);
 
-  const filtered = models.filter(m =>
-    m.id.toLowerCase().includes(search.toLowerCase()) ||
-    m.name.toLowerCase().includes(search.toLowerCase())
-  );
+  const isSearching = isOpen && search !== value;
+  const filtered = isSearching
+    ? models.filter(m =>
+        m.id.toLowerCase().includes(search.toLowerCase()) ||
+        m.name.toLowerCase().includes(search.toLowerCase())
+      )
+    : models;
 
   return (
     <div className="searchable-dropdown-wrapper">
@@ -32,7 +35,10 @@ function SearchableModelDropdown({ label, value, onChange, models, idPrefix }) {
             setSearch(e.target.value);
             setIsOpen(true);
           }}
-          onFocus={() => setIsOpen(true)}
+          onFocus={(e) => {
+            setIsOpen(true);
+            e.target.select();
+          }}
           onBlur={() => {
             // Delay closing to allow clicking options
             setTimeout(() => {
@@ -83,9 +89,9 @@ export default function Profile() {
   
   // Provider Specific States
   const [provider, setProvider] = useState('openrouter');
-  const [selectedModel, setSelectedModel] = useState('google/gemini-2.5-flash');
-  const [agent1Model, setAgent1Model] = useState('meta-llama/llama-3.3-70b-instruct:free');
-  const [agent2Model, setAgent2Model] = useState('meta-llama/llama-3.3-70b-instruct:free');
+  const [selectedModel, setSelectedModel] = useState('z-ai/glm-4.5-air:free');
+  const [agent1Model, setAgent1Model] = useState('z-ai/glm-4.5-air:free');
+  const [agent2Model, setAgent2Model] = useState('openai/gpt-oss-120b:free');
   const [useSameModel, setUseSameModel] = useState(true);
   
   const [openrouterModels, setOpenrouterModels] = useState([]);
@@ -115,11 +121,12 @@ export default function Profile() {
       
       // Rich static list of models as fallback
       setOpenrouterModels([
-        { id: 'google/gemini-2.5-flash', name: 'Google: Gemini 2.5 Flash (Free)' },
-        { id: 'google/gemini-2.5-pro', name: 'Google: Gemini 2.5 Pro' },
+        { id: 'z-ai/glm-4.5-air:free', name: 'GLM 4.5 Air (Free)' },
+        { id: 'openai/gpt-oss-120b:free', name: 'GPT OSS 120B (Free)' },
         { id: 'meta-llama/llama-3.3-70b-instruct:free', name: 'Llama 3.3 70B Instruct (Free)' },
+        { id: 'google/gemini-2.5-flash', name: 'Google: Gemini 2.5 Flash' },
+        { id: 'google/gemini-2.5-pro', name: 'Google: Gemini 2.5 Pro' },
         { id: 'deepseek/deepseek-chat', name: 'DeepSeek Chat' },
-        { id: 'z-ai/glm-4.5-air', name: 'GLM 4.5 Air' },
         { id: 'qwen/qwen-2.5-72b-instruct', name: 'Qwen 2.5 72B Instruct' },
         { id: 'openai/gpt-4o-mini', name: 'OpenAI: GPT-4o Mini' },
         { id: 'openai/gpt-4o', name: 'OpenAI: GPT-4o' },
