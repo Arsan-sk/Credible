@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate, Link, useParams } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import {
@@ -27,6 +27,7 @@ export default function Results() {
   const [certId, setCertId] = useState(null);
   const [userName, setUserName] = useState('');
   const [currentAttemptId, setCurrentAttemptId] = useState(attemptId || null);
+  const saveInProgress = useRef(false);
 
   useEffect(() => {
     async function loadAttemptData() {
@@ -72,7 +73,8 @@ export default function Results() {
           if (attempt) {
             setCertId(attempt.certificateId);
           }
-        } else {
+        } else if (!saveInProgress.current) {
+          saveInProgress.current = true;
           // Save new attempt!
           const newAttemptId = `ATT-${Date.now()}-${Math.floor(1000 + Math.random() * 9000)}`;
           const title = quiz.assessment_profile?.assessment_title || quiz.assessment_profile?.source_video_title || quiz.title || quiz.video_title || quiz.quiz_metadata?.title || 'AI Learning Assessment';

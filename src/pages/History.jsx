@@ -80,21 +80,34 @@ export default function History() {
           </div>
         ) : (
           <div className="history-list">
-            {attempts.map((attempt, idx) => (
-              <div
-                key={attempt.attemptId}
-                className="history-card animate-fade-in-up"
-                style={{ animationDelay: `${(idx + 1) * 50}ms` }}
-              >
-                <div className="history-card-header">
-                  <div>
-                    <h3 className="history-card-title">{attempt.title}</h3>
-                    <span className="history-card-date">{formatDate(attempt.date)}</span>
+            {attempts.map((attempt, idx) => {
+              const isFeatured = attempt.quizId === 'FEATURED-ASSESSMENT-001';
+              const isUserGen = attempt.quizId && attempt.quizId.startsWith('GEN-');
+              
+              return (
+                <div
+                  key={attempt.attemptId}
+                  className="history-card animate-fade-in-up"
+                  style={{ animationDelay: `${(idx + 1) * 50}ms` }}
+                >
+                  <div className="history-card-header">
+                    <div>
+                      <div style={{ display: 'flex', gap: '8px', alignItems: 'center', marginBottom: '6px' }}>
+                        {isFeatured ? (
+                          <span className="badge badge-success animate-fade-in" style={{ fontSize: '0.7rem', padding: '2px 8px' }}>Featured Quiz</span>
+                        ) : isUserGen ? (
+                          <span className="badge badge-indigo animate-fade-in" style={{ fontSize: '0.7rem', padding: '2px 8px' }}>User Generated</span>
+                        ) : (
+                          <span className="badge badge-ghost animate-fade-in" style={{ fontSize: '0.7rem', padding: '2px 8px' }}>System Quiz</span>
+                        )}
+                      </div>
+                      <h3 className="history-card-title">{attempt.title}</h3>
+                      <span className="history-card-date">{formatDate(attempt.date)}</span>
+                    </div>
+                    <span className={`badge ${attempt.passed ? 'badge-success' : 'badge-error'}`}>
+                      {attempt.passed ? 'Passed' : 'Failed'}
+                    </span>
                   </div>
-                  <span className={`badge ${attempt.passed ? 'badge-success' : 'badge-error'}`}>
-                    {attempt.passed ? 'Passed' : 'Failed'}
-                  </span>
-                </div>
 
                 <div className="history-card-body">
                   <div className="history-metrics">
@@ -128,7 +141,8 @@ export default function History() {
                   )}
                 </div>
               </div>
-            ))}
+            );
+            })}
           </div>
         )}
       </div>

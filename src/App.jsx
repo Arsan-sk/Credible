@@ -13,6 +13,7 @@ import History from './pages/History';
 import Register from './pages/Register';
 import Login from './pages/Login';
 import Profile from './pages/Profile';
+import CreateAssessment from './pages/CreateAssessment';
 
 export default function App() {
   return (
@@ -24,6 +25,7 @@ export default function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/create-assessment" element={<CreateAssessment />} />
           <Route path="/assessment" element={<AssessmentEntry />} />
           <Route path="/quiz" element={<Quiz />} />
           <Route path="/results" element={<Results />} />

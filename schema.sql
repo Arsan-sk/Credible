@@ -288,3 +288,57 @@ CREATE INDEX IF NOT EXISTS idx_certificates_user_id ON public.certificates(user_
 CREATE INDEX IF NOT EXISTS idx_guest_attempts_guest_id ON public.guest_attempts(guest_id);
 CREATE INDEX IF NOT EXISTS idx_guest_certificates_guest_id ON public.guest_certificates(guest_id);
 CREATE INDEX IF NOT EXISTS idx_user_api_keys_user_id ON public.user_api_keys(user_id);
+
+
+-- ═══════════════════════════════════════════════════════════════════════════
+-- 9. USER GENERATED ASSESSMENTS
+-- ═══════════════════════════════════════════════════════════════════════════
+CREATE TABLE IF NOT EXISTS public.user_assessments (
+  id TEXT PRIMARY KEY,
+  user_id UUID REFERENCES auth.users(id) ON DELETE CASCADE NOT NULL,
+  quiz_data JSONB NOT NULL,
+  created_at TIMESTAMPTZ DEFAULT now()
+);
+
+ALTER TABLE public.user_assessments ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Users can insert own assessments"
+  ON public.user_assessments FOR INSERT
+  WITH CHECK (auth.uid() = user_id);
+
+CREATE POLICY "Anyone can read assessments"
+  ON public.user_assessments FOR SELECT
+  USING (true);
+
+-- ═══════════════════════════════════════════════════════════════════════════
+-- 10. GENERATION JOBS
+-- ═══════════════════════════════════════════════════════════════════════════
+CREATE TABLE IF NOT EXISTS public.credible_generation_jobs (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  user_id UUID REFERENCES auth.users(id) ON DELETE CASCADE NOT NULL,
+  status TEXT CHECK (status IN ('queued', 'processing', 'completed', 'failed')) DEFAULT 'queued',
+  started_at TIMESTAMPTZ DEFAULT now(),
+  completed_at TIMESTAMPTZ,
+  assessment_id TEXT REFERENCES public.user_assessments(id) ON DELETE SET NULL,
+  provider TEXT,
+  video_title TEXT,
+  error_message TEXT,
+  created_at TIMESTAMPTZ DEFAULT now()
+);
+
+ALTER TABLE public.credible_generation_jobs ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Users can read own generation jobs"
+  ON public.credible_generation_jobs FOR SELECT
+  USING (auth.uid() = user_id);
+
+CREATE POLICY "Users can insert own generation jobs"
+  ON public.credible_generation_jobs FOR INSERT
+  WITH CHECK (auth.uid() = user_id);
+
+CREATE POLICY "Users/Service role can update own generation jobs"
+  ON public.credible_generation_jobs FOR UPDATE
+  USING (auth.uid() = user_id);
+
+CREATE INDEX IF NOT EXISTS idx_user_assessments_user_id ON public.user_assessments(user_id);
+CREATE INDEX IF NOT EXISTS idx_credible_generation_jobs_user_id ON public.credible_generation_jobs(user_id);

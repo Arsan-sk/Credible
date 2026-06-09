@@ -29,6 +29,9 @@ export default function Header() {
           </Link>
           {user ? (
             <>
+              <Link to="/create-assessment" className="header-link" id="nav-create-assessment">
+                Create Assessment
+              </Link>
               <Link to="/history" className="header-link" id="nav-history">
                 History
               </Link>
