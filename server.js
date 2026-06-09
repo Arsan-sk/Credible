@@ -55,15 +55,22 @@ app.post('/webhook/quiz', (req, res) => {
   }
 });
 
+// ── Helper to read JSON file safely (stripping UTF-8 BOM if present) ─────────
+function readJsonFileSync(filePath) {
+  const content = fs.readFileSync(filePath, 'utf8').replace(/^\uFEFF/, '');
+  return JSON.parse(content);
+}
+
 // ── API: quiz app fetches current quiz ──────────────────────────────────────
 app.get('/api/quiz', (req, res) => {
   if (!fs.existsSync(QUIZ_FILE)) {
     return res.status(404).json({ error: 'No quiz loaded yet. Send data to POST /webhook/quiz first.' });
   }
   try {
-    const data = JSON.parse(fs.readFileSync(QUIZ_FILE, 'utf8'));
+    const data = readJsonFileSync(QUIZ_FILE);
     res.json(data);
-  } catch {
+  } catch (err) {
+    console.error('Error parsing quiz file:', err.message);
     res.status(500).json({ error: 'Corrupt quiz file.' });
   }
 });
@@ -76,9 +83,10 @@ app.get('/api/guest-quiz', (req, res) => {
     return res.status(404).json({ error: 'No guest quiz available.' });
   }
   try {
-    const data = JSON.parse(fs.readFileSync(GUEST_QUIZ_FILE, 'utf8'));
+    const data = readJsonFileSync(GUEST_QUIZ_FILE);
     res.json(data);
-  } catch {
+  } catch (err) {
+    console.error('Error parsing guest quiz file:', err.message);
     res.status(500).json({ error: 'Corrupt guest quiz file.' });
   }
 });

@@ -5,6 +5,7 @@ import './Auth.css';
 
 export default function Register() {
   const navigate = useNavigate();
+  const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
@@ -15,7 +16,19 @@ export default function Register() {
     setError(null);
 
     // Client-side validation
+    const trimmedEmail = email.trim().toLowerCase();
     const trimmedUser = username.trim().toLowerCase();
+
+    if (!trimmedEmail) {
+      setError('Please enter your email address.');
+      return;
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(trimmedEmail)) {
+      setError('Please enter a valid email address.');
+      return;
+    }
+
     if (trimmedUser.length < 3 || trimmedUser.length > 20) {
       setError('Username must be between 3 and 20 characters.');
       return;
@@ -49,10 +62,9 @@ export default function Register() {
         return;
       }
 
-      // 2. Register via Supabase Auth using synthetic email
-      const syntheticEmail = `${trimmedUser}@credible.com`;
+      // 2. Register via Supabase Auth using native email/password
       const { data, error: signUpError } = await supabase.auth.signUp({
-        email: syntheticEmail,
+        email: trimmedEmail,
         password: password,
         options: {
           data: {
@@ -62,6 +74,9 @@ export default function Register() {
       });
 
       if (signUpError) {
+        if (signUpError.message?.includes('Email signups are disabled') || signUpError.code === 'email_provider_disabled') {
+          throw new Error('Email signups are disabled in your Supabase project. Please enable the Email provider and disable "Confirm email" in the Supabase Dashboard under Authentication -> Providers -> Email.');
+        }
         throw new Error(signUpError.message);
       }
 
@@ -99,6 +114,24 @@ export default function Register() {
 
         <form onSubmit={handleRegister} className="auth-form">
           <div className="auth-group">
+            <label className="auth-label" htmlFor="register-email">
+              Email Address
+            </label>
+            <input
+              id="register-email"
+              type="email"
+              className="input"
+              placeholder="Enter your email address"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              disabled={loading}
+              required
+              autoFocus
+              autoComplete="email"
+            />
+          </div>
+
+          <div className="auth-group">
             <label className="auth-label" htmlFor="register-username">
               Username
             </label>
@@ -111,7 +144,6 @@ export default function Register() {
               onChange={(e) => setUsername(e.target.value)}
               disabled={loading}
               required
-              autoFocus
               autoComplete="username"
             />
           </div>
@@ -137,7 +169,7 @@ export default function Register() {
             id="btn-register-submit"
             type="submit"
             className="btn btn-primary btn-lg w-full"
-            disabled={loading || !username.trim() || !password}
+            disabled={loading || !email.trim() || !username.trim() || !password}
           >
             {loading ? 'Creating Account...' : 'Sign Up'}
           </button>

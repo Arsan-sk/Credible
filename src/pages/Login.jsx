@@ -5,7 +5,7 @@ import './Auth.css';
 
 export default function Login() {
   const navigate = useNavigate();
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -14,8 +14,8 @@ export default function Login() {
     e.preventDefault();
     setError(null);
 
-    const trimmedUser = username.trim().toLowerCase();
-    if (!trimmedUser || !password) {
+    const input = email.trim();
+    if (!input || !password) {
       setError('Please fill in all fields.');
       return;
     }
@@ -23,16 +23,33 @@ export default function Login() {
     setLoading(true);
 
     try {
-      const syntheticEmail = `${trimmedUser}@credible.com`;
-      const { data, error: signInError } = await supabase.auth.signInWithPassword({
-        email: syntheticEmail,
+      let finalEmail = input;
+      let isUsername = !input.includes('@');
+
+      if (isUsername) {
+        finalEmail = `${input.toLowerCase()}@credible.com`;
+      }
+
+      let { data, error: signInError } = await supabase.auth.signInWithPassword({
+        email: finalEmail,
         password: password,
       });
 
+      // Fallback for legacy users under the @credible.local domain
+      if (isUsername && signInError && (signInError.message.includes('Invalid login credentials') || signInError.status === 400)) {
+        const { data: fallbackData, error: fallbackError } = await supabase.auth.signInWithPassword({
+          email: `${input.toLowerCase()}@credible.local`,
+          password: password,
+        });
+        if (!fallbackError) {
+          data = fallbackData;
+          signInError = null;
+        }
+      }
+
       if (signInError) {
-        // Customize Supabase default errors to username context
         if (signInError.message.includes('Invalid login credentials')) {
-          throw new Error('Invalid username or password.');
+          throw new Error('Invalid email/username or password.');
         }
         throw new Error(signInError.message);
       }
@@ -69,20 +86,20 @@ export default function Login() {
 
         <form onSubmit={handleLogin} className="auth-form">
           <div className="auth-group">
-            <label className="auth-label" htmlFor="login-username">
-              Username
+            <label className="auth-label" htmlFor="login-email">
+              Email Address or Username
             </label>
             <input
-              id="login-username"
+              id="login-email"
               type="text"
               className="input"
-              placeholder="Enter your username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              placeholder="Enter your email or username"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               disabled={loading}
               required
               autoFocus
-              autoComplete="username"
+              autoComplete="email"
             />
           </div>
 
@@ -107,7 +124,7 @@ export default function Login() {
             id="btn-login-submit"
             type="submit"
             className="btn btn-primary btn-lg w-full"
-            disabled={loading || !username.trim() || !password}
+            disabled={loading || !email.trim() || !password}
           >
             {loading ? 'Logging in...' : 'Log In'}
           </button>

@@ -1,917 +1,925 @@
-﻿{
-    "quiz_metadata":  {
-                          "total_questions":  30,
-                          "passing_score":  70,
-                          "difficulty_distribution":  {
-                                                          "easy":  9,
-                                                          "medium":  12,
-                                                          "hard":  9
-                                                      }
-                      },
-    "questions":  [
-                      {
-                          "question_id":  "Q1",
-                          "topic_id":  "T1.1",
-                          "question_type":  "single-correct",
-                          "difficulty":  "easy",
-                          "question_text":  "Which of the following best describes the role of an activation function in a perceptron?",
-                          "options":  [
-                                          {
-                                              "option":  "A",
-                                              "text":  "It scales the input features.",
-                                              "is_correct":  false
-                                          },
-                                          {
-                                              "option":  "B",
-                                              "text":  "It introduces nonâ€‘linearity to allow the network to learn complex patterns.",
-                                              "is_correct":  true
-                                          },
-                                          {
-                                              "option":  "C",
-                                              "text":  "It normalizes the output to have zero mean.",
-                                              "is_correct":  false
-                                          },
-                                          {
-                                              "option":  "D",
-                                              "text":  "It reduces the dimensionality of the data.",
-                                              "is_correct":  false
-                                          }
-                                      ],
-                          "explanation":  "Activation functions like Sigmoid or ReLU add nonâ€‘linearity, enabling multilayer networks (MLPs) to model complex relationships beyond linear separability."
-                      },
-                      {
-                          "question_id":  "Q2",
-                          "topic_id":  "T1.1",
-                          "question_type":  "multi-select",
-                          "difficulty":  "easy",
-                          "question_text":  "Select all statements that are true about the ReLU activation function.",
-                          "options":  [
-                                          {
-                                              "option":  "A",
-                                              "text":  "It outputs zero for negative inputs.",
-                                              "is_correct":  true
-                                          },
-                                          {
-                                              "option":  "B",
-                                              "text":  "It suffers from vanishing gradients for large positive inputs.",
-                                              "is_correct":  false
-                                          },
-                                          {
-                                              "option":  "C",
-                                              "text":  "It is computationally inexpensive.",
-                                              "is_correct":  true
-                                          },
-                                          {
-                                              "option":  "D",
-                                              "text":  "It outputs values bounded between 0 and 1.",
-                                              "is_correct":  false
-                                          }
-                                      ],
-                          "explanation":  "ReLU = max(0, x); returns 0 for negatives, passes positive values unchanged, and is cheap to compute."
-                      },
-                      {
-                          "question_id":  "Q3",
-                          "topic_id":  "T1.2",
-                          "question_type":  "single-correct",
-                          "difficulty":  "easy",
-                          "question_text":  "Which loss function is most appropriate for a binary classification task?",
-                          "options":  [
-                                          {
-                                              "option":  "A",
-                                              "text":  "Mean Squared Error (MSE)",
-                                              "is_correct":  false
-                                          },
-                                          {
-                                              "option":  "B",
-                                              "text":  "Crossâ€‘Entropy Loss",
-                                              "is_correct":  true
-                                          },
-                                          {
-                                              "option":  "C",
-                                              "text":  "Huber Loss",
-                                              "is_correct":  false
-                                          },
-                                          {
-                                              "option":  "D",
-                                              "text":  "Kullbackâ€‘Leibler Divergence",
-                                              "is_correct":  false
-                                          }
-                                      ],
-                          "explanation":  "Binary crossâ€‘entropy directly models the probability of the two classes and provides stronger gradients for classification."
-                      },
-                      {
-                          "question_id":  "Q4",
-                          "topic_id":  "T1.2",
-                          "question_type":  "scenario",
-                          "difficulty":  "medium",
-                          "question_text":  "You notice training loss decreasing but validation loss remains high and unstable. Which optimizer change is most likely to improve generalization?",
-                          "options":  [
-                                          {
-                                              "option":  "A",
-                                              "text":  "Switch from Adam to plain Stochastic Gradient Descent with momentum.",
-                                              "is_correct":  true
-                                          },
-                                          {
-                                              "option":  "B",
-                                              "text":  "Increase the learning rate of Adam.",
-                                              "is_correct":  false
-                                          },
-                                          {
-                                              "option":  "C",
-                                              "text":  "Replace crossâ€‘entropy loss with MSE.",
-                                              "is_correct":  false
-                                          },
-                                          {
-                                              "option":  "D",
-                                              "text":  "Add more layers to the network without regularization.",
-                                              "is_correct":  false
-                                          }
-                                      ],
-                          "explanation":  "SGD with momentum often provides better generalization than adaptive methods like Adam, especially when overfitting is observed."
-                      },
-                      {
-                          "question_id":  "Q5",
-                          "topic_id":  "T2.1",
-                          "question_type":  "single-correct",
-                          "difficulty":  "easy",
-                          "question_text":  "What is the primary purpose of pooling layers in a CNN?",
-                          "options":  [
-                                          {
-                                              "option":  "A",
-                                              "text":  "To increase the number of parameters.",
-                                              "is_correct":  false
-                                          },
-                                          {
-                                              "option":  "B",
-                                              "text":  "To reduce spatial dimensions and control overfitting.",
-                                              "is_correct":  true
-                                          },
-                                          {
-                                              "option":  "C",
-                                              "text":  "To perform nonâ€‘linear activation.",
-                                              "is_correct":  false
-                                          },
-                                          {
-                                              "option":  "D",
-                                              "text":  "To convert images to vectors.",
-                                              "is_correct":  false
-                                          }
-                                      ],
-                          "explanation":  "Pooling (e.g., maxâ€‘pooling) downsamples feature maps, decreasing computational load and providing translation invariance."
-                      },
-                      {
-                          "question_id":  "Q6",
-                          "topic_id":  "T2.1",
-                          "question_type":  "multi-select",
-                          "difficulty":  "medium",
-                          "question_text":  "Which statements about Transfer Learning in CNNs are correct?",
-                          "options":  [
-                                          {
-                                              "option":  "A",
-                                              "text":  "Preâ€‘trained weights can be fineâ€‘tuned on a new dataset.",
-                                              "is_correct":  true
-                                          },
-                                          {
-                                              "option":  "B",
-                                              "text":  "It requires training the entire network from scratch.",
-                                              "is_correct":  false
-                                          },
-                                          {
-                                              "option":  "C",
-                                              "text":  "It is especially useful when the new dataset is small.",
-                                              "is_correct":  true
-                                          },
-                                          {
-                                              "option":  "D",
-                                              "text":  "It only works with VGGâ€‘style architectures.",
-                                              "is_correct":  false
-                                          }
-                                      ],
-                          "explanation":  "Transfer learning reâ€‘uses learned representations, often freezing early layers and fineâ€‘tuning later ones, making it valuable for limited data."
-                      },
-                      {
-                          "question_id":  "Q7",
-                          "topic_id":  "T2.2",
-                          "question_type":  "single-correct",
-                          "difficulty":  "easy",
-                          "question_text":  "What problem do LSTM cells specifically address in traditional RNNs?",
-                          "options":  [
-                                          {
-                                              "option":  "A",
-                                              "text":  "Exploding gradients",
-                                              "is_correct":  false
-                                          },
-                                          {
-                                              "option":  "B",
-                                              "text":  "Vanishing gradients over long sequences",
-                                              "is_correct":  true
-                                          },
-                                          {
-                                              "option":  "C",
-                                              "text":  "Lack of nonâ€‘linearity",
-                                              "is_correct":  false
-                                          },
-                                          {
-                                              "option":  "D",
-                                              "text":  "Insufficient model capacity",
-                                              "is_correct":  false
-                                          }
-                                      ],
-                          "explanation":  "LSTM gates regulate information flow, preserving gradients over long time steps and mitigating vanishing gradient issues."
-                      },
-                      {
-                          "question_id":  "Q8",
-                          "topic_id":  "T2.2",
-                          "question_type":  "scenario",
-                          "difficulty":  "hard",
-                          "question_text":  "You are training a GRUâ€‘based language model that collapses after 10 epochs, producing the same token repeatedly. Which modification is most likely to resolve this collapse?",
-                          "options":  [
-                                          {
-                                              "option":  "A",
-                                              "text":  "Add dropout between recurrent layers.",
-                                              "is_correct":  true
-                                          },
-                                          {
-                                              "option":  "B",
-                                              "text":  "Replace GRU with a vanilla RNN.",
-                                              "is_correct":  false
-                                          },
-                                          {
-                                              "option":  "C",
-                                              "text":  "Increase the batch size to 512.",
-                                              "is_correct":  false
-                                          },
-                                          {
-                                              "option":  "D",
-                                              "text":  "Switch the loss to Mean Squared Error.",
-                                              "is_correct":  false
-                                          }
-                                      ],
-                          "explanation":  "Dropout helps regularize recurrent connections, preventing the model from overâ€‘fitting to a single token output."
-                      },
-                      {
-                          "question_id":  "Q9",
-                          "topic_id":  "T3.1",
-                          "question_type":  "code-output",
-                          "difficulty":  "medium",
-                          "question_text":  "Given the following PyTorch snippet used in the CNN Image Classification project, what will be printed?\n```python\nimport torch\nx = torch.randn(1, 3, 64, 64)\nconv = torch.nn.Conv2d(3, 16, kernel_size=3, stride=2, padding=1)\nout = conv(x)\nprint(out.shape)\n```",
-                          "options":  [
-                                          {
-                                              "option":  "A",
-                                              "text":  "(1, 16, 32, 32)",
-                                              "is_correct":  true
-                                          },
-                                          {
-                                              "option":  "B",
-                                              "text":  "(1, 16, 64, 64)",
-                                              "is_correct":  false
-                                          },
-                                          {
-                                              "option":  "C",
-                                              "text":  "(1, 3, 62, 62)",
-                                              "is_correct":  false
-                                          },
-                                          {
-                                              "option":  "D",
-                                              "text":  "(1, 16, 31, 31)",
-                                              "is_correct":  false
-                                          }
-                                      ],
-                          "explanation":  "Stride 2 halves the spatial dimensions; padding 1 keeps size consistent with kernel 3, so 64 â†’ 32."
-                      },
-                      {
-                          "question_id":  "Q10",
-                          "topic_id":  "T3.1",
-                          "question_type":  "scenario",
-                          "difficulty":  "hard",
-                          "question_text":  "During the Image Classification project you observe that validation accuracy plateaus at 70% while training accuracy reaches 95%. Which combination of actions is most appropriate?",
-                          "options":  [
-                                          {
-                                              "option":  "A",
-                                              "text":  "Add data augmentation and increase dropout rate.",
-                                              "is_correct":  true
-                                          },
-                                          {
-                                              "option":  "B",
-                                              "text":  "Increase learning rate and remove regularization.",
-                                              "is_correct":  false
-                                          },
-                                          {
-                                              "option":  "C",
-                                              "text":  "Reduce model depth and switch to MSE loss.",
-                                              "is_correct":  false
-                                          },
-                                          {
-                                              "option":  "D",
-                                              "text":  "Stop training early after 5 epochs.",
-                                              "is_correct":  false
-                                          }
-                                      ],
-                          "explanation":  "Augmentation and dropout combat overfitting, which is indicated by the gap between training and validation performance."
-                      },
-                      {
-                          "question_id":  "Q11",
-                          "topic_id":  "T3.2",
-                          "question_type":  "single-correct",
-                          "difficulty":  "easy",
-                          "question_text":  "In the Sentiment Analysis project, which layer is used to convert integer word indices into dense vectors?",
-                          "options":  [
-                                          {
-                                              "option":  "A",
-                                              "text":  "Embedding Layer",
-                                              "is_correct":  true
-                                          },
-                                          {
-                                              "option":  "B",
-                                              "text":  "Dense Layer",
-                                              "is_correct":  false
-                                          },
-                                          {
-                                              "option":  "C",
-                                              "text":  "Convolutional Layer",
-                                              "is_correct":  false
-                                          },
-                                          {
-                                              "option":  "D",
-                                              "text":  "Flatten Layer",
-                                              "is_correct":  false
-                                          }
-                                      ],
-                          "explanation":  "Embedding layers map each token index to a learned vector representation."
-                      },
-                      {
-                          "question_id":  "Q12",
-                          "topic_id":  "T3.2",
-                          "question_type":  "multi-select",
-                          "difficulty":  "medium",
-                          "question_text":  "Select all techniques that can improve the RNN Sentiment Analyzer\u0027s performance on a small dataset.",
-                          "options":  [
-                                          {
-                                              "option":  "A",
-                                              "text":  "Use preâ€‘trained word embeddings (e.g., GloVe).",
-                                              "is_correct":  true
-                                          },
-                                          {
-                                              "option":  "B",
-                                              "text":  "Increase the number of hidden units to 1024.",
-                                              "is_correct":  false
-                                          },
-                                          {
-                                              "option":  "C",
-                                              "text":  "Apply dropout on the recurrent connections.",
-                                              "is_correct":  true
-                                          },
-                                          {
-                                              "option":  "D",
-                                              "text":  "Remove the embedding layer and feed raw indices.",
-                                              "is_correct":  false
-                                          }
-                                      ],
-                          "explanation":  "Preâ€‘trained embeddings and dropout help with limited data; excessively large hidden layers may overfit."
-                      },
-                      {
-                          "question_id":  "Q13",
-                          "topic_id":  "T4.1",
-                          "question_type":  "single-correct",
-                          "difficulty":  "medium",
-                          "question_text":  "Which of the following best characterizes the training dynamics of a GAN?",
-                          "options":  [
-                                          {
-                                              "option":  "A",
-                                              "text":  "The generator and discriminator are trained sequentially, competing in a minimax game.",
-                                              "is_correct":  true
-                                          },
-                                          {
-                                              "option":  "B",
-                                              "text":  "Only the generator is optimized; the discriminator is fixed.",
-                                              "is_correct":  false
-                                          },
-                                          {
-                                              "option":  "C",
-                                              "text":  "Both networks share the same loss function.",
-                                              "is_correct":  false
-                                          },
-                                          {
-                                              "option":  "D",
-                                              "text":  "Training stops once the discriminator loss reaches zero.",
-                                              "is_correct":  false
-                                          }
-                                      ],
-                          "explanation":  "GANs involve a twoâ€‘player minimax game where the generator tries to fool a discriminator that is simultaneously learning to distinguish real from fake."
-                      },
-                      {
-                          "question_id":  "Q14",
-                          "topic_id":  "T4.1",
-                          "question_type":  "scenario",
-                          "difficulty":  "hard",
-                          "question_text":  "You notice mode collapse in your GAN: the generator produces nearly identical images. Which corrective action is most likely to mitigate this issue?",
-                          "options":  [
-                                          {
-                                              "option":  "A",
-                                              "text":  "Introduce label smoothing for the discriminator.",
-                                              "is_correct":  true
-                                          },
-                                          {
-                                              "option":  "B",
-                                              "text":  "Increase the learning rate of the generator drastically.",
-                                              "is_correct":  false
-                                          },
-                                          {
-                                              "option":  "C",
-                                              "text":  "Remove batch normalization from the discriminator.",
-                                              "is_correct":  false
-                                          },
-                                          {
-                                              "option":  "D",
-                                              "text":  "Switch the loss to Mean Squared Error.",
-                                              "is_correct":  false
-                                          }
-                                      ],
-                          "explanation":  "Label smoothing prevents the discriminator from becoming overly confident, which helps reduce mode collapse."
-                      },
-                      {
-                          "question_id":  "Q15",
-                          "topic_id":  "T4.2",
-                          "question_type":  "single-correct",
-                          "difficulty":  "easy",
-                          "question_text":  "Quantization primarily reduces a model\u0027s:",
-                          "options":  [
-                                          {
-                                              "option":  "A",
-                                              "text":  "Number of layers",
-                                              "is_correct":  false
-                                          },
-                                          {
-                                              "option":  "B",
-                                              "text":  "Floatingâ€‘point precision of weights and activations",
-                                              "is_correct":  true
-                                          },
-                                          {
-                                              "option":  "C",
-                                              "text":  "Training dataset size",
-                                              "is_correct":  false
-                                          },
-                                          {
-                                              "option":  "D",
-                                              "text":  "Number of output classes",
-                                              "is_correct":  false
-                                          }
-                                      ],
-                          "explanation":  "Quantization converts 32â€‘bit floats to lowerâ€‘precision (e.g., 8â€‘bit) representations, reducing memory and compute."
-                      },
-                      {
-                          "question_id":  "Q16",
-                          "topic_id":  "T4.2",
-                          "question_type":  "code-output",
-                          "difficulty":  "medium",
-                          "question_text":  "What will be the printed size of a TensorFlow Lite model after applying postâ€‘training quantization, assuming the original Float32 model is 8â€¯MB?\n```python\nconverter = tf.lite.TFLiteConverter.from_keras_model(model)\nconverter.optimizations = [tf.lite.Optimize.DEFAULT]\nquantized_tflite = converter.convert()\nprint(len(quantized_tflite) / (1024*1024))\n```",
-                          "options":  [
-                                          {
-                                              "option":  "A",
-                                              "text":  "~2 MB",
-                                              "is_correct":  true
-                                          },
-                                          {
-                                              "option":  "B",
-                                              "text":  "~8 MB",
-                                              "is_correct":  false
-                                          },
-                                          {
-                                              "option":  "C",
-                                              "text":  "~0.5 MB",
-                                              "is_correct":  false
-                                          },
-                                          {
-                                              "option":  "D",
-                                              "text":  "~16 MB",
-                                              "is_correct":  false
-                                          }
-                                      ],
-                          "explanation":  "Postâ€‘training quantization typically reduces model size by 4Ã—, so an 8â€¯MB float model becomes roughly 2â€¯MB."
-                      },
-                      {
-                          "question_id":  "Q17",
-                          "topic_id":  "T1.1",
-                          "question_type":  "single-correct",
-                          "difficulty":  "medium",
-                          "question_text":  "When stacking multiple perceptrons to form an MLP, which statement about depth vs. width is accurate?",
-                          "options":  [
-                                          {
-                                              "option":  "A",
-                                              "text":  "Increasing depth always reduces model capacity.",
-                                              "is_correct":  false
-                                          },
-                                          {
-                                              "option":  "B",
-                                              "text":  "A deeper network can represent certain functions exponentially more efficiently than a wide shallow network.",
-                                              "is_correct":  true
-                                          },
-                                          {
-                                              "option":  "C",
-                                              "text":  "Width and depth are interchangeable without effect on expressiveness.",
-                                              "is_correct":  false
-                                          },
-                                          {
-                                              "option":  "D",
-                                              "text":  "Only width matters for universal approximation.",
-                                              "is_correct":  false
-                                          }
-                                      ],
-                          "explanation":  "Depth allows hierarchical feature composition; some functions need exponentially more neurons if represented shallowly."
-                      },
-                      {
-                          "question_id":  "Q18",
-                          "topic_id":  "T1.2",
-                          "question_type":  "multi-select",
-                          "difficulty":  "hard",
-                          "question_text":  "Which optimizer characteristics help mitigate the vanishing gradient problem in deep networks?",
-                          "options":  [
-                                          {
-                                              "option":  "A",
-                                              "text":  "Momentum term",
-                                              "is_correct":  true
-                                          },
-                                          {
-                                              "option":  "B",
-                                              "text":  "Adaptive learning rates (e.g., Adam)",
-                                              "is_correct":  true
-                                          },
-                                          {
-                                              "option":  "C",
-                                              "text":  "Constant high learning rate",
-                                              "is_correct":  false
-                                          },
-                                          {
-                                              "option":  "D",
-                                              "text":  "Weight decay only",
-                                              "is_correct":  false
-                                          }
-                                      ],
-                          "explanation":  "Momentum and adaptive methods preserve gradient magnitude across layers, alleviating vanishing issues."
-                      },
-                      {
-                          "question_id":  "Q19",
-                          "topic_id":  "T2.1",
-                          "question_type":  "scenario",
-                          "difficulty":  "hard",
-                          "question_text":  "You need to adapt a preâ€‘trained VGG model for a 10â€‘class medical imaging task with limited data. Which transferâ€‘learning strategy yields the best tradeâ€‘off between performance and training time?",
-                          "options":  [
-                                          {
-                                              "option":  "A",
-                                              "text":  "Freeze all convolutional layers, replace the final dense layer with a new 10â€‘unit softmax, and train only this new layer.",
-                                              "is_correct":  true
-                                          },
-                                          {
-                                              "option":  "B",
-                                              "text":  "Retrain the entire VGG network from random initialization.",
-                                              "is_correct":  false
-                                          },
-                                          {
-                                              "option":  "C",
-                                              "text":  "Freeze only the first convolutional block, fineâ€‘tune the rest, and increase learning rate globally.",
-                                              "is_correct":  false
-                                          },
-                                          {
-                                              "option":  "D",
-                                              "text":  "Replace convolutional layers with fully connected layers.",
-                                              "is_correct":  false
-                                          }
-                                      ],
-                          "explanation":  "Freezing feature extractors leverages learned representations while minimizing overâ€‘fitting on small data."
-                      },
-                      {
-                          "question_id":  "Q20",
-                          "topic_id":  "T2.2",
-                          "question_type":  "single-correct",
-                          "difficulty":  "medium",
-                          "question_text":  "Biâ€‘directional RNNs are particularly useful because they:",
-                          "options":  [
-                                          {
-                                              "option":  "A",
-                                              "text":  "Process sequences twice as fast.",
-                                              "is_correct":  false
-                                          },
-                                          {
-                                              "option":  "B",
-                                              "text":  "Capture context from both past and future tokens.",
-                                              "is_correct":  true
-                                          },
-                                          {
-                                              "option":  "C",
-                                              "text":  "Require fewer parameters than unidirectional RNNs.",
-                                              "is_correct":  false
-                                          },
-                                          {
-                                              "option":  "D",
-                                              "text":  "Eliminate the need for embeddings.",
-                                              "is_correct":  false
-                                          }
-                                      ],
-                          "explanation":  "Biâ€‘directional RNNs run a forward and backward pass, providing each time step with full context."
-                      },
-                      {
-                          "question_id":  "Q21",
-                          "topic_id":  "T3.1",
-                          "question_type":  "code-output",
-                          "difficulty":  "hard",
-                          "question_text":  "What will be the final shape of the tensor after the following PyTorch sequential block, given an input of shape (batch=8, channels=3, 128, 128)?\n```python\nmodel = torch.nn.Sequential(\n    torch.nn.Conv2d(3, 32, kernel_size=3, stride=1, padding=1),\n    torch.nn.ReLU(),\n    torch.nn.MaxPool2d(kernel_size=2),\n    torch.nn.Conv2d(32, 64, kernel_size=3, stride=1, padding=1),\n    torch.nn.ReLU(),\n    torch.nn.AdaptiveAvgPool2d((1,1))\n)\noutput = model(torch.randn(8,3,128,128))\nprint(output.shape)\n```",
-                          "options":  [
-                                          {
-                                              "option":  "A",
-                                              "text":  "(8, 64, 1, 1)",
-                                              "is_correct":  true
-                                          },
-                                          {
-                                              "option":  "B",
-                                              "text":  "(8, 64, 16, 16)",
-                                              "is_correct":  false
-                                          },
-                                          {
-                                              "option":  "C",
-                                              "text":  "(8, 32, 64, 64)",
-                                              "is_correct":  false
-                                          },
-                                          {
-                                              "option":  "D",
-                                              "text":  "(8, 64, 128, 128)",
-                                              "is_correct":  false
-                                          }
-                                      ],
-                          "explanation":  "Two conv layers keep spatial size; one maxâ€‘pool halves to 64Ã—64, adaptive avgâ€‘pool forces 1Ã—1."
-                      },
-                      {
-                          "question_id":  "Q22",
-                          "topic_id":  "T3.2",
-                          "question_type":  "scenario",
-                          "difficulty":  "hard",
-                          "question_text":  "During training the sentiment analyzer, validation loss spikes after epoch 3 then resumes decreasing. Which phenomenon is most likely and what is a practical remedy?",
-                          "options":  [
-                                          {
-                                              "option":  "A",
-                                              "text":  "Learning rate too high â†’ Reduce learning rate or use a scheduler.",
-                                              "is_correct":  true
-                                          },
-                                          {
-                                              "option":  "B",
-                                              "text":  "Data leakage â†’ Remove validation data from training.",
-                                              "is_correct":  false
-                                          },
-                                          {
-                                              "option":  "C",
-                                              "text":  "Model underâ€‘fitting â†’ Add more layers.",
-                                              "is_correct":  false
-                                          },
-                                          {
-                                              "option":  "D",
-                                              "text":  "Gradient explosion â†’ Switch to SGD without momentum.",
-                                              "is_correct":  false
-                                          }
-                                      ],
-                          "explanation":  "A sudden loss rise often signals a learning rate thatâ€™s too aggressive; scheduling smooths training."
-                      },
-                      {
-                          "question_id":  "Q23",
-                          "topic_id":  "T4.1",
-                          "question_type":  "multi-select",
-                          "difficulty":  "medium",
-                          "question_text":  "Which statements about Variational Autoencoders (VAEs) are correct?",
-                          "options":  [
-                                          {
-                                              "option":  "A",
-                                              "text":  "They learn a probabilistic latent space.",
-                                              "is_correct":  true
-                                          },
-                                          {
-                                              "option":  "B",
-                                              "text":  "The decoder receives deterministic codes only.",
-                                              "is_correct":  false
-                                          },
-                                          {
-                                              "option":  "C",
-                                              "text":  "KLâ€‘divergence is part of the loss function.",
-                                              "is_correct":  true
-                                          },
-                                          {
-                                              "option":  "D",
-                                              "text":  "VAEs cannot generate new samples.",
-                                              "is_correct":  false
-                                          }
-                                      ],
-                          "explanation":  "VAEs model distributions; KL divergence regularizes latent space, enabling generation."
-                      },
-                      {
-                          "question_id":  "Q24",
-                          "topic_id":  "T4.2",
-                          "question_type":  "single-correct",
-                          "difficulty":  "medium",
-                          "question_text":  "Model compression via pruning primarily targets:",
-                          "options":  [
-                                          {
-                                              "option":  "A",
-                                              "text":  "Removing redundant weights/connections.",
-                                              "is_correct":  true
-                                          },
-                                          {
-                                              "option":  "B",
-                                              "text":  "Reducing input feature dimensions.",
-                                              "is_correct":  false
-                                          },
-                                          {
-                                              "option":  "C",
-                                              "text":  "Changing activation functions.",
-                                              "is_correct":  false
-                                          },
-                                          {
-                                              "option":  "D",
-                                              "text":  "Increasing batch size.",
-                                              "is_correct":  false
-                                          }
-                                      ],
-                          "explanation":  "Pruning eliminates weights with little impact, shrinking the model size and inference cost."
-                      },
-                      {
-                          "question_id":  "Q25",
-                          "topic_id":  "T1.2",
-                          "question_type":  "scenario",
-                          "difficulty":  "easy",
-                          "question_text":  "If a modelâ€™s loss plateaus early during training, which firstâ€‘order tactic is most appropriate?",
-                          "options":  [
-                                          {
-                                              "option":  "A",
-                                              "text":  "Reduce the learning rate.",
-                                              "is_correct":  true
-                                          },
-                                          {
-                                              "option":  "B",
-                                              "text":  "Increase the batch size dramatically.",
-                                              "is_correct":  false
-                                          },
-                                          {
-                                              "option":  "C",
-                                              "text":  "Switch to a larger network without changing other settings.",
-                                              "is_correct":  false
-                                          },
-                                          {
-                                              "option":  "D",
-                                              "text":  "Remove all regularization.",
-                                              "is_correct":  false
-                                          }
-                                      ],
-                          "explanation":  "A smaller learning rate can help the optimizer find finer minima when progress stalls."
-                      },
-                      {
-                          "question_id":  "Q26",
-                          "topic_id":  "T2.1",
-                          "question_type":  "single-correct",
-                          "difficulty":  "hard",
-                          "question_text":  "In a ResNet block, the skip connection helps address which deep network problem?",
-                          "options":  [
-                                          {
-                                              "option":  "A",
-                                              "text":  "Overâ€‘parameterization",
-                                              "is_correct":  false
-                                          },
-                                          {
-                                              "option":  "B",
-                                              "text":  "Vanishing/exploding gradients",
-                                              "is_correct":  true
-                                          },
-                                          {
-                                              "option":  "C",
-                                              "text":  "Lack of nonâ€‘linearity",
-                                              "is_correct":  false
-                                          },
-                                          {
-                                              "option":  "D",
-                                              "text":  "Insufficient training data",
-                                              "is_correct":  false
-                                          }
-                                      ],
-                          "explanation":  "Skip connections provide alternate gradient paths, stabilizing training of very deep nets."
-                      },
-                      {
-                          "question_id":  "Q27",
-                          "topic_id":  "T2.2",
-                          "question_type":  "single-correct",
-                          "difficulty":  "medium",
-                          "question_text":  "Which gating mechanism is unique to GRU cells compared to LSTM cells?",
-                          "options":  [
-                                          {
-                                              "option":  "A",
-                                              "text":  "Forget gate",
-                                              "is_correct":  false
-                                          },
-                                          {
-                                              "option":  "B",
-                                              "text":  "Reset gate",
-                                              "is_correct":  true
-                                          },
-                                          {
-                                              "option":  "C",
-                                              "text":  "Output gate",
-                                              "is_correct":  false
-                                          },
-                                          {
-                                              "option":  "D",
-                                              "text":  "Input gate",
-                                              "is_correct":  false
-                                          }
-                                      ],
-                          "explanation":  "GRUs have reset and update gates; they lack separate input and forget gates found in LSTMs."
-                      },
-                      {
-                          "question_id":  "Q28",
-                          "topic_id":  "T3.1",
-                          "question_type":  "code-output",
-                          "difficulty":  "hard",
-                          "question_text":  "What does the following TensorFlow code print?\n```python\nimport tensorflow as tf\nmodel = tf.keras.applications.MobileNetV2(weights=None, input_shape=(128,128,3), classes=5)\nmodel.compile(optimizer=\u0027adam\u0027, loss=\u0027sparse_categorical_crossentropy\u0027)\nprint(len(model.trainable_variables))\n```",
-                          "options":  [
-                                          {
-                                              "option":  "A",
-                                              "text":  "Around 150",
-                                              "is_correct":  true
-                                          },
-                                          {
-                                              "option":  "B",
-                                              "text":  "0",
-                                              "is_correct":  false
-                                          },
-                                          {
-                                              "option":  "C",
-                                              "text":  "5",
-                                              "is_correct":  false
-                                          },
-                                          {
-                                              "option":  "D",
-                                              "text":  "Approximately 1000",
-                                              "is_correct":  false
-                                          }
-                                      ],
-                          "explanation":  "MobileNetV2 has roughly 150 trainable weight tensors (kernels and biases across layers)."
-                      },
-                      {
-                          "question_id":  "Q29",
-                          "topic_id":  "T3.2",
-                          "question_type":  "scenario",
-                          "difficulty":  "medium",
-                          "question_text":  "Your sentiment model is biased toward positive predictions. Which modification directly addresses class imbalance?",
-                          "options":  [
-                                          {
-                                              "option":  "A",
-                                              "text":  "Apply classâ€‘weighted crossâ€‘entropy.",
-                                              "is_correct":  true
-                                          },
-                                          {
-                                              "option":  "B",
-                                              "text":  "Increase embedding dimension size.",
-                                              "is_correct":  false
-                                          },
-                                          {
-                                              "option":  "C",
-                                              "text":  "Add more convolutional layers.",
-                                              "is_correct":  false
-                                          },
-                                          {
-                                              "option":  "D",
-                                              "text":  "Switch optimizer to RMSprop.",
-                                              "is_correct":  false
-                                          }
-                                      ],
-                          "explanation":  "Class weighting penalizes the majority class more, helping the model learn minority class patterns."
-                      },
-                      {
-                          "question_id":  "Q30",
-                          "topic_id":  "T4.2",
-                          "question_type":  "single-correct",
-                          "difficulty":  "hard",
-                          "question_text":  "When deploying a model with TensorFlow Lite on an edge device, which step is essential to ensure compatibility with the device\u0027s hardware accelerator?",
-                          "options":  [
-                                          {
-                                              "option":  "A",
-                                              "text":  "Enable the delegate (e.g., NNAPI or GPU) during conversion.",
-                                              "is_correct":  true
-                                          },
-                                          {
-                                              "option":  "B",
-                                              "text":  "Remove all ReLU activations.",
-                                              "is_correct":  false
-                                          },
-                                          {
-                                              "option":  "C",
-                                              "text":  "Increase the batch size to 256.",
-                                              "is_correct":  false
-                                          },
-                                          {
-                                              "option":  "D",
-                                              "text":  "Train the model with a batch size of 1.",
-                                              "is_correct":  false
-                                          }
-                                      ],
-                          "explanation":  "Specifying the appropriate delegate lets TFLite use the deviceâ€™s accelerator (GPU, DSP, NNAPI) for faster inference."
-                      }
-                  ],
-    "received_at":  "2026-06-06T10:56:27.020Z",
-    "featured":  true,
-    "quiz_id":  "FEATURED-ASSESSMENT-001",
-    "title":  "Deep Learning Fundamentals"
+{
+  "quiz_metadata": {
+    "total_questions": 30,
+    "passing_score": 70,
+    "difficulty_distribution": {
+      "easy": 9,
+      "medium": 12,
+      "hard": 9
+    }
+  },
+  "assessment_profile": {
+    "assessment_title": "Full Stack Web Development Professional Certification Quiz",
+    "source_video_title": "Full Stack Web Development",
+    "source_video_url": "https://youtu.be/nu_pCVPKzTk?si=sN1nCVOMdeQ-nJBp",
+    "difficulty_rating": "intermediate",
+    "knowledge_scope_score": 85,
+    "topics_count": 18,
+    "projects_count": 3,
+    "estimated_learning_hours": 25,
+    "assessment_weight": "standard"
+  },
+  "questions": [
+    {
+      "question_id": "Q1",
+      "topic_id": "T1.1",
+      "question_type": "single-correct",
+      "difficulty": "easy",
+      "question_text": "Which layer of the client‑server model is responsible for rendering HTML received from the server?",
+      "options": [
+        {
+          "option": "A",
+          "text": "Database layer",
+          "is_correct": false
+        },
+        {
+          "option": "B",
+          "text": "Presentation layer (browser)",
+          "is_correct": true
+        },
+        {
+          "option": "C",
+          "text": "Application server",
+          "is_correct": false
+        },
+        {
+          "option": "D",
+          "text": "Network transport layer",
+          "is_correct": false
+        }
+      ],
+      "explanation": "The browser (presentation layer) interprets HTML and displays it to the user."
+    },
+    {
+      "question_id": "Q2",
+      "topic_id": "T1.1",
+      "question_type": "single-correct",
+      "difficulty": "easy",
+      "question_text": "HTTPS differs from HTTP primarily because it:",
+      "options": [
+        {
+          "option": "A",
+          "text": "Uses a different port number",
+          "is_correct": false
+        },
+        {
+          "option": "B",
+          "text": "Encrypts data using TLS/SSL",
+          "is_correct": true
+        },
+        {
+          "option": "C",
+          "text": "Runs on a separate protocol stack",
+          "is_correct": false
+        },
+        {
+          "option": "D",
+          "text": "Does not require DNS",
+          "is_correct": false
+        }
+      ],
+      "explanation": "HTTPS adds TLS/SSL encryption to the HTTP protocol, securing data in transit."
+    },
+    {
+      "question_id": "Q3",
+      "topic_id": "T1.2",
+      "question_type": "single-correct",
+      "difficulty": "easy",
+      "question_text": "Which command initializes a new Git repository in the current directory?",
+      "options": [
+        {
+          "option": "A",
+          "text": "git start",
+          "is_correct": false
+        },
+        {
+          "option": "B",
+          "text": "git init",
+          "is_correct": true
+        },
+        {
+          "option": "C",
+          "text": "git create",
+          "is_correct": false
+        },
+        {
+          "option": "D",
+          "text": "git new",
+          "is_correct": false
+        }
+      ],
+      "explanation": "`git init` creates a .git folder and starts tracking the project."
+    },
+    {
+      "question_id": "Q4",
+      "topic_id": "T2.1",
+      "question_type": "single-correct",
+      "difficulty": "easy",
+      "question_text": "Which HTML5 element is most appropriate for the main navigation links of a site?",
+      "options": [
+        {
+          "option": "A",
+          "text": "<section>",
+          "is_correct": false
+        },
+        {
+          "option": "B",
+          "text": "<nav>",
+          "is_correct": true
+        },
+        {
+          "option": "C",
+          "text": "<article>",
+          "is_correct": false
+        },
+        {
+          "option": "D",
+          "text": "<aside>",
+          "is_correct": false
+        }
+      ],
+      "explanation": "The <nav> element semantically represents a set of navigation links."
+    },
+    {
+      "question_id": "Q5",
+      "topic_id": "T2.2",
+      "question_type": "multi-select",
+      "difficulty": "easy",
+      "question_text": "Select all CSS properties that are part of the Flexbox layout model:",
+      "options": [
+        {
+          "option": "A",
+          "text": "flex-direction",
+          "is_correct": true
+        },
+        {
+          "option": "B",
+          "text": "grid-template-columns",
+          "is_correct": false
+        },
+        {
+          "option": "C",
+          "text": "justify-content",
+          "is_correct": true
+        },
+        {
+          "option": "D",
+          "text": "align-items",
+          "is_correct": true
+        }
+      ],
+      "explanation": "flex-direction, justify-content, and align-items are Flexbox properties; grid-template-columns belongs to CSS Grid."
+    },
+    {
+      "question_id": "Q6",
+      "topic_id": "T2.2",
+      "question_type": "scenario",
+      "difficulty": "medium",
+      "question_text": "You need a layout that displays three columns on desktop, two columns on tablet, and a single column on mobile. Which CSS technique best accomplishes this with minimal code?",
+      "options": [
+        {
+          "option": "A",
+          "text": "Multiple @media queries with float-based columns",
+          "is_correct": false
+        },
+        {
+          "option": "B",
+          "text": "CSS Grid with repeat(auto-fit, minmax(250px, 1fr))",
+          "is_correct": true
+        },
+        {
+          "option": "C",
+          "text": "Flexbox with flex-wrap and fixed widths",
+          "is_correct": false
+        },
+        {
+          "option": "D",
+          "text": "Absolute positioning for each column",
+          "is_correct": false
+        }
+      ],
+      "explanation": "CSS Grid's auto-fit/minmax pattern automatically adjusts column count based on viewport width."
+    },
+    {
+      "question_id": "Q7",
+      "topic_id": "T2.3",
+      "question_type": "single-correct",
+      "difficulty": "easy",
+      "question_text": "What does the following JavaScript syntax do?\n\nconst { name, age } = user;",
+      "options": [
+        {
+          "option": "A",
+          "text": "Creates a new object named name and age",
+          "is_correct": false
+        },
+        {
+          "option": "B",
+          "text": "Destructures the user object into variables name and age",
+          "is_correct": true
+        },
+        {
+          "option": "C",
+          "text": "Assigns default values to user",
+          "is_correct": false
+        },
+        {
+          "option": "D",
+          "text": "Defines a function called user",
+          "is_correct": false
+        }
+      ],
+      "explanation": "Object destructuring extracts the specified properties into standalone variables."
+    },
+    {
+      "question_id": "Q8",
+      "topic_id": "T2.3",
+      "question_type": "code-output",
+      "difficulty": "medium",
+      "question_text": "What is logged to the console?\n\n```js\nconst fetchData = async () => {\n  return 42;\n};\nfetchData().then(console.log);\n```",
+      "options": [
+        {
+          "option": "A",
+          "text": "Promise { <pending> }",
+          "is_correct": false
+        },
+        {
+          "option": "B",
+          "text": "42",
+          "is_correct": true
+        },
+        {
+          "option": "C",
+          "text": "undefined",
+          "is_correct": false
+        },
+        {
+          "option": "D",
+          "text": "Error: async function must be awaited",
+          "is_correct": false
+        }
+      ],
+      "explanation": "The async function returns a resolved promise with value 42; .then logs 42."
+    },
+    {
+      "question_id": "Q9",
+      "topic_id": "T3.1",
+      "question_type": "single-correct",
+      "difficulty": "easy",
+      "question_text": "In React, JSX allows you to:",
+      "options": [
+        {
+          "option": "A",
+          "text": "Write HTML directly inside JavaScript files",
+          "is_correct": true
+        },
+        {
+          "option": "B",
+          "text": "Render components without a virtual DOM",
+          "is_correct": false
+        },
+        {
+          "option": "C",
+          "text": "Avoid using props",
+          "is_correct": false
+        },
+        {
+          "option": "D",
+          "text": "Compile to pure CSS",
+          "is_correct": false
+        }
+      ],
+      "explanation": "JSX is a syntax extension that mixes HTML‑like markup with JavaScript."
+    },
+    {
+      "question_id": "Q10",
+      "topic_id": "T3.1",
+      "question_type": "single-correct",
+      "difficulty": "medium",
+      "question_text": "Which React Hook should be used to perform a side effect after the component mounts and only once?",
+      "options": [
+        {
+          "option": "A",
+          "text": "useState",
+          "is_correct": false
+        },
+        {
+          "option": "B",
+          "text": "useEffect(() => { … }, [])",
+          "is_correct": true
+        },
+        {
+          "option": "C",
+          "text": "useMemo",
+          "is_correct": false
+        },
+        {
+          "option": "D",
+          "text": "useCallback",
+          "is_correct": false
+        }
+      ],
+      "explanation": "Providing an empty dependency array runs the effect only after the first render."
+    },
+    {
+      "question_id": "Q11",
+      "topic_id": "T3.2",
+      "question_type": "multi-select",
+      "difficulty": "hard",
+      "question_text": "When using Redux Toolkit, which statements are true? (Select all that apply)",
+      "options": [
+        {
+          "option": "A",
+          "text": "createSlice automatically generates action creators",
+          "is_correct": true
+        },
+        {
+          "option": "B",
+          "text": "The store must be created with combineReducers manually",
+          "is_correct": false
+        },
+        {
+          "option": "C",
+          "text": "Immer is used behind the scenes to allow mutable syntax",
+          "is_correct": true
+        },
+        {
+          "option": "D",
+          "text": "Reducers must be pure functions that never mutate state",
+          "is_correct": false
+        }
+      ],
+      "explanation": "RTK's createSlice creates actions and uses Immer, so reducers can appear mutable while remaining immutable."
+    },
+    {
+      "question_id": "Q12",
+      "topic_id": "T3.3",
+      "question_type": "scenario",
+      "difficulty": "medium",
+      "question_text": "A route should be accessible only to logged‑in users. Which React Router pattern implements this?",
+      "options": [
+        {
+          "option": "A",
+          "text": "Wrap the component with <Redirect> inside the route",
+          "is_correct": false
+        },
+        {
+          "option": "B",
+          "text": "Create a <PrivateRoute> component that checks auth before rendering",
+          "is_correct": true
+        },
+        {
+          "option": "C",
+          "text": "Use useNavigate inside the component’s render",
+          "is_correct": false
+        },
+        {
+          "option": "D",
+          "text": "Add a query param `auth=true` to the URL",
+          "is_correct": false
+        }
+      ],
+      "explanation": "A custom PrivateRoute component conditionally renders based on authentication state."
+    },
+    {
+      "question_id": "Q13",
+      "topic_id": "T4.1",
+      "question_type": "single-correct",
+      "difficulty": "easy",
+      "question_text": "In Express, the function signature `app.use((req, res, next) => { … })` is an example of:",
+      "options": [
+        {
+          "option": "A",
+          "text": "Routing handler",
+          "is_correct": false
+        },
+        {
+          "option": "B",
+          "text": "Middleware",
+          "is_correct": true
+        },
+        {
+          "option": "C",
+          "text": "Error handler",
+          "is_correct": false
+        },
+        {
+          "option": "D",
+          "text": "Static file server",
+          "is_correct": false
+        }
+      ],
+      "explanation": "Calling app.use with three parameters defines middleware that can pass control via next()."
+    },
+    {
+      "question_id": "Q14",
+      "topic_id": "T4.2",
+      "question_type": "single-correct",
+      "difficulty": "medium",
+      "question_text": "Which statement correctly describes the difference between SQL and NoSQL databases?",
+      "options": [
+        {
+          "option": "A",
+          "text": "SQL databases store data as key‑value pairs, NoSQL uses tables",
+          "is_correct": false
+        },
+        {
+          "option": "B",
+          "text": "SQL enforces a fixed schema, NoSQL allows flexible schemas",
+          "is_correct": true
+        },
+        {
+          "option": "C",
+          "text": "SQL is always faster than NoSQL",
+          "is_correct": false
+        },
+        {
+          "option": "D",
+          "text": "NoSQL cannot support transactions",
+          "is_correct": false
+        }
+      ],
+      "explanation": "Relational databases require a predefined schema, whereas document/column stores are schema‑less."
+    },
+    {
+      "question_id": "Q15",
+      "topic_id": "T4.2",
+      "question_type": "code-output",
+      "difficulty": "hard",
+      "question_text": "What will be the output of the following Mongoose code?\n\n```js\nconst userSchema = new mongoose.Schema({ name: String });\nconst User = mongoose.model('User', userSchema);\nconst u = new User({ name: 'Alice' });\nconsole.log(u._id instanceof mongoose.Types.ObjectId);\n```",
+      "options": [
+        {
+          "option": "A",
+          "text": "true",
+          "is_correct": true
+        },
+        {
+          "option": "B",
+          "text": "false",
+          "is_correct": false
+        },
+        {
+          "option": "C",
+          "text": "undefined",
+          "is_correct": false
+        },
+        {
+          "option": "D",
+          "text": "Error thrown",
+          "is_correct": false
+        }
+      ],
+      "explanation": "Mongoose automatically assigns an ObjectId to the _id field upon document creation."
+    },
+    {
+      "question_id": "Q16",
+      "topic_id": "T4.3",
+      "question_type": "single-correct",
+      "difficulty": "medium",
+      "question_text": "Which header is essential for a server to allow cross‑origin requests?",
+      "options": [
+        {
+          "option": "A",
+          "text": "Authorization",
+          "is_correct": false
+        },
+        {
+          "option": "B",
+          "text": "Content-Type",
+          "is_correct": false
+        },
+        {
+          "option": "C",
+          "text": "Access-Control-Allow-Origin",
+          "is_correct": true
+        },
+        {
+          "option": "D",
+          "text": "Cache-Control",
+          "is_correct": false
+        }
+      ],
+      "explanation": "CORS is controlled via the Access-Control-Allow-Origin response header."
+    },
+    {
+      "question_id": "Q17",
+      "topic_id": "T5.1",
+      "question_type": "scenario",
+      "difficulty": "hard",
+      "question_text": "You need a CI workflow that (1) runs unit tests on every push, (2) builds a Docker image, and (3) pushes the image to Docker Hub only on the main branch. Which GitHub Actions configuration snippet achieves this?",
+      "options": [
+        {
+          "option": "A",
+          "text": "Run all three steps in a single job with `if: github.ref == 'refs/heads/main'` for the push step only",
+          "is_correct": false
+        },
+        {
+          "option": "B",
+          "text": "Create two jobs: `test` on any push, and `deploy` with `needs: test` and `if: github.ref == 'refs/heads/main'`",
+          "is_correct": true
+        },
+        {
+          "option": "C",
+          "text": "Use a single job with `only: main` for the entire workflow",
+          "is_correct": false
+        },
+        {
+          "option": "D",
+          "text": "Trigger a separate workflow file for Docker push",
+          "is_correct": false
+        }
+      ],
+      "explanation": "Separate jobs allow tests to run on every push, while the deploy job is gated to the main branch."
+    },
+    {
+      "question_id": "Q18",
+      "topic_id": "T5.2",
+      "question_type": "single-correct",
+      "difficulty": "easy",
+      "question_text": "Which environment variable is commonly used to store an API key without hard‑coding it in the source code?",
+      "options": [
+        {
+          "option": "A",
+          "text": "API_KEY",
+          "is_correct": true
+        },
+        {
+          "option": "B",
+          "text": "config.js",
+          "is_correct": false
+        },
+        {
+          "option": "C",
+          "text": "publicKey",
+          "is_correct": false
+        },
+        {
+          "option": "D",
+          "text": "LOCALHOST",
+          "is_correct": false
+        }
+      ],
+      "explanation": "Storing secrets in environment variables like API_KEY keeps them out of the codebase."
+    },
+    {
+      "question_id": "Q19",
+      "topic_id": "T3.2",
+      "question_type": "single-correct",
+      "difficulty": "hard",
+      "question_text": "In Redux Toolkit, which function is used to create an asynchronous thunk action?",
+      "options": [
+        {
+          "option": "A",
+          "text": "createAsyncThunk",
+          "is_correct": true
+        },
+        {
+          "option": "B",
+          "text": "createSlice",
+          "is_correct": false
+        },
+        {
+          "option": "C",
+          "text": "createReducer",
+          "is_correct": false
+        },
+        {
+          "option": "D",
+          "text": "createAction",
+          "is_correct": false
+        }
+      ],
+      "explanation": "createAsyncThunk generates pending/fulfilled/rejected action types for async logic."
+    },
+    {
+      "question_id": "Q20",
+      "topic_id": "T4.3",
+      "question_type": "multi-select",
+      "difficulty": "hard",
+      "question_text": "Which of the following are valid strategies to protect routes in an Express API using JWTs? (Select all that apply)",
+      "options": [
+        {
+          "option": "A",
+          "text": "Verify token in a middleware before the protected route",
+          "is_correct": true
+        },
+        {
+          "option": "B",
+          "text": "Store JWT in a URL query string",
+          "is_correct": false
+        },
+        {
+          "option": "C",
+          "text": "Send the JWT in an HttpOnly cookie",
+          "is_correct": true
+        },
+        {
+          "option": "D",
+          "text": "Hard‑code the secret key in the client side",
+          "is_correct": false
+        }
+      ],
+      "explanation": "Token verification middleware and HttpOnly cookies are secure patterns; query strings expose tokens."
+    },
+    {
+      "question_id": "Q21",
+      "topic_id": "T2.3",
+      "question_type": "scenario",
+      "difficulty": "medium",
+      "question_text": "You need to fetch user data from an API and handle errors without using try/catch. Which syntax correctly accomplishes this?",
+      "options": [
+        {
+          "option": "A",
+          "text": "fetch(url).then(res => res.json()).catch(err => console.error(err));",
+          "is_correct": true
+        },
+        {
+          "option": "B",
+          "text": "await fetch(url);",
+          "is_correct": false
+        },
+        {
+          "option": "C",
+          "text": "fetch(url).then(console.log);",
+          "is_correct": false
+        },
+        {
+          "option": "D",
+          "text": "fetch(url).error(err => ...);",
+          "is_correct": false
+        }
+      ],
+      "explanation": "Using .catch on the promise chain captures any rejection."
+    },
+    {
+      "question_id": "Q22",
+      "topic_id": "T3.1",
+      "question_type": "code-output",
+      "difficulty": "medium",
+      "question_text": "What will be rendered by this component?\n\n```jsx\nfunction Greeting({ name }) {\n  return <h1>Hello, {name ?? 'Guest'}!</h1>;\n}\n\nReactDOM.render(<Greeting />, document.getElementById('root'));\n```",
+      "options": [
+        {
+          "option": "A",
+          "text": "Hello, Guest!",
+          "is_correct": true
+        },
+        {
+          "option": "B",
+          "text": "Hello, undefined!",
+          "is_correct": false
+        },
+        {
+          "option": "C",
+          "text": "Hello, null!",
+          "is_correct": false
+        },
+        {
+          "option": "D",
+          "text": "A runtime error",
+          "is_correct": false
+        }
+      ],
+      "explanation": "The nullish coalescing operator falls back to 'Guest' when name is undefined."
+    },
+    {
+      "question_id": "Q23",
+      "topic_id": "T5.1",
+      "question_type": "single-correct",
+      "difficulty": "medium",
+      "question_text": "Which Docker command builds an image from a Dockerfile in the current directory and tags it as `myapp:latest`?",
+      "options": [
+        {
+          "option": "A",
+          "text": "docker run -t myapp:latest .",
+          "is_correct": false
+        },
+        {
+          "option": "B",
+          "text": "docker build -t myapp:latest .",
+          "is_correct": true
+        },
+        {
+          "option": "C",
+          "text": "docker create -t myapp:latest",
+          "is_correct": false
+        },
+        {
+          "option": "D",
+          "text": "docker compose build myapp",
+          "is_correct": false
+        }
+      ],
+      "explanation": "`docker build -t <tag> .` builds and tags the image."
+    },
+    {
+      "question_id": "Q24",
+      "topic_id": "T1.2",
+      "question_type": "single-correct",
+      "difficulty": "easy",
+      "question_text": "Which of the following is NOT a typical step in setting up a Node.js development environment?",
+      "options": [
+        {
+          "option": "A",
+          "text": "Installing Node via package manager",
+          "is_correct": false
+        },
+        {
+          "option": "B",
+          "text": "Configuring a linter like ESLint",
+          "is_correct": false
+        },
+        {
+          "option": "C",
+          "text": "Setting up a MySQL server as the IDE",
+          "is_correct": true
+        },
+        {
+          "option": "D",
+          "text": "Initializing a Git repository",
+          "is_correct": false
+        }
+      ],
+      "explanation": "An IDE is software; a database server is not part of IDE configuration."
+    },
+    {
+      "question_id": "Q25",
+      "topic_id": "T3.3",
+      "question_type": "single-correct",
+      "difficulty": "hard",
+      "question_text": "Which React Router v6 component replaces the older `<Switch>` component?",
+      "options": [
+        {
+          "option": "A",
+          "text": "<Routes>",
+          "is_correct": true
+        },
+        {
+          "option": "B",
+          "text": "<Router>",
+          "is_correct": false
+        },
+        {
+          "option": "C",
+          "text": "<RouteGroup>",
+          "is_correct": false
+        },
+        {
+          "option": "D",
+          "text": "<Navigator>",
+          "is_correct": false
+        }
+      ],
+      "explanation": "React Router v6 introduced <Routes> to wrap <Route> elements."
+    },
+    {
+      "question_id": "Q26",
+      "topic_id": "T5.2",
+      "question_type": "multi-select",
+      "difficulty": "medium",
+      "question_text": "When deploying a React app to Netlify, which of the following configurations are commonly required? (Select all that apply)",
+      "options": [
+        {
+          "option": "A",
+          "text": "Specify a build command (e.g., `npm run build`)",
+          "is_correct": true
+        },
+        {
+          "option": "B",
+          "text": "Set the publish directory to `build/`",
+          "is_correct": true
+        },
+        {
+          "option": "C",
+          "text": "Create a .netlify.toml for routing rewrites",
+          "is_correct": true
+        },
+        {
+          "option": "D",
+          "text": "Disable HTTPS in site settings",
+          "is_correct": false
+        }
+      ],
+      "explanation": "Build command, publish folder, and optional redirects are typical; HTTPS should remain enabled."
+    },
+    {
+      "question_id": "Q27",
+      "topic_id": "T4.1",
+      "question_type": "scenario",
+      "difficulty": "medium",
+      "question_text": "A client sends a POST request with JSON payload to `/api/items`. Which Express code correctly parses the JSON body?",
+      "options": [
+        {
+          "option": "A",
+          "text": "app.post('/api/items', (req, res) => { /* req.body is undefined */ });",
+          "is_correct": false
+        },
+        {
+          "option": "B",
+          "text": "app.use(express.json());\napp.post('/api/items', (req, res) => { res.json(req.body); });",
+          "is_correct": true
+        },
+        {
+          "option": "C",
+          "text": "app.post('/api/items', express.json(), (req, res) => { res.send(req.body); });",
+          "is_correct": false
+        },
+        {
+          "option": "D",
+          "text": "app.use(bodyParser.urlencoded({ extended: true }));",
+          "is_correct": false
+        }
+      ],
+      "explanation": "express.json() middleware parses incoming JSON payloads."
+    },
+    {
+      "question_id": "Q28",
+      "topic_id": "T2.1",
+      "question_type": "single-correct",
+      "difficulty": "easy",
+      "question_text": "Which attribute improves accessibility by providing alternative text for an image?",
+      "options": [
+        {
+          "option": "A",
+          "text": "title",
+          "is_correct": false
+        },
+        {
+          "option": "B",
+          "text": "alt",
+          "is_correct": true
+        },
+        {
+          "option": "C",
+          "text": "src",
+          "is_correct": false
+        },
+        {
+          "option": "D",
+          "text": "href",
+          "is_correct": false
+        }
+      ],
+      "explanation": "The alt attribute supplies descriptive text for screen readers."
+    },
+    {
+      "question_id": "Q29",
+      "topic_id": "T5.2",
+      "question_type": "single-correct",
+      "difficulty": "hard",
+      "question_text": "During a blue‑green deployment on AWS, which service is primarily used to switch traffic between the two environments?",
+      "options": [
+        {
+          "option": "A",
+          "text": "Amazon EC2 Auto Scaling",
+          "is_correct": false
+        },
+        {
+          "option": "B",
+          "text": "Amazon Route 53",
+          "is_correct": true
+        },
+        {
+          "option": "C",
+          "text": "AWS Lambda",
+          "is_correct": false
+        },
+        {
+          "option": "D",
+          "text": "Amazon S3",
+          "is_correct": false
+        }
+      ],
+      "explanation": "Route 53 can update DNS records to point to the new environment instantly."
+    },
+    {
+      "question_id": "Q30",
+      "topic_id": "T3.2",
+      "question_type": "project",
+      "difficulty": "hard",
+      "question_text": "For the Task Management App project, which combination of technologies correctly satisfies the stated requirements?",
+      "options": [
+        {
+          "option": "A",
+          "text": "React.js for UI, Express for API, JWT for auth, MongoDB via Mongoose",
+          "is_correct": true
+        },
+        {
+          "option": "B",
+          "text": "Angular for UI, Koa for API, Sessions, MySQL",
+          "is_correct": false
+        },
+        {
+          "option": "C",
+          "text": "Vue.js, Laravel, OAuth2, PostgreSQL",
+          "is_correct": false
+        },
+        {
+          "option": "D",
+          "text": "Plain JavaScript, PHP, Cookie‑based auth, SQLite",
+          "is_correct": false
+        }
+      ],
+      "explanation": "The project specification lists React, Express, JWT, and MongoDB as the required stack."
+    }
+  ],
+  "received_at": "2026-06-08T18:55:18.218Z"
 }
