@@ -244,7 +244,7 @@ export default function Landing() {
                 </svg>
               </div>
               <h3>No assessment is currently available.</h3>
-              <p>An assessment will appear here when a new quiz is sent from the learning pipeline.</p>
+              <p>An assessment will appear here when a new quiz is sent from the Admin</p>
             </div>
 
             {/* CTAs */}
