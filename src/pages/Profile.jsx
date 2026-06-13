@@ -81,11 +81,20 @@ function SearchableModelDropdown({ label, value, onChange, models, idPrefix }) {
 
 export default function Profile() {
   const navigate = useNavigate();
-  const { user, profile, loading, signOut } = useAuth();
+  const { user, profile, loading, signOut, refreshProfile } = useAuth();
   const [apiKeys, setApiKeys] = useState([]);
   const [keysLoading, setKeysLoading] = useState(false);
   const [newKeyName, setNewKeyName] = useState('');
   const [newKeyValue, setNewKeyValue] = useState('');
+  const [displayName, setDisplayName] = useState('');
+
+  useEffect(() => {
+    if (profile?.username) {
+      setDisplayName(profile.username);
+    } else if (user?.email) {
+      setDisplayName(user.email.split('@')[0]);
+    }
+  }, [profile, user]);
   
   // Provider Specific States
   const [provider, setProvider] = useState('openrouter');
@@ -237,6 +246,51 @@ export default function Profile() {
     }
   };
 
+  const handleUpdateName = async (e) => {
+    e.preventDefault();
+    setError(null);
+    setSuccess(null);
+
+    const newName = displayName.trim();
+    if (!newName) {
+      setError('Name cannot be empty.');
+      return;
+    }
+    if (newName.length < 2 || newName.length > 50) {
+      setError('Name must be between 2 and 50 characters.');
+      return;
+    }
+
+    setActionLoading(true);
+    try {
+      const { error: profileError } = await supabase
+        .from('profiles')
+        .update({ username: newName })
+        .eq('id', user.id);
+
+      if (profileError) throw profileError;
+
+      const { error: authError } = await supabase.auth.updateUser({
+        data: { username: newName }
+      });
+
+      if (authError) {
+        console.warn('Auth metadata update failed, profiles was updated:', authError.message);
+      }
+
+      if (refreshProfile) {
+        await refreshProfile();
+      }
+
+      setSuccess('Name successfully updated.');
+    } catch (err) {
+      console.error('Error updating name:', err);
+      setError(err.message || 'Failed to update name.');
+    } finally {
+      setActionLoading(false);
+    }
+  };
+
   const handleLogout = async () => {
     try {
       await signOut();
@@ -297,6 +351,39 @@ export default function Profile() {
           )}
         </div>
       )}
+
+      <div className="profile-section" style={{ marginBottom: 'var(--space-xl)' }}>
+        <div className="profile-section-header">
+          <h2>Name Settings</h2>
+          <p>Update the name that will be printed on your learning certificates.</p>
+        </div>
+
+        <form onSubmit={handleUpdateName} className="api-key-form-vertical">
+          <div className="auth-group">
+            <label className="auth-label" htmlFor="profile-display-name">Name (Name needed on certificate)</label>
+            <input
+              id="profile-display-name"
+              type="text"
+              className="input"
+              placeholder="Enter your name (e.g. John Doe)"
+              value={displayName}
+              onChange={(e) => setDisplayName(e.target.value)}
+              disabled={actionLoading}
+              required
+            />
+          </div>
+
+          <button
+            id="btn-update-name"
+            type="submit"
+            className="btn btn-primary"
+            disabled={actionLoading || !displayName.trim() || displayName.trim() === username}
+            style={{ alignSelf: 'flex-start', padding: '0 var(--space-xl)', height: '45px', marginTop: 'var(--space-xs)' }}
+          >
+            {actionLoading ? 'Updating...' : 'Update Name'}
+          </button>
+        </form>
+      </div>
 
       <div className="profile-section">
         <div className="profile-section-header">

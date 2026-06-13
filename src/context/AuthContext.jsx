@@ -70,12 +70,20 @@ export function AuthProvider({ children }) {
     setProfile(null);
   };
 
+  async function refreshProfile() {
+    if (user) {
+      const prof = await fetchProfile(user.id);
+      setProfile(prof);
+    }
+  }
+
   const value = {
     user,
     profile,
     loading,
     isGuest: !user,
     signOut,
+    refreshProfile,
   };
 
   return (

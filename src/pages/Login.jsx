@@ -87,13 +87,13 @@ export default function Login() {
         <form onSubmit={handleLogin} className="auth-form">
           <div className="auth-group">
             <label className="auth-label" htmlFor="login-email">
-              Email Address or Username
+              Email Address or Name (Name needed on certificate)
             </label>
             <input
               id="login-email"
               type="text"
               className="input"
-              placeholder="Enter your email or username"
+              placeholder="Enter your email or name"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               disabled={loading}

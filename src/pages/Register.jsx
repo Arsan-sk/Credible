@@ -17,7 +17,7 @@ export default function Register() {
 
     // Client-side validation
     const trimmedEmail = email.trim().toLowerCase();
-    const trimmedUser = username.trim().toLowerCase();
+    const trimmedUser = username.trim();
 
     if (!trimmedEmail) {
       setError('Please enter your email address.');
@@ -29,13 +29,8 @@ export default function Register() {
       return;
     }
 
-    if (trimmedUser.length < 3 || trimmedUser.length > 20) {
-      setError('Username must be between 3 and 20 characters.');
-      return;
-    }
-    const usernameRegex = /^[a-zA-Z0-9_]+$/;
-    if (!usernameRegex.test(trimmedUser)) {
-      setError('Username can only contain letters, numbers, and underscores.');
+    if (trimmedUser.length < 2 || trimmedUser.length > 50) {
+      setError('Name must be between 2 and 50 characters.');
       return;
     }
     if (password.length < 6) {
@@ -46,23 +41,7 @@ export default function Register() {
     setLoading(true);
 
     try {
-      // 1. Check if username already exists in profiles
-      const { data: existing, error: checkError } = await supabase
-        .from('profiles')
-        .select('username')
-        .eq('username', trimmedUser)
-        .maybeSingle();
-
-      if (checkError) {
-        throw new Error(checkError.message);
-      }
-      if (existing) {
-        setError('Username is already taken.');
-        setLoading(false);
-        return;
-      }
-
-      // 2. Register via Supabase Auth using native email/password
+      // Register via Supabase Auth using native email/password
       const { data, error: signUpError } = await supabase.auth.signUp({
         email: trimmedEmail,
         password: password,
@@ -133,18 +112,18 @@ export default function Register() {
 
           <div className="auth-group">
             <label className="auth-label" htmlFor="register-username">
-              Username
+              Name (Name needed on certificate)
             </label>
             <input
               id="register-username"
               type="text"
               className="input"
-              placeholder="Pick a unique username"
+              placeholder="Enter your name (e.g. John Doe)"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               disabled={loading}
               required
-              autoComplete="username"
+              autoComplete="name"
             />
           </div>
 

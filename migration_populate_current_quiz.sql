@@ -1,4 +1,10 @@
-{
+-- ═══════════════════════════════════════════════════════════════════════════
+-- CREDIBLE — Database Migration: Populate Current Quiz
+-- Run this in Supabase Dashboard → SQL Editor → Run
+-- ═══════════════════════════════════════════════════════════════════════════
+
+INSERT INTO public.system_quizzes (quiz_type, quiz_data, updated_at)
+VALUES ('current', $${
   "quiz_metadata": {
     "total_questions": 90,
     "passing_score": 70,
@@ -922,4 +928,7 @@
     }
   ],
   "received_at": "2026-06-09T09:09:03.631Z"
-}
+}$$::jsonb, now())
+ON CONFLICT (quiz_type) DO UPDATE SET 
+  quiz_data = EXCLUDED.quiz_data,
+  updated_at = now();

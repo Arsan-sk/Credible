@@ -3,12 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { loadQuiz, saveUserName, loadUserName } from '../utils/storage';
 import { PASSING_SCORE } from '../utils/quiz';
+import { supabase } from '../utils/supabase';
 import './AssessmentEntry.css';
 
 export default function AssessmentEntry() {
   const navigate = useNavigate();
-  const { user, profile } = useAuth();
+  const { user, profile, refreshProfile } = useAuth();
   const [name, setName] = useState('');
+  const [initialized, setInitialized] = useState(false);
   const [quiz, setQuiz] = useState(null);
 
   useEffect(() => {
@@ -21,13 +23,18 @@ export default function AssessmentEntry() {
   }, [navigate]);
 
   useEffect(() => {
+    if (initialized) return;
     if (user) {
       const username = profile?.username || user.email?.split('@')[0] || '';
-      setName(username);
+      if (username) {
+        setName(username);
+        setInitialized(true);
+      }
     } else {
       setName(loadUserName());
+      setInitialized(true);
     }
-  }, [user, profile]);
+  }, [user, profile, initialized]);
 
   if (!quiz) return null;
 
@@ -37,9 +44,32 @@ export default function AssessmentEntry() {
   const domain = quiz.domain || metadata.domain || null;
   const certLevel = quiz.certification_level || metadata.certification_level || null;
 
-  const handleStart = () => {
-    if (!name.trim()) return;
-    saveUserName(name.trim());
+  const handleStart = async () => {
+    const trimmedName = name.trim();
+    if (!trimmedName) return;
+
+    saveUserName(trimmedName);
+
+    // If logged in and the name was changed, sync to profiles in DB
+    if (user && trimmedName !== (profile?.username || '')) {
+      try {
+        await supabase
+          .from('profiles')
+          .update({ username: trimmedName })
+          .eq('id', user.id);
+
+        await supabase.auth.updateUser({
+          data: { username: trimmedName }
+        });
+
+        if (refreshProfile) {
+          await refreshProfile();
+        }
+      } catch (err) {
+        console.error('Error updating name on start assessment:', err);
+      }
+    }
+
     navigate('/quiz');
   };
 
@@ -80,23 +110,20 @@ export default function AssessmentEntry() {
 
         <div className="assessment-form">
           <label className="assessment-label" htmlFor="input-name">
-            Full Name
+            Name (Name needed on certificate)
           </label>
           <input
             id="input-name"
             type="text"
             className="input"
-            placeholder={user ? "" : "Enter your full name"}
+            placeholder="Enter your name (e.g. John Doe)"
             value={name}
-            onChange={(e) => !user && setName(e.target.value)}
+            onChange={(e) => setName(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && handleStart()}
-            autoFocus={!user}
-            readOnly={!!user}
+            autoFocus
           />
           <p className="assessment-name-note">
-            {user 
-              ? "This is your account username and will appear on your certificate."
-              : "This name will appear on your certificate if you pass."}
+            This name will appear on your certificate if you pass. You can edit it to change how it is printed.
           </p>
         </div>
 

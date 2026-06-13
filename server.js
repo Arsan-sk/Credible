@@ -5,6 +5,11 @@ const path = require('path');
 const fs = require('fs');
 const { createClient } = require('@supabase/supabase-js');
 
+// Initialize Supabase admin client for system-wide operations (e.g. quiz loading/saving)
+const supabaseAdmin = (process.env.VITE_SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY)
+  ? createClient(process.env.VITE_SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY)
+  : null;
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 const QUIZ_FILE = path.join(__dirname, 'current-quiz.json');
@@ -19,7 +24,7 @@ if (fs.existsSync(distPath)) {
 }
 
 // ── Webhook endpoint: n8n sends quiz data here ──────────────────────────────
-app.post('/webhook/quiz', (req, res) => {
+app.post('/webhook/quiz', async (req, res) => {
   try {
     const body = req.body;
 
@@ -43,12 +48,39 @@ app.post('/webhook/quiz', (req, res) => {
     // Stamp received time
     quizData.received_at = new Date().toISOString();
 
+    // Write locally
     fs.writeFileSync(QUIZ_FILE, JSON.stringify(quizData, null, 2));
-    console.log(`✅ Quiz received: ${quizData.questions.length} questions`);
+    console.log(`✅ Quiz received locally: ${quizData.questions.length} questions`);
+
+    // Upsert to Supabase
+    let dbStatus = 'skipped (missing keys)';
+    if (supabaseAdmin) {
+      try {
+        const { error } = await supabaseAdmin
+          .from('system_quizzes')
+          .upsert({
+            quiz_type: 'current',
+            quiz_data: quizData,
+            updated_at: new Date().toISOString()
+          }, { onConflict: 'quiz_type' });
+        
+        if (error) {
+          console.error('Failed to upsert current quiz to Supabase:', error.message);
+          dbStatus = `failed: ${error.message}`;
+        } else {
+          console.log('✅ Current quiz successfully upserted to Supabase');
+          dbStatus = 'success';
+        }
+      } catch (dbErr) {
+        console.error('Error during Supabase upsert:', dbErr.message);
+        dbStatus = `error: ${dbErr.message}`;
+      }
+    }
 
     res.json({
       success: true,
       message: `Quiz stored. ${quizData.questions.length} questions ready.`,
+      database_sync: dbStatus,
       quiz_url: `http://localhost:${PORT}/`,
     });
   } catch (err) {
@@ -64,7 +96,28 @@ function readJsonFileSync(filePath) {
 }
 
 // ── API: quiz app fetches current quiz ──────────────────────────────────────
-app.get('/api/quiz', (req, res) => {
+app.get('/api/quiz', async (req, res) => {
+  // Try Supabase first
+  if (supabaseAdmin) {
+    try {
+      const { data, error } = await supabaseAdmin
+        .from('system_quizzes')
+        .select('quiz_data')
+        .eq('quiz_type', 'current')
+        .single();
+      
+      if (!error && data?.quiz_data) {
+        return res.json(data.quiz_data);
+      }
+      if (error) {
+        console.warn('Supabase fetch for current quiz failed (falling back to file):', error.message);
+      }
+    } catch (err) {
+      console.warn('Error fetching current quiz from Supabase (falling back to file):', err.message);
+    }
+  }
+
+  // Fallback to local file
   if (!fs.existsSync(QUIZ_FILE)) {
     return res.status(404).json({ error: 'No quiz loaded yet. Send data to POST /webhook/quiz first.' });
   }
@@ -80,7 +133,28 @@ app.get('/api/quiz', (req, res) => {
 // ── API: guest quiz (featured assessment) ───────────────────────────────────
 const GUEST_QUIZ_FILE = path.join(__dirname, 'guest-quiz.json');
 
-app.get('/api/guest-quiz', (req, res) => {
+app.get('/api/guest-quiz', async (req, res) => {
+  // Try Supabase first
+  if (supabaseAdmin) {
+    try {
+      const { data, error } = await supabaseAdmin
+        .from('system_quizzes')
+        .select('quiz_data')
+        .eq('quiz_type', 'featured')
+        .single();
+      
+      if (!error && data?.quiz_data) {
+        return res.json(data.quiz_data);
+      }
+      if (error) {
+        console.warn('Supabase fetch for guest quiz failed (falling back to file):', error.message);
+      }
+    } catch (err) {
+      console.warn('Error fetching guest quiz from Supabase (falling back to file):', err.message);
+    }
+  }
+
+  // Fallback to local file
   if (!fs.existsSync(GUEST_QUIZ_FILE)) {
     return res.status(404).json({ error: 'No guest quiz available.' });
   }
@@ -527,8 +601,12 @@ app.get('/{*splat}', (req, res) => {
   }
 });
 
-app.listen(PORT, () => {
-  console.log(`\n🚀 Credible running at http://localhost:${PORT}`);
-  console.log(`📡 Webhook endpoint: POST http://localhost:${PORT}/webhook/quiz`);
-  console.log(`📋 Quiz API: GET http://localhost:${PORT}/api/quiz\n`);
-});
+if (!process.env.VERCEL) {
+  app.listen(PORT, () => {
+    console.log(`\n🚀 Credible running at http://localhost:${PORT}`);
+    console.log(`📡 Webhook endpoint: POST http://localhost:${PORT}/webhook/quiz`);
+    console.log(`📋 Quiz API: GET http://localhost:${PORT}/api/quiz\n`);
+  });
+}
+
+module.exports = app;

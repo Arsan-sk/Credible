@@ -1,4 +1,10 @@
-{
+-- ═══════════════════════════════════════════════════════════════════════════
+-- CREDIBLE — Database Migration: Populate Featured/Guest Quiz
+-- Run this in Supabase Dashboard → SQL Editor → Run
+-- ═══════════════════════════════════════════════════════════════════════════
+
+INSERT INTO public.system_quizzes (quiz_type, quiz_data, updated_at)
+VALUES ('featured', $${
   "quiz_metadata": {
     "total_questions": 30,
     "passing_score": 70,
@@ -922,4 +928,7 @@
     }
   ],
   "received_at": "2026-06-08T18:55:18.218Z"
-}
+}$$::jsonb, now())
+ON CONFLICT (quiz_type) DO UPDATE SET 
+  quiz_data = EXCLUDED.quiz_data,
+  updated_at = now();
