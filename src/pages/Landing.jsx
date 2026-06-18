@@ -2,9 +2,10 @@ import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { fetchQuiz, fetchGuestQuiz } from '../utils/api';
-import { saveQuiz, loadQuiz, getAllAttempts, getGuestId, hasGuestTakenFeatured } from '../utils/storage';
+import { saveQuiz, loadQuiz, getAllAttempts, getGuestId, hasGuestTakenFeatured, clearQuizState } from '../utils/storage';
 import { PASSING_SCORE } from '../utils/quiz';
 import { supabase } from '../utils/supabase';
+import LiquidEther from '../components/LiquidEther';
 import './Landing.css';
 
 export default function Landing() {
@@ -100,6 +101,25 @@ export default function Landing() {
 
   return (
     <div className="landing">
+      <div className="landing-canvas-container">
+        <LiquidEther
+          colors={['#c4b5d4', '#9ca3af', '#d6ccc2']}
+          mouseForce={15}
+          cursorSize={120}
+          isViscous={false}
+          viscous={30}
+          iterationsViscous={32}
+          iterationsPoisson={32}
+          resolution={0.4}
+          isBounce={false}
+          autoDemo={true}
+          autoSpeed={0.25}
+          autoIntensity={1.5}
+          takeoverDuration={0.25}
+          autoResumeDelay={2500}
+          autoRampDuration={0.8}
+        />
+      </div>
       <div className="landing-container">
         {/* Hero */}
         <div className="landing-hero animate-fade-in-up">
