@@ -5,6 +5,26 @@ const path = require('path');
 const fs = require('fs');
 const { createClient } = require('@supabase/supabase-js');
 
+// Helper to resolve asset paths robustly across both local and Vercel environments
+function resolveAssetPath(...paths) {
+  const targetSubPath = path.join(...paths);
+  
+  // 1. Try relative to process.cwd() (project root)
+  const pathCwd = path.join(process.cwd(), targetSubPath);
+  if (fs.existsSync(pathCwd)) return pathCwd;
+
+  // 2. Try relative to __dirname
+  const pathDir = path.join(__dirname, targetSubPath);
+  if (fs.existsSync(pathDir)) return pathDir;
+
+  // 3. Try relative to parent of __dirname (if called from a subdirectory like /api)
+  const pathParent = path.join(__dirname, '..', targetSubPath);
+  if (fs.existsSync(pathParent)) return pathParent;
+
+  // Default fallback
+  return pathCwd;
+}
+
 // Initialize Supabase admin client for system-wide operations (e.g. quiz loading/saving)
 const supabaseAdmin = (process.env.VITE_SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY)
   ? createClient(process.env.VITE_SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY)
@@ -12,13 +32,13 @@ const supabaseAdmin = (process.env.VITE_SUPABASE_URL && process.env.SUPABASE_SER
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const QUIZ_FILE = path.join(__dirname, 'current-quiz.json');
+const QUIZ_FILE = resolveAssetPath('current-quiz.json');
 
 app.use(cors());
 app.use(express.json({ limit: '10mb' }));
 
 // ── Serve Vite build in production ──────────────────────────────────────────
-const distPath = path.join(__dirname, 'dist');
+const distPath = resolveAssetPath('dist');
 if (fs.existsSync(distPath)) {
   app.use(express.static(distPath));
 }
@@ -131,7 +151,7 @@ app.get('/api/quiz', async (req, res) => {
 });
 
 // ── API: guest quiz (featured assessment) ───────────────────────────────────
-const GUEST_QUIZ_FILE = path.join(__dirname, 'guest-quiz.json');
+const GUEST_QUIZ_FILE = resolveAssetPath('guest-quiz.json');
 
 app.get('/api/guest-quiz', async (req, res) => {
   // Try Supabase first
@@ -333,7 +353,7 @@ async function runGeneration(jobId, apiKey, keyMeta, inputs) {
     }
 
     // 2. Read Agent 1 prompt and replace placeholders
-    const prompt1Path = path.join(__dirname, 'prompts', 'agent1.txt');
+    const prompt1Path = resolveAssetPath('prompts', 'agent1.txt');
     if (!fs.existsSync(prompt1Path)) {
       throw new Error('Agent 1 prompt file is missing from the server (prompts/agent1.txt)');
     }
@@ -350,7 +370,7 @@ async function runGeneration(jobId, apiKey, keyMeta, inputs) {
     const cleanedAgent1Output = cleanJsonResponse(agent1Output);
 
     // 4. Read Agent 2 prompt and replace placeholders
-    const prompt2Path = path.join(__dirname, 'prompts', 'agent2.txt');
+    const prompt2Path = resolveAssetPath('prompts', 'agent2.txt');
     if (!fs.existsSync(prompt2Path)) {
       throw new Error('Agent 2 prompt file is missing from the server (prompts/agent2.txt)');
     }
@@ -597,7 +617,7 @@ app.get('/{*splat}', (req, res) => {
   if (fs.existsSync(distPath)) {
     res.sendFile(path.join(distPath, 'index.html'));
   } else {
-    res.sendFile(path.join(__dirname, 'index.html'));
+    res.sendFile(resolveAssetPath('index.html'));
   }
 });
 

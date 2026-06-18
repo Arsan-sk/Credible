@@ -13,5 +13,14 @@
       "source": "/((?!api|webhook).*|$)",
       "destination": "/index.html"
     }
-  ]
+  ],
+  "functions": {
+    "api/index.js": {
+      "includeFiles": [
+        "current-quiz.json",
+        "guest-quiz.json",
+        "prompts/**"
+      ]
+    }
+  }
 }

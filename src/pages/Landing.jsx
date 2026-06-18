@@ -274,7 +274,7 @@ export default function Landing() {
                   View Attempt History
                 </Link>
               )}
-              <Link to="/verify" className="btn style={{ marginTop: user ? '8px' : '0' }} btn-primary btn-lg" id="btn-verify-cert">
+              <Link to="/verify" className="btn btn-primary btn-lg" style={{ marginTop: user ? '8px' : '0' }} id="btn-verify-cert">
                 Verify Certificate
               </Link>
             </div>
