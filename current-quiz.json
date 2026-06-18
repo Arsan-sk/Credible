@@ -1,0 +1,925 @@
+{
+  "quiz_metadata": {
+    "total_questions": 90,
+    "passing_score": 70,
+    "difficulty_distribution": {
+      "easy": 30,
+      "medium": 40,
+      "hard": 20
+    }
+  },
+  "assessment_profile": {
+    "assessment_title": "Node.js Professional Certification Exam",
+    "source_video_title": "Back End development with Node.js",
+    "source_video_url": "https://youtu.be/gxHXPmePnvo?si=j5WSPXhRNtnHyEKj",
+    "difficulty_rating": "intermediate",
+    "knowledge_scope_score": 85,
+    "topics_count": 28,
+    "projects_count": 4,
+    "estimated_learning_hours": 40,
+    "assessment_weight": "extensive"
+  },
+  "questions": [
+    {
+      "question_id": "Q1",
+      "topic_id": "T1.1",
+      "question_type": "single-correct",
+      "difficulty": "easy",
+      "question_text": "Which component of Node.js is responsible for executing JavaScript code?",
+      "options": [
+        {
+          "option": "A",
+          "text": "V8 Engine",
+          "is_correct": true
+        },
+        {
+          "option": "B",
+          "text": "Event Loop",
+          "is_correct": false
+        },
+        {
+          "option": "C",
+          "text": "npm",
+          "is_correct": false
+        },
+        {
+          "option": "D",
+          "text": "CommonJS",
+          "is_correct": false
+        }
+      ],
+      "explanation": "Node.js uses Google's V8 engine to compile and run JavaScript."
+    },
+    {
+      "question_id": "Q2",
+      "topic_id": "T1.1",
+      "question_type": "single-correct",
+      "difficulty": "easy",
+      "question_text": "What does the Event Loop primarily handle in Node.js?",
+      "options": [
+        {
+          "option": "A",
+          "text": "File system operations",
+          "is_correct": false
+        },
+        {
+          "option": "B",
+          "text": "Synchronous function execution",
+          "is_correct": false
+        },
+        {
+          "option": "C",
+          "text": "Managing asynchronous callbacks",
+          "is_correct": true
+        },
+        {
+          "option": "D",
+          "text": "Compiling JavaScript",
+          "is_correct": false
+        }
+      ],
+      "explanation": "The Event Loop processes callbacks from asynchronous operations."
+    },
+    {
+      "question_id": "Q3",
+      "topic_id": "T1.2",
+      "question_type": "single-correct",
+      "difficulty": "easy",
+      "question_text": "Which command initializes a new Node.js project with a package.json file?",
+      "options": [
+        {
+          "option": "A",
+          "text": "npm start",
+          "is_correct": false
+        },
+        {
+          "option": "B",
+          "text": "npm init",
+          "is_correct": true
+        },
+        {
+          "option": "C",
+          "text": "node init",
+          "is_correct": false
+        },
+        {
+          "option": "D",
+          "text": "npm install",
+          "is_correct": false
+        }
+      ],
+      "explanation": "npm init creates a package.json file for the project."
+    },
+    {
+      "question_id": "Q4",
+      "topic_id": "T1.3",
+      "question_type": "code-output",
+      "difficulty": "medium",
+      "question_text": "Given the following code, what is the output when a request is made to http://localhost:3000/?\n```js\nconst http = require('http');\nhttp.createServer((req, res) => {\n  res.writeHead(200, {'Content-Type': 'text/plain'});\n  res.end('Hello World');\n}).listen(3000);\n```",
+      "options": [
+        {
+          "option": "A",
+          "text": "Server error",
+          "is_correct": false
+        },
+        {
+          "option": "B",
+          "text": "Hello World",
+          "is_correct": true
+        },
+        {
+          "option": "C",
+          "text": "404 Not Found",
+          "is_correct": false
+        },
+        {
+          "option": "D",
+          "text": "Empty response",
+          "is_correct": false
+        }
+      ],
+      "explanation": "The server responds with the string 'Hello World' and a 200 status."
+    },
+    {
+      "question_id": "Q5",
+      "topic_id": "T2.1",
+      "question_type": "single-correct",
+      "difficulty": "easy",
+      "question_text": "Which method from the Path module joins path segments and normalizes the result?",
+      "options": [
+        {
+          "option": "A",
+          "text": "path.resolve()",
+          "is_correct": false
+        },
+        {
+          "option": "B",
+          "text": "path.join()",
+          "is_correct": true
+        },
+        {
+          "option": "C",
+          "text": "path.basename()",
+          "is_correct": false
+        },
+        {
+          "option": "D",
+          "text": "path.extname()",
+          "is_correct": false
+        }
+      ],
+      "explanation": "path.join() concatenates segments and resolves '..' and '.'."
+    },
+    {
+      "question_id": "Q6",
+      "topic_id": "T2.2",
+      "question_type": "multi-select",
+      "difficulty": "medium",
+      "question_text": "Which of the following are true about Node.js streams?",
+      "options": [
+        {
+          "option": "A",
+          "text": "They can be used to process large files without loading the entire file into memory.",
+          "is_correct": true
+        },
+        {
+          "option": "B",
+          "text": "All streams are duplex (readable and writable).",
+          "is_correct": false
+        },
+        {
+          "option": "C",
+          "text": "Readable streams emit 'data' events.",
+          "is_correct": true
+        },
+        {
+          "option": "D",
+          "text": "Writable streams cannot be piped.",
+          "is_correct": false
+        }
+      ],
+      "explanation": "Readable streams emit 'data'; not all streams are duplex; writable streams can be piped."
+    },
+    {
+      "question_id": "Q7",
+      "topic_id": "T3.1",
+      "question_type": "single-correct",
+      "difficulty": "medium",
+      "question_text": "What is the correct order of middleware execution in Express?",
+      "options": [
+        {
+          "option": "A",
+          "text": "Error-handling → Custom → Built-in",
+          "is_correct": false
+        },
+        {
+          "option": "B",
+          "text": "Built-in → Custom → Route handlers → Error-handling",
+          "is_correct": true
+        },
+        {
+          "option": "C",
+          "text": "Custom → Built-in → Route handlers",
+          "is_correct": false
+        },
+        {
+          "option": "D",
+          "text": "Route handlers → Built-in → Custom",
+          "is_correct": false
+        }
+      ],
+      "explanation": "Express runs built-in middleware first, then custom, then routes, with error-handling at the end."
+    },
+    {
+      "question_id": "Q8",
+      "topic_id": "T3.2",
+      "question_type": "scenario",
+      "difficulty": "hard",
+      "question_text": "You need to create a route that captures a product ID from the URL `/products/:id` and returns a JSON object `{productId: id}`. Which code snippet correctly implements this?",
+      "options": [
+        {
+          "option": "A",
+          "text": "app.get('/products/:id', (req, res) => { res.json({ productId: req.params.id }); });",
+          "is_correct": true
+        },
+        {
+          "option": "B",
+          "text": "app.get('/products/id', (req, res) => { res.json({ productId: req.body.id }); });",
+          "is_correct": false
+        },
+        {
+          "option": "C",
+          "text": "app.post('/products/:id', (req, res) => { res.send(req.params.id); });",
+          "is_correct": false
+        },
+        {
+          "option": "D",
+          "text": "app.use('/products/:id', (req, res) => { res.json({ productId: req.query.id }); });",
+          "is_correct": false
+        }
+      ],
+      "explanation": "Route parameters are accessed via req.params; GET method matches requirement."
+    },
+    {
+      "question_id": "Q9",
+      "topic_id": "T3.3",
+      "question_type": "single-correct",
+      "difficulty": "hard",
+      "question_text": "Which HTTP status code should be used when a client sends a request with malformed JSON payload?",
+      "options": [
+        {
+          "option": "A",
+          "text": "400 Bad Request",
+          "is_correct": true
+        },
+        {
+          "option": "B",
+          "text": "401 Unauthorized",
+          "is_correct": false
+        },
+        {
+          "option": "C",
+          "text": "422 Unprocessable Entity",
+          "is_correct": false
+        },
+        {
+          "option": "D",
+          "text": "500 Internal Server Error",
+          "is_correct": false
+        }
+      ],
+      "explanation": "400 indicates a client-side syntax error."
+    },
+    {
+      "question_id": "Q10",
+      "topic_id": "T4.1",
+      "question_type": "single-correct",
+      "difficulty": "hard",
+      "question_text": "In Mongoose, which option enables automatic creation of indexes defined in schema definitions?",
+      "options": [
+        {
+          "option": "A",
+          "text": "autoIndex: false",
+          "is_correct": false
+        },
+        {
+          "option": "B",
+          "text": "autoCreate: true",
+          "is_correct": false
+        },
+        {
+          "option": "C",
+          "text": "autoIndex: true",
+          "is_correct": true
+        },
+        {
+          "option": "D",
+          "text": "useCreateIndex: true",
+          "is_correct": false
+        }
+      ],
+      "explanation": "Setting autoIndex to true tells Mongoose to build indexes at startup."
+    },
+    {
+      "question_id": "Q11",
+      "topic_id": "T4.2",
+      "question_type": "multi-select",
+      "difficulty": "hard",
+      "question_text": "Select statements that correctly describe Sequelize migrations:",
+      "options": [
+        {
+          "option": "A",
+          "text": "Migrations are written in JavaScript and run via the CLI.",
+          "is_correct": true
+        },
+        {
+          "option": "B",
+          "text": "Migrations automatically sync models without explicit files.",
+          "is_correct": false
+        },
+        {
+          "option": "C",
+          "text": "Each migration file exports up and down functions.",
+          "is_correct": true
+        },
+        {
+          "option": "D",
+          "text": "Sequelize migrations cannot alter existing tables.",
+          "is_correct": false
+        }
+      ],
+      "explanation": "Migrations require up/down definitions and are executed via CLI."
+    },
+    {
+      "question_id": "Q12",
+      "topic_id": "T5.1",
+      "question_type": "scenario",
+      "difficulty": "medium",
+      "question_text": "A JWT is issued with a 15‑minute expiry. Which strategy should be used to keep a user logged in without forcing re‑authentication after the token expires?",
+      "options": [
+        {
+          "option": "A",
+          "text": "Store the token in localStorage and refresh it manually.",
+          "is_correct": false
+        },
+        {
+          "option": "B",
+          "text": "Issue a long‑lived refresh token and exchange it for a new access token.",
+          "is_correct": true
+        },
+        {
+          "option": "C",
+          "text": "Increase the JWT expiry to 24 hours.",
+          "is_correct": false
+        },
+        {
+          "option": "D",
+          "text": "Ignore the expiry claim.",
+          "is_correct": false
+        }
+      ],
+      "explanation": "Refresh tokens allow silent renewal of short‑lived access tokens."
+    },
+    {
+      "question_id": "Q13",
+      "topic_id": "T5.2",
+      "question_type": "single-correct",
+      "difficulty": "easy",
+      "question_text": "Which npm package helps set secure HTTP headers in an Express app?",
+      "options": [
+        {
+          "option": "A",
+          "text": "cors",
+          "is_correct": false
+        },
+        {
+          "option": "B",
+          "text": "helmet",
+          "is_correct": true
+        },
+        {
+          "option": "C",
+          "text": "morgan",
+          "is_correct": false
+        },
+        {
+          "option": "D",
+          "text": "dotenv",
+          "is_correct": false
+        }
+      ],
+      "explanation": "Helmet configures various security-related HTTP headers."
+    },
+    {
+      "question_id": "Q14",
+      "topic_id": "T6.1",
+      "question_type": "code-output",
+      "difficulty": "medium",
+      "question_text": "What will be the result of the following Jest test?\n```js\nfunction sum(a, b) { return a + b; }\ntest('adds 2 + 3 = 5', () => {\n  expect(sum(2, 3)).toBe(6);\n});\n```",
+      "options": [
+        {
+          "option": "A",
+          "text": "Test passes",
+          "is_correct": false
+        },
+        {
+          "option": "B",
+          "text": "Test fails because expected value is incorrect",
+          "is_correct": true
+        },
+        {
+          "option": "C",
+          "text": "Test throws an exception",
+          "is_correct": false
+        },
+        {
+          "option": "D",
+          "text": "Test is skipped",
+          "is_correct": false
+        }
+      ],
+      "explanation": "sum(2,3) returns 5, but the test expects 6, so it fails."
+    },
+    {
+      "question_id": "Q15",
+      "topic_id": "T6.2",
+      "question_type": "single-correct",
+      "difficulty": "hard",
+      "question_text": "Which line correctly copies only production dependencies into a Docker image using a multi‑stage build?",
+      "options": [
+        {
+          "option": "A",
+          "text": "COPY package*.json ./",
+          "is_correct": false
+        },
+        {
+          "option": "B",
+          "text": "RUN npm ci --only=production",
+          "is_correct": true
+        },
+        {
+          "option": "C",
+          "text": "RUN npm install --dev",
+          "is_correct": false
+        },
+        {
+          "option": "D",
+          "text": "COPY . .",
+          "is_correct": false
+        }
+      ],
+      "explanation": "npm ci --only=production installs only prod deps."
+    },
+    {
+      "question_id": "Q16",
+      "topic_id": "T3.3",
+      "question_type": "multi-select",
+      "difficulty": "hard",
+      "question_text": "When designing a RESTful resource for \"orders\", which of the following are appropriate endpoint designs?",
+      "options": [
+        {
+          "option": "A",
+          "text": "GET /orders",
+          "is_correct": true
+        },
+        {
+          "option": "B",
+          "text": "POST /orders/{id}",
+          "is_correct": false
+        },
+        {
+          "option": "C",
+          "text": "PUT /orders/{id}",
+          "is_correct": true
+        },
+        {
+          "option": "D",
+          "text": "DELETE /orders",
+          "is_correct": false
+        }
+      ],
+      "explanation": "GET for collection, PUT for updating a specific resource; POST creates, DELETE needs an ID."
+    },
+    {
+      "question_id": "Q17",
+      "topic_id": "T4.1",
+      "question_type": "scenario",
+      "difficulty": "medium",
+      "question_text": "You need to retrieve a user and populate their \"posts\" field using Mongoose. Which query achieves this?",
+      "options": [
+        {
+          "option": "A",
+          "text": "User.findById(id).populate('posts').exec()",
+          "is_correct": true
+        },
+        {
+          "option": "B",
+          "text": "User.find({}).populate('posts')",
+          "is_correct": false
+        },
+        {
+          "option": "C",
+          "text": "User.findOne({ _id: id }).exec()",
+          "is_correct": false
+        },
+        {
+          "option": "D",
+          "text": "User.aggregate([{ $lookup: { from: 'posts', localField: '_id', foreignField: 'author', as: 'posts' } }])",
+          "is_correct": false
+        }
+      ],
+      "explanation": "populate() on a document query loads referenced documents."
+    },
+    {
+      "question_id": "Q18",
+      "topic_id": "T5.1",
+      "question_type": "single-correct",
+      "difficulty": "easy",
+      "question_text": "Which claim in a JWT identifies the token's expiration time?",
+      "options": [
+        {
+          "option": "A",
+          "text": "iss",
+          "is_correct": false
+        },
+        {
+          "option": "B",
+          "text": "sub",
+          "is_correct": false
+        },
+        {
+          "option": "C",
+          "text": "exp",
+          "is_correct": true
+        },
+        {
+          "option": "D",
+          "text": "iat",
+          "is_correct": false
+        }
+      ],
+      "explanation": "The 'exp' claim holds the Unix timestamp for expiry."
+    },
+    {
+      "question_id": "Q19",
+      "topic_id": "T6.1",
+      "question_type": "single-correct",
+      "difficulty": "easy",
+      "question_text": "Which Jest matcher checks that a value is defined and not undefined?",
+      "options": [
+        {
+          "option": "A",
+          "text": "toBeUndefined()",
+          "is_correct": false
+        },
+        {
+          "option": "B",
+          "text": "toBeDefined()",
+          "is_correct": true
+        },
+        {
+          "option": "C",
+          "text": "toBeTruthy()",
+          "is_correct": false
+        },
+        {
+          "option": "D",
+          "text": "toBeNull()",
+          "is_correct": false
+        }
+      ],
+      "explanation": "toBeDefined() asserts the value is not undefined."
+    },
+    {
+      "question_id": "Q20",
+      "topic_id": "T3.1",
+      "question_type": "multi-select",
+      "difficulty": "medium",
+      "question_text": "Identify true statements about custom Express middleware:",
+      "options": [
+        {
+          "option": "A",
+          "text": "It receives (req, res, next) arguments.",
+          "is_correct": true
+        },
+        {
+          "option": "B",
+          "text": "It must call next() to pass control.",
+          "is_correct": true
+        },
+        {
+          "option": "C",
+          "text": "It can only be placed before route definitions.",
+          "is_correct": false
+        },
+        {
+          "option": "D",
+          "text": "It can modify req and res objects.",
+          "is_correct": true
+        }
+      ],
+      "explanation": "Custom middleware follows the standard signature and can be used anywhere."
+    },
+    {
+      "question_id": "Q21",
+      "topic_id": "T2.2",
+      "question_type": "scenario",
+      "difficulty": "hard",
+      "question_text": "Write a Node.js snippet that reads a large file line‑by‑line without loading it entirely into memory. Which APIs are appropriate?",
+      "options": [
+        {
+          "option": "A",
+          "text": "fs.readFileSync()",
+          "is_correct": false
+        },
+        {
+          "option": "B",
+          "text": "fs.createReadStream() with readline module",
+          "is_correct": true
+        },
+        {
+          "option": "C",
+          "text": "fs.readdir()",
+          "is_correct": false
+        },
+        {
+          "option": "D",
+          "text": "fs.stat()",
+          "is_correct": false
+        }
+      ],
+      "explanation": "createReadStream combined with readline allows streaming line by line."
+    },
+    {
+      "question_id": "Q22",
+      "topic_id": "T4.2",
+      "question_type": "single-correct",
+      "difficulty": "medium",
+      "question_text": "Which Sequelize method initiates a transaction?",
+      "options": [
+        {
+          "option": "A",
+          "text": "sequelize.transaction()",
+          "is_correct": true
+        },
+        {
+          "option": "B",
+          "text": "Model.startTransaction()",
+          "is_correct": false
+        },
+        {
+          "option": "C",
+          "text": "sequelize.begin()",
+          "is_correct": false
+        },
+        {
+          "option": "D",
+          "text": "Model.transaction()",
+          "is_correct": false
+        }
+      ],
+      "explanation": "sequelize.transaction() creates a new transaction."
+    },
+    {
+      "question_id": "Q23",
+      "topic_id": "T5.2",
+      "question_type": "single-correct",
+      "difficulty": "medium",
+      "question_text": "What does the CORS middleware control in an Express app?",
+      "options": [
+        {
+          "option": "A",
+          "text": "Database connections",
+          "is_correct": false
+        },
+        {
+          "option": "B",
+          "text": "Cross‑origin HTTP request permissions",
+          "is_correct": true
+        },
+        {
+          "option": "C",
+          "text": "Session storage",
+          "is_correct": false
+        },
+        {
+          "option": "D",
+          "text": "Template rendering",
+          "is_correct": false
+        }
+      ],
+      "explanation": "CORS sets headers to allow or deny cross‑origin requests."
+    },
+    {
+      "question_id": "Q24",
+      "topic_id": "T3.3",
+      "question_type": "scenario",
+      "difficulty": "hard",
+      "question_text": "Your API returns a list of users. Which response structure best follows REST conventions?",
+      "options": [
+        {
+          "option": "A",
+          "text": "{ data: users, count: users.length }",
+          "is_correct": true
+        },
+        {
+          "option": "B",
+          "text": "{ users }",
+          "is_correct": false
+        },
+        {
+          "option": "C",
+          "text": "{ result: users }",
+          "is_correct": false
+        },
+        {
+          "option": "D",
+          "text": "Just the raw array",
+          "is_correct": false
+        }
+      ],
+      "explanation": "Including metadata like count is a common REST pattern."
+    },
+    {
+      "question_id": "Q25",
+      "topic_id": "T6.2",
+      "question_type": "single-correct",
+      "difficulty": "medium",
+      "question_text": "In a Dockerfile, which instruction sets the base image?",
+      "options": [
+        {
+          "option": "A",
+          "text": "FROM",
+          "is_correct": true
+        },
+        {
+          "option": "B",
+          "text": "RUN",
+          "is_correct": false
+        },
+        {
+          "option": "C",
+          "text": "CMD",
+          "is_correct": false
+        },
+        {
+          "option": "D",
+          "text": "ENTRYPOINT",
+          "is_correct": false
+        }
+      ],
+      "explanation": "FROM specifies the base image layer."
+    },
+    {
+      "question_id": "Q26",
+      "topic_id": "T1.1",
+      "question_type": "single-correct",
+      "difficulty": "easy",
+      "question_text": "Which module system does Node.js use by default?",
+      "options": [
+        {
+          "option": "A",
+          "text": "ES Modules",
+          "is_correct": false
+        },
+        {
+          "option": "B",
+          "text": "CommonJS",
+          "is_correct": true
+        },
+        {
+          "option": "C",
+          "text": "AMD",
+          "is_correct": false
+        },
+        {
+          "option": "D",
+          "text": "SystemJS",
+          "is_correct": false
+        }
+      ],
+      "explanation": "Node.js traditionally uses CommonJS (require/module.exports)."
+    },
+    {
+      "question_id": "Q27",
+      "topic_id": "T1.3",
+      "question_type": "scenario",
+      "difficulty": "easy",
+      "question_text": "If a request handler throws an error without a try/catch, what will Node.js do by default?",
+      "options": [
+        {
+          "option": "A",
+          "text": "Crash the process.",
+          "is_correct": true
+        },
+        {
+          "option": "B",
+          "text": "Return a 500 response automatically.",
+          "is_correct": false
+        },
+        {
+          "option": "C",
+          "text": "Ignore the error.",
+          "is_correct": false
+        },
+        {
+          "option": "D",
+          "text": "Retry the request.",
+          "is_correct": false
+        }
+      ],
+      "explanation": "Uncaught errors terminate the Node.js process unless handled."
+    },
+    {
+      "question_id": "Q28",
+      "topic_id": "T2.1",
+      "question_type": "single-correct",
+      "difficulty": "easy",
+      "question_text": "Which method returns the directory name of a given path?",
+      "options": [
+        {
+          "option": "A",
+          "text": "path.dirname()",
+          "is_correct": true
+        },
+        {
+          "option": "B",
+          "text": "path.basename()",
+          "is_correct": false
+        },
+        {
+          "option": "C",
+          "text": "path.extname()",
+          "is_correct": false
+        },
+        {
+          "option": "D",
+          "text": "path.resolve()",
+          "is_correct": false
+        }
+      ],
+      "explanation": "dirname extracts the directory portion."
+    },
+    {
+      "question_id": "Q29",
+      "topic_id": "T4.1",
+      "question_type": "multi-select",
+      "difficulty": "hard",
+      "question_text": "Which techniques improve MongoDB query performance?",
+      "options": [
+        {
+          "option": "A",
+          "text": "Creating indexes on frequently queried fields.",
+          "is_correct": true
+        },
+        {
+          "option": "B",
+          "text": "Using $where with JavaScript functions for filtering.",
+          "is_correct": false
+        },
+        {
+          "option": "C",
+          "text": "Limiting result sets with projection.",
+          "is_correct": true
+        },
+        {
+          "option": "D",
+          "text": "Storing large binary data directly in documents.",
+          "is_correct": false
+        }
+      ],
+      "explanation": "Indexes and projection boost performance; $where is slower."
+    },
+    {
+      "question_id": "Q30",
+      "topic_id": "T6.1",
+      "question_type": "code-output",
+      "difficulty": "hard",
+      "question_text": "What will be the Jest coverage percentage for the following file after running the test? Assume the test covers only the `add` function.\n```js\nfunction add(a, b) { return a + b; }\nfunction mul(a, b) { return a * b; }\nmodule.exports = { add, mul };\n```",
+      "options": [
+        {
+          "option": "A",
+          "text": "100% for both functions",
+          "is_correct": false
+        },
+        {
+          "option": "B",
+          "text": "50% overall, 100% add, 0% mul",
+          "is_correct": true
+        },
+        {
+          "option": "C",
+          "text": "0% overall",
+          "is_correct": false
+        },
+        {
+          "option": "D",
+          "text": "75% overall",
+          "is_correct": false
+        }
+      ],
+      "explanation": "Only add is exercised; mul remains uncovered."
+    }
+  ],
+  "received_at": "2026-06-09T09:09:03.631Z"
+}

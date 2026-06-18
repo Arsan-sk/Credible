@@ -115,29 +115,6 @@ function readJsonFileSync(filePath) {
   return JSON.parse(content);
 }
 
-app.get('/api/debug-paths', (req, res) => {
-  try {
-    const cwd = process.cwd();
-    const dirname = __dirname;
-    const listDir = (dir) => {
-      if (fs.existsSync(dir)) {
-        return fs.readdirSync(dir);
-      }
-      return null;
-    };
-    res.json({
-      cwd,
-      dirname,
-      cwd_files: listDir(cwd),
-      dirname_files: listDir(dirname),
-      parent_files: listDir(path.join(dirname, '..')),
-      env_keys: Object.keys(process.env).filter(k => !k.includes('KEY') && !k.includes('SECRET') && !k.includes('PASSWORD') && !k.includes('TOKEN'))
-    });
-  } catch (err) {
-    res.status(500).json({ error: err.message, stack: err.stack });
-  }
-});
-
 // ── API: quiz app fetches current quiz ──────────────────────────────────────
 app.get('/api/quiz', async (req, res) => {
   // Try Supabase first
