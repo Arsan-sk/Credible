@@ -84,3 +84,92 @@
     padding-top: var(--space-2xl);
   }
 }
+
+/* ── Video Card Styles ────────────────────────────────────────────────────── */
+.assessment-video-card {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  background: var(--bg-white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 12px;
+  margin-bottom: var(--space-xl);
+  text-decoration: none;
+  transition: all var(--transition-base);
+  cursor: pointer;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.assessment-video-card:hover {
+  border-color: var(--text-muted);
+  background: var(--bg-secondary);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.assessment-video-card:active {
+  transform: translateY(0);
+}
+
+.assessment-video-thumbnail-container {
+  flex-shrink: 0;
+  width: 110px;
+  height: 62px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.assessment-video-thumbnail {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.assessment-video-placeholder {
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.assessment-video-details {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  flex-grow: 1;
+}
+
+.assessment-video-tag {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--success);
+}
+
+.assessment-video-title {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.assessment-video-action {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
