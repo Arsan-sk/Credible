@@ -15,7 +15,7 @@
     }
   ],
   "functions": {
-    "api/index.js": {
+    "api/**": {
       "includeFiles": [
         "current-quiz.json",
         "guest-quiz.json",
