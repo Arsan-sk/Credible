@@ -22,11 +22,14 @@
   color: var(--text-secondary);
 }
 
-.certview-preview {
-  overflow-x: auto;
-  margin-bottom: var(--space-xl);
+.certview-preview-container {
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-lg);
+  background: white;
+  border: 1px solid var(--border);
+}
+
+.certview-preview {
   display: flex;
   justify-content: center;
   background: white;

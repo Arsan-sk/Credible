@@ -12,6 +12,10 @@ export default function CertificateView() {
   const [cert, setCert] = useState(null);
   const [downloading, setDownloading] = useState(false);
   const [backLink, setBackLink] = useState('/results');
+  
+  const [scale, setScale] = useState(1);
+  const [containerHeight, setContainerHeight] = useState('auto');
+  const containerRef = useRef(null);
   const certRef = useRef(null);
 
   useEffect(() => {
@@ -39,6 +43,35 @@ export default function CertificateView() {
 
     loadCertData();
   }, [id, user, authLoading]);
+
+  // Handle dynamic scaling of certificate preview on mobile viewports
+  useEffect(() => {
+    if (!cert || !containerRef.current || !certRef.current) return;
+    
+    const updateScale = () => {
+      const wrapperWidth = containerRef.current.offsetWidth;
+      // Get the scrollHeight of the actual certificate element
+      const certEl = certRef.current.querySelector('.certificate') || certRef.current;
+      const originalHeight = certEl.scrollHeight || 580;
+      
+      if (wrapperWidth < 900) {
+        const s = wrapperWidth / 900;
+        setScale(s);
+        setContainerHeight(`${originalHeight * s}px`);
+      } else {
+        setScale(1);
+        setContainerHeight('auto');
+      }
+    };
+
+    // Wait a brief tick for render/layout of certificate child
+    const timer = setTimeout(updateScale, 100);
+    window.addEventListener('resize', updateScale);
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener('resize', updateScale);
+    };
+  }, [cert]);
 
   if (!cert) {
     return (
@@ -93,8 +126,23 @@ export default function CertificateView() {
         </div>
 
         {/* Certificate Preview */}
-        <div className="certview-preview" ref={certRef}>
-          <Certificate data={cert} />
+        <div 
+          className="certview-preview-container" 
+          ref={containerRef}
+          style={{ height: containerHeight, overflow: 'hidden', width: '100%', marginBottom: 'var(--space-xl)' }}
+        >
+          <div 
+            className="certview-preview" 
+            ref={certRef}
+            style={{ 
+              transform: `scale(${scale})`, 
+              transformOrigin: 'top center',
+              width: '900px',
+              margin: '0 auto'
+            }}
+          >
+            <Certificate data={cert} />
+          </div>
         </div>
 
         {/* Download Actions */}

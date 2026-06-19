@@ -189,3 +189,26 @@
   border-radius: var(--radius-sm);
   border: 1px solid var(--border-light);
 }
+
+@media (max-width: 480px) {
+  .history-card-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-sm);
+  }
+  .history-card-header .badge {
+    align-self: flex-start;
+  }
+  .history-card-actions {
+    flex-direction: column;
+    gap: 8px;
+  }
+  .history-card-actions .btn {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+  }
+  .history-metrics {
+    gap: var(--space-lg);
+  }
+}
