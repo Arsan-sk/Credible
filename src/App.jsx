@@ -34,6 +34,7 @@ export default function App() {
           <Route path="/review/:attemptId" element={<DetailedReview />} />
           <Route path="/certificate/:id" element={<CertificateView />} />
           <Route path="/verify" element={<Verify />} />
+          <Route path="/verify/:id" element={<Verify />} />
           <Route path="/history" element={<History />} />
         </Routes>
       </main>
