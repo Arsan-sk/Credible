@@ -128,6 +128,19 @@
   max-width: 60%;
 }
 
+.verify-result-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: var(--space-xl);
+  border-top: 1px solid var(--border);
+  padding-top: var(--space-lg);
+  justify-content: center;
+}
+
+.verify-result-actions .btn {
+  flex: 1;
+}
+
 @media (max-width: 640px) {
   .verify-page {
     padding: var(--space-xl) var(--space-md);
@@ -136,5 +149,14 @@
   }
   .verify-input-group {
     flex-direction: column;
+  }
+  .verify-result-actions {
+    flex-direction: column;
+    gap: 8px;
+  }
+  .verify-result-actions .btn {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
   }
 }
